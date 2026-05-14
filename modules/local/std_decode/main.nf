@@ -7,8 +7,11 @@ process STD_DECODE {
         'aaryanjaitly/episegmix:new_plots' }"
 
     beforeScript """
-        export PATH=\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/build; 
-        export PYTHONPATH=\$PYTHONPATH:/app/src:${projectDir}/bin/src
+        if [[ "\$(uname)" == "Darwin" ]]; then
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/mac"
+        else
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/linux"
+        fi
     """
 
     input:
@@ -24,11 +27,7 @@ process STD_DECODE {
     script:
     """
     set -euo pipefail
-    
-    if ! command -v HMMChromSeg &> /dev/null; then
-        bash "${projectDir}/bin/build.sh"
-    fi
-    
+
     mkdir -p counts_${meta.id} states_${meta.id} segmentation
 
     get_counts_for_all.py -d "${config}" -o "counts_${meta.id}"

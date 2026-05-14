@@ -6,11 +6,6 @@ process DNA_REPORT {
         'docker://aaryanjaitly/episegmix:new_plots' :
         'aaryanjaitly/episegmix:new_plots' }"
 
-    beforeScript """
-        export PATH=\$PATH:${projectDir}/bin/workflowDNAMethylation:${projectDir}/bin/src
-        export PYTHONPATH=\$PYTHONPATH:/app/src:${projectDir}/bin/src
-    """
-
     input:
     tuple val(meta), path(config), path(model), path(bed), path(seg_txt)
 

@@ -7,8 +7,11 @@ process STD_TRAIN {
         'aaryanjaitly/episegmix:new_plots' }"
 
     beforeScript """
-        export PATH=\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/build; 
-        export PYTHONPATH=\$PYTHONPATH:/app/src:${projectDir}/bin/src
+        if [[ "\$(uname)" == "Darwin" ]]; then
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/mac"
+        else
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/linux"
+        fi
     """
 
     input:
@@ -25,12 +28,7 @@ process STD_TRAIN {
 
     """
     set -euo pipefail
-    
-    # Auto-build for Conda: Checks if HMMChromSeg exists AND can run successfully
-    if ! command -v HMMChromSeg &> /dev/null || ! HMMChromSeg 2>&1 | grep -q "Usage"; then
-        bash "${projectDir}/bin/build.sh"
-    fi
-    
+
     init_HMM.py \\
         -d "${counts}" \\
         ${meth_arg} \\

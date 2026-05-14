@@ -5,12 +5,7 @@ process DM_REPORT {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'docker://aaryanjaitly/episegmix:new_plots' :
         'aaryanjaitly/episegmix:new_plots' }"
-
-    beforeScript """
-        export PATH=\$PATH:${projectDir}/bin/workflowTopology:${projectDir}/bin/src
-        export PYTHONPATH=\$PYTHONPATH:/app/src:${projectDir}/bin/src
-    """
-
+        
     input:
     tuple val(meta), path(config), path(model), path(bed), path(seg_txt)
 

@@ -7,8 +7,11 @@ process DNA_TRAIN {
         'aaryanjaitly/episegmix:new_plots' }"
 
     beforeScript """
-        export PATH=\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/build; 
-        export PYTHONPATH=\$PYTHONPATH:/app/src:${projectDir}/bin/src
+        if [[ "\$(uname)" == "Darwin" ]]; then
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/mac"
+        else
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/linux"
+        fi
     """
 
     input:
@@ -22,14 +25,7 @@ process DNA_TRAIN {
     script:
     """
     set -euo pipefail
-    
-    # Auto-build for Conda: Checks if TopologyHMM exists AND can run successfully
-    if ! command -v TopologyHMM &> /dev/null || ! TopologyHMM 2>&1 | grep -q "Usage"; then
-        echo "TopologyHMM not found or incompatible. Running build.sh..."
-        bash "${projectDir}/bin/build.sh"
-        export PATH="\$PATH:${projectDir}/bin/HMM/build"
-    fi
-    
+
     # 1. INITIALIZE HMM
     init_HMM.py \\
         -e "${train_counts}" \\

@@ -1,14 +1,18 @@
 process DM_DECODE {
     tag "Decode: ${meta.id}"
     label 'process_medium'
+
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'docker://aaryanjaitly/episegmix:new_plots' :
         'aaryanjaitly/episegmix:new_plots' }"
 
     beforeScript """
-        export PATH=\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/build
-        export PYTHONPATH=\$PYTHONPATH:/app/src:${projectDir}/bin/src
+        if [[ "\$(uname)" == "Darwin" ]]; then
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/mac"
+        else
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/linux"
+        fi
     """
 
     input:
@@ -25,12 +29,6 @@ process DM_DECODE {
     """
     set -euo pipefail
     export MPLCONFIGDIR=\$(pwd)
-
-    # 1. AUTO-BUILD (For Conda users only)
-    if ! command -v TopologyHMM &> /dev/null; then
-        bash "${projectDir}/bin/build.sh"
-        export PATH="\$PATH:${projectDir}/bin/HMM/build"
-    fi
 
     mkdir -p counts_${meta.id} states_${meta.id} segmentation
 

@@ -6,11 +6,6 @@ process DNA_PREPARE {
         'docker://aaryanjaitly/episegmix:new_plots' :
         'aaryanjaitly/episegmix:new_plots' }"
 
-    beforeScript """
-        export PATH=\$PATH:${projectDir}/bin/src; 
-        export PYTHONPATH=\$PYTHONPATH:/app/src:${projectDir}/bin/src
-    """
-
     input:
     tuple val(meta), path(meth), val(state)
 

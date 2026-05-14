@@ -7,8 +7,11 @@ process DM_TRAIN {
         'aaryanjaitly/episegmix:new_plots' }"
 
     beforeScript """
-        export PATH=\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/build
-        export PYTHONPATH=\$PYTHONPATH:/app/src:${projectDir}/bin/src
+        if [[ "\$(uname)" == "Darwin" ]]; then
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/mac"
+        else
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/linux"
+        fi
     """
 
     input:
@@ -22,18 +25,9 @@ process DM_TRAIN {
     script:
     def meth_arg = meth_counts ? "-e ${meth_counts}" : ""
     def train_meth_arg = meth_counts ? "-x ${meth_counts}" : ""
-    
+
     """
     set -euo pipefail
-    
-    # --- CONDA AUTO-BUILD ---
-    # Checks if TopologyHMM exists AND can execute successfully.
-    # In Docker, this is skipped because TopologyHMM is native in /usr/local/bin.
-    if ! command -v TopologyHMM &> /dev/null || ! TopologyHMM 2>&1 | grep -q "Usage"; then
-        echo "TopologyHMM not found or incompatible. Running build.sh..."
-        bash "${projectDir}/bin/build.sh"
-        export PATH="\$PATH:${projectDir}/bin/HMM/build"
-    fi
 
     # 1. INITIALIZE HMM
     init_HMM.py \\

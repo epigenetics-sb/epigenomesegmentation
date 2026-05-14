@@ -7,8 +7,11 @@ process DISTFIT_HISTONE_ASSESS {
         'aaryanjaitly/episegmix:new_plots' }"
 
     beforeScript """
-        export PATH=\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/build; 
-        export PYTHONPATH=\$PYTHONPATH:/app/src:${projectDir}/bin/src
+        if [[ "\$(uname)" == "Darwin" ]]; then
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/mac"
+        else
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/linux"
+        fi
     """
 
     input:
@@ -24,12 +27,6 @@ process DISTFIT_HISTONE_ASSESS {
     """
     set -euo pipefail
     export MPLCONFIGDIR=\$(pwd)
-
-    # 1. Compile LogLikelihood if missing
-    if ! command -v LogLikelihood &> /dev/null || ! LogLikelihood 2>&1 | grep -qi "usage"; then
-        bash "${projectDir}/bin/build.sh"
-        export PATH="\$PATH:${projectDir}/bin/HMM/build"
-    fi
 
     # 2. Extract markers
     MARKERS=\$(head -n 1 ${histone_data} | awk '{for(i=4;i<=NF;++i) print \$i}')

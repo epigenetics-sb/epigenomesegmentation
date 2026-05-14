@@ -7,8 +7,11 @@ process DNA_DECODE {
         'aaryanjaitly/episegmix:new_plots' }"
 
     beforeScript """
-        export PATH=\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/build; 
-        export PYTHONPATH=\$PYTHONPATH:/app/src:${projectDir}/bin/src
+        if [[ "\$(uname)" == "Darwin" ]]; then
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/mac"
+        else
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/linux"
+        fi
     """
 
     input:
@@ -24,13 +27,9 @@ process DNA_DECODE {
     script:
     """
     set -euo pipefail
-    
-    if ! command -v TopologyHMM &> /dev/null; then
-        bash "${projectDir}/bin/build.sh"
-    fi
 
     mkdir -p counts_${meta.id} states_${meta.id} segmentation
-    
+
     # 1. RUN VITERBI DECODING
     TopologyHMM \\
         -m "${model}" \\

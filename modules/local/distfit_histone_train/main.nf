@@ -7,8 +7,11 @@ process DISTFIT_HISTONE_TRAIN {
         'aaryanjaitly/episegmix:new_plots' }"
 
     beforeScript """
-        export PATH=\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/build; 
-        export PYTHONPATH=\$PYTHONPATH:/app/src:${projectDir}/bin/src
+        if [[ "\$(uname)" == "Darwin" ]]; then
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/mac"
+        else
+            export PATH="\$PATH:${projectDir}/bin/src:${projectDir}/bin/HMM/pre-built/linux"
+        fi
     """
 
     input:
@@ -25,10 +28,6 @@ process DISTFIT_HISTONE_TRAIN {
     """
     set -euo pipefail
     export MPLCONFIGDIR=\$(pwd)
-
-    if ! command -v TopologyHMM &> /dev/null; then
-        bash "${projectDir}/bin/build.sh"
-    fi
 
     # 1. Config (Strictly Histone)
     echo -e "states: 3\\nmarker: 1\\nmarker_spec:\\n  - name: ${mark}\\n    distribution: ${dist}\\ndata: [\$(readlink -f ${histone_data})]" > ${prefix}.yaml
