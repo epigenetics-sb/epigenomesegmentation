@@ -4,7 +4,7 @@ process GENERATE_METHYLATION_BINS {
     label 'process_medium'
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'docker://community.wave.seqera.io/library/bedtools:2.31.1--7c4ce4cb07c09ee4' :
+        'community.wave.seqera.io/library/bedtools:2.31.1--7c4ce4cb07c09ee4' :
         'community.wave.seqera.io/library/bedtools:2.31.1--7c4ce4cb07c09ee4' }"
 
     input:

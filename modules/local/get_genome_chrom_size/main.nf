@@ -3,7 +3,7 @@ process GET_GENOME_CHROM_SIZE {
     label 'process_single'
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'docker://biocontainers/biocontainers:v1.2.0_cv1' :
+        'biocontainers/biocontainers:v1.2.0_cv1' :
         'biocontainers/biocontainers:v1.2.0_cv1' }"
 
     input:

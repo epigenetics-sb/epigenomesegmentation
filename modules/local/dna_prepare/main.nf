@@ -3,7 +3,7 @@ process DNA_PREPARE {
     label 'process_medium'
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'docker://aaryanjaitly/episegmix:new_plots' :
+        'aaryanjaitly/episegmix:new_plots' :
         'aaryanjaitly/episegmix:new_plots' }"
 
     input:

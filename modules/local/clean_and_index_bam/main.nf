@@ -3,7 +3,7 @@ process CLEAN_AND_INDEX_BAM {
     label 'process_medium'
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'docker://community.wave.seqera.io/library/samtools:1.22.1--eccb42ff8fb55509' :
+        'community.wave.seqera.io/library/samtools:1.22.1--eccb42ff8fb55509' :
         'community.wave.seqera.io/library/samtools:1.22.1--eccb42ff8fb55509' }"
 
     input:

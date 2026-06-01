@@ -3,7 +3,7 @@ process GENERATE_COUNT_MATRIX_BAM {
     label 'process_high'
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'docker://aaryanjaitly/episegmix_counts_container:latest' :
+        'aaryanjaitly/episegmix_counts_container:latest' :
         'aaryanjaitly/episegmix_counts_container:latest' }"
 
     input:
