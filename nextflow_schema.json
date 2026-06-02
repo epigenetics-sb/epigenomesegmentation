@@ -92,6 +92,13 @@
                     "description": "Genomic bin size in base pairs used for discretising the genome.",
                     "fa_icon": "fas fa-ruler-horizontal"
                 },
+                "chromsizes": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to a custom chromosome sizes file.",
+                    "fa_icon": "fas fa-file-alt",
+                    "help_text": "Use this parameter to provide a custom chromosome sizes file (e.g., if you are not relying on the pipeline to download them automatically based on the `--genome` ID). It should be a tab-separated text file with chromosome names in the first column and sizes in the second."
+                },
                 "states": {
                     "type": ["integer", "string"],
                     "default": "8",
