@@ -14,7 +14,7 @@ workflow BED_COUNTS {
     // ---------------------------------------------------------
     CUSTOM_BEDCOUNTS(ch_in_bedcounts)
 
-    ch_bedcounts_out = CUSTOM_BEDCOUNTS.out
+    ch_bedcounts_out = CUSTOM_BEDCOUNTS.out.countsbed
     ch_in_bedtools_map = ch_bins
         .combine(ch_bedcounts_out)
         .map { meta1, chrombin, meta2, tab -> 

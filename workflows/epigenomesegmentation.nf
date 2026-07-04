@@ -7,7 +7,6 @@ include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_epigenomesegmentation_pipeline'
 
-/* LOCAL SUBWORKFLOWS */
 include { PREPARE_GENOME                  } from '../subworkflows/local/prepare_genome/'
 include { BAM_REHEADER_INDEX_SAMTOOLS     } from '../subworkflows/local/bam_reheader_index_samtools/'
 include { TAB_SHEETBAM_COUNTSBAM_CUSTOM   } from '../subworkflows/local/tab_sheetbam_countsbam_custom/'
@@ -27,10 +26,14 @@ include { EPISEGMIX_FITTING               } from '../subworkflows/local/episegmi
 workflow EPIGENOMESEGMENTATION {
 
     take:
-    ch_samplesheet
-    
+    ch_samplesheet // channel: samplesheet read in from --input
+    outdir
+
     main:
-    ch_versions = Channel.empty()
+
+    def ch_versions = Channel.empty()
+
+    // --- PIPELINE LOGIC ---
 
     PREPARE_GENOME()
     ch_chrom_sizes_sort = PREPARE_GENOME.out.chrom_sizes_sort
@@ -66,25 +69,22 @@ workflow EPIGENOMESEGMENTATION {
     ch_states = Channel.of("${params.states}").splitCsv().flatten()
     
     if (params.dna == true) {
-
-    ch_in_episegmix_config = ch_mapped_bed 
-    .map { it -> 
-        def sample_id = it[0] 
-        def meta2     = it[1]
-        def meth      = it[2]
-        
-        def meta1     = [id: 'no_bam_counts'] 
-        def histone   = []
-        
-        return tuple(sample_id, meta1, histone, meta2, meth)
+        ch_in_episegmix_config = ch_mapped_bed 
+        .map { it -> 
+            def sample_id = it[0] 
+            def meta2     = it[1]
+            def meth      = it[2]
+            
+            def meta1     = [id: 'no_bam_counts'] 
+            def histone   = []
+            
+            return tuple(sample_id, meta1, histone, meta2, meth)
+        }
+        .combine(ch_states)
+        .map { sample_id, meta1, histone, meta2, meth, state ->           
+            ["${sample_id}_${state}", meta1, histone, meta2, meth, state]
+        }
     }
-    .combine(ch_states)
-    .map { sample_id, meta1, histone, meta2, meth, state ->           
-        ["${sample_id}_${state}", meta1, histone, meta2, meth, state]
-    }
-    }
-
-
     else if (params.fitting == true) {
         ch_dist = Channel.of("${params.distributions}").splitCsv().flatten()
 
@@ -130,18 +130,13 @@ workflow EPIGENOMESEGMENTATION {
                 )
             }
     }
-
     else if (params.counts) {
         ch_in_episegmix_config = Channel.empty()
     }
-
-
     else if (params.jointrain) {
-
-            ch_in_episegmix_config = ch_bamcounts
+        ch_in_episegmix_config = ch_bamcounts
             .join(ch_meth_tab, remainder: true)
             .map { it -> 
-
                 def sample_id = it[0] 
                 def meta1 
                 def histone
@@ -170,24 +165,18 @@ workflow EPIGENOMESEGMENTATION {
                 return tuple(sample_id, meta1, histone, meta2, meth)
             }
             .combine(ch_states)
-            .map { 
-            sample_id, meta1, histone, meta2, meth, state ->           
+            .map { sample_id, meta1, histone, meta2, meth, state ->           
                 [state,"${sample_id}_${state}", meta1, histone, meta2, meth]
             }
             .groupTuple()
-            .map {
-                state, sample_id, meta1, histone, meta2, meth ->
+            .map { state, sample_id, meta1, histone, meta2, meth ->
                 [sample_id[0], meta1[0], histone, meta2[0], meth, state]
             }
-
     }
-
-
     else {
         ch_in_episegmix_config = ch_bamcounts
             .join(ch_meth_tab, remainder: true)
             .map { it -> 
-
                 def sample_id = it[0] 
                 def meta1 
                 def histone
@@ -237,46 +226,36 @@ workflow EPIGENOMESEGMENTATION {
     else {
         EPISEGMIX_LDM(ch_train_counts)
     }
-    
-    // =========================================================
-    // PIPELINE TRUNCATED HERE FOR TESTING/DEVELOPMENT
-    // =========================================================
 
-    //
+    // --- VERSION COLLATION ---
+
     // Collate and save software versions
-    //
-    def topic_versions = Channel.topic("versions")
+    def topic_versions = channel.topic("versions")
         .distinct()
         .branch { entry ->
-            versions_file:  entry instanceof Path
+            versions_file: entry instanceof Path
             versions_tuple: true
         }
 
     def topic_versions_string = topic_versions.versions_tuple
-        .map { tuple ->
-            def process = tuple[0]
-            def tool    = tuple[1]
-            def version = tuple[2]
+        .map { process, tool, version ->
             [ process[process.lastIndexOf(':')+1..-1], "  ${tool}: ${version}" ]
         }
-        .groupTuple(by: 0)
-        .map { tuple ->
-            def process       = tuple[0]
-            def tool_versions = tuple[1]
+        .groupTuple(by:0)
+        .map { process, tool_versions ->
             tool_versions.unique().sort()
             "${process}:\n${tool_versions.join('\n')}"
         }
 
-    softwareVersionsToYAML(ch_versions.mix(topic_versions.versions_file))
+    def ch_collated_versions = softwareVersionsToYAML(ch_versions.mix(topic_versions.versions_file))
         .mix(topic_versions_string)
         .collectFile(
-            storeDir: "${params.outdir}/pipeline_info",
-            name:     'nf_core_epigenomesegmentation_software_versions.yml',
-            sort:     true,
-            newLine:  true
+            storeDir: "${outdir}/pipeline_info",
+            name: 'nf_core_'  +  'epigenomesegmentation_software_'  + 'versions.yml',
+            sort: true,
+            newLine: true
         )
-        .set { ch_collated_versions }
-
+        
     emit:
     versions = ch_versions                 // channel: [ path(versions.yml) ]
 }
