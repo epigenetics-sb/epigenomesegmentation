@@ -161,7 +161,7 @@ paste <(awk -v OFS="\t" 'BEGIN{print "chr\tstart\tend"} {gsub(/chr/,""); print$0
 	> ${episegmix_input}
 
 # 6. Remove all the temporary files created in between
-rm ${counts_txt} ${chrom_sizes} ${refine_chr_regions}
+rm ${counts_txt}
 
 
 echo -e "$(timestamp) Count matrix generated and saved as ${episegmix_input}"

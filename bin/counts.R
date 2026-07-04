@@ -30,7 +30,7 @@ tab_files$V2 <- as.character(tab_files$V2)
 regions <- GRanges(ut.regions[[1]], IRanges(start=ut.regions[[2]]+1, end=ut.regions[[3]]))
 starts <- start(regions)-1
 ends <- end(regions)
-newstarts <- bin_size*(ceiling(starts/bin_size))
+newstarts <- bin_size*(floor(starts/bin_size))
 newends <- bin_size*(floor(ends/bin_size))
 valid <- newends > newstarts
 regions <- regions[valid]
@@ -65,10 +65,20 @@ summed_data_list <- lapply(unique_patterns, function(pattern) {
   print("Starting normalization...")
     if(ncol(counts_list[grep(pattern, names(counts_list))]) > 1) {
         input_df <- counts_list[grep(pattern, names(counts_list))]
-        #outlier removal
+
+        
+        # #outlier removal
+        # for(i in 1:ncol(input_df)){
+        #   input_df <- subset(input_df, input_df[,i]<=quantile(input_df[,i],prob=.999))
+        # }
+
+      # Outlier capping (Winsorization) instead of row removal
         for(i in 1:ncol(input_df)){
-          input_df <- subset(input_df, input_df[,i]<=quantile(input_df[,i],prob=.999))
+          q999 <- quantile(input_df[,i], prob=.999)
+          # Replace values strictly greater than the quantile with the quantile value
+          input_df[input_df[,i] > q999, i] <- q999
         }
+
         normalized_counts <- quantileNormalization(input_df)
         normalized_counts <- as.matrix(normalized_counts)
         print("calculating rowmedians...")

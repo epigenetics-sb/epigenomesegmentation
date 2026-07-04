@@ -12,7 +12,7 @@ process CUSTOM_DOWNLOADCHROMSIZES {
 
     output:
     path "*.chrom.sizes", emit: chromsizes
-    tuple val("${task.process}"), val('awk'), eval("wget -V | head -n1 | cut -f 3 -d \" \""), topic: versions, emit: versions_custom
+    tuple val("${task.process}"), val('wget'), eval("wget -V | head -n1 | cut -f 3 -d \" \""), topic: versions, emit: versions_wget
 
     when:
     task.ext.when == null || task.ext.when
