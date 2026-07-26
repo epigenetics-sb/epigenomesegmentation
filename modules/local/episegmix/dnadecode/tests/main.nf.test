@@ -16,24 +16,24 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    'Forebrain_16.5_2', 
-                    [ id: 'no_bam_counts' ], 
-                    [], 
-                    [ 
-                        id: 'Forebrain_16.5', 
-                        replicate: 1, 
-                        epigenetic_mark: 'WGBS', 
-                        modality: 'WGBS', 
-                        paired_end: true, 
-                        distribution: 'BI' 
-                    ], 
-                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_WGBS_binnedbedcounts.bed', checkIfExists: true), 
-                    2, 
-                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2.yaml', checkIfExists: true), 
-                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2-train-counts.txt', checkIfExists: true), 
-                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2-train-regions.txt', checkIfExists: true), 
-                    file(params.pipelines_testdata_base_path + '/modules/dna/dummy-train-counts-meth.txt', checkIfExists: true), 
-                    file(params.pipelines_testdata_base_path + '/modules/dna/final-model-Forebrain_16.5_2.json', checkIfExists: true), 
+                    'Forebrain_16.5_2',
+                    [ id: 'no_bam_counts' ],
+                    [],
+                    [
+                        id: 'Forebrain_16.5',
+                        replicate: 1,
+                        epigenetic_mark: 'WGBS',
+                        modality: 'WGBS',
+                        paired_end: true,
+                        distribution: 'BI'
+                    ],
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_WGBS_binnedbedcounts.bed', checkIfExists: true),
+                    2,
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2.yaml', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2-train-counts.txt', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2-train-regions.txt', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + '/modules/dna/dummy-train-counts-meth.txt', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + '/modules/dna/final-model-Forebrain_16.5_2.json', checkIfExists: true),
                     file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2.regions.txt', checkIfExists: true)
                 ]
                 """
@@ -60,24 +60,24 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    'Forebrain_16.5_2', 
-                    [ id: 'no_bam_counts' ], 
-                    [], 
-                    [ 
-                        id: 'Forebrain_16.5', 
-                        replicate: 1, 
-                        epigenetic_mark: 'WGBS', 
-                        modality: 'WGBS', 
-                        paired_end: true, 
-                        distribution: 'BI' 
-                    ], 
-                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_WGBS_binnedbedcounts.bed', checkIfExists: true), 
-                    2, 
-                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2.yaml', checkIfExists: true), 
-                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2-train-counts.txt', checkIfExists: true), 
-                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2-train-regions.txt', checkIfExists: true), 
-                    file(params.pipelines_testdata_base_path + '/modules/dna/dummy-train-counts-meth.txt', checkIfExists: true), 
-                    file(params.pipelines_testdata_base_path + '/modules/dna/final-model-Forebrain_16.5_2.json', checkIfExists: true), 
+                    'Forebrain_16.5_2',
+                    [ id: 'no_bam_counts' ],
+                    [],
+                    [
+                        id: 'Forebrain_16.5',
+                        replicate: 1,
+                        epigenetic_mark: 'WGBS',
+                        modality: 'WGBS',
+                        paired_end: true,
+                        distribution: 'BI'
+                    ],
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_WGBS_binnedbedcounts.bed', checkIfExists: true),
+                    2,
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2.yaml', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2-train-counts.txt', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2-train-regions.txt', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + '/modules/dna/dummy-train-counts-meth.txt', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + '/modules/dna/final-model-Forebrain_16.5_2.json', checkIfExists: true),
                     file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2.regions.txt', checkIfExists: true)
                 ]
                 """

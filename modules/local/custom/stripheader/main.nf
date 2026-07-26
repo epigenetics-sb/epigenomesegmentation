@@ -30,7 +30,7 @@ process CUSTOM_STRIPHEADER {
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
     echo $args
-    
+
     touch no_header_${prefix}.bed
     """
 }

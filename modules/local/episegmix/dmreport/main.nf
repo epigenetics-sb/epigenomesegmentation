@@ -34,7 +34,7 @@ process EPISEGMIX_DMREPORT {
 
     """
     echo $args
-    
+
     mkdir Plots
     touch Plots/dummy.txt
     """

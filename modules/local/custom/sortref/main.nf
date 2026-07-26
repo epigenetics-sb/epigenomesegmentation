@@ -2,7 +2,7 @@ process CUSTOM_SORTREF {
     tag "$meta_id"
     label 'process_single'
 
-    
+
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/ubuntu:22.04':
@@ -34,7 +34,7 @@ process CUSTOM_SORTREF {
 
     """
     echo $args
-    
+
     touch ${prefix}.v2
     """
 }

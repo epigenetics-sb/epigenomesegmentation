@@ -18,7 +18,7 @@ graph LR
         filterchromsizes[Filter Sizes]
         makewindows[Make Windows]
         sortreference[Sort Reference]
-        
+
         downloadchromsizes -->|genome| filterchromsizes
         filterchromsizes -->|genome| makewindows
         filterchromsizes -->|genome| sortreference
@@ -29,7 +29,7 @@ graph LR
         index[Index]
         sheetbam[BAM Sheet]
         bamcounts[BAM Counts]
-        
+
         reheader -->|bam| index
         index -->|bam| sheetbam
         sheetbam -->|bam| bamcounts
@@ -38,7 +38,7 @@ graph LR
     subgraph bed_processing [BED Processing]
         bedcounts[BED Counts]
         map[Map]
-        
+
         bedcounts -->|bed| map
     end
 
@@ -46,7 +46,7 @@ graph LR
         stripheader[Strip Header]
         intersect[Intersect]
         filterbed[Filter BED]
-        
+
         stripheader -->|merge| intersect
         intersect -->|merge| filterbed
     end
@@ -54,8 +54,8 @@ graph LR
     subgraph preparing [EpiSegMix Preparing]
         episegmixconfig[Config]
         episegmixtraincounts[Train Counts]
-        
-        
+
+
         episegmixconfig -->|prepare| episegmixtraincounts
     end
 
@@ -64,7 +64,7 @@ graph LR
         episegmixdmtrain[DM Train]
         episegmixdmdecoder[DM Decode]
         episegmixdmreport[DM Report]
-        
+
         episegmixdmtrain -->|episegmix| episegmixdmdecoder
         episegmixdmdecoder -->|episegmix| episegmixdmreport
     end
@@ -75,7 +75,7 @@ graph LR
         episegmixldmdecoder[LDM Decode]
         episegmixldmreport[LDM Report]
         episegmixbestdistribution[Best Distribution]
-        
+
         episegmixldmtrain -->|episegmix| episegmixldmdecoder
         episegmixldmdecoder -->|episegmix| episegmixldmreport
         episegmixldmtrain -->|episegmix| episegmixbestdistribution
@@ -87,7 +87,7 @@ graph LR
         episegmixmethtrain[DNA Train]
         episegmixmethdecoder[DNA Decode]
         episegmixmethreport[DNA Report]
-        
+
         episegmixmethtrain -->|episegmix| episegmixmethdecoder
         episegmixmethdecoder -->|episegmix| episegmixmethreport
     end
@@ -99,15 +99,15 @@ graph LR
 
     sortreference -->|genome| reheader
     makewindows -->|genome| bedcounts
-    
+
     %% Merge map and bamcounts OUTSIDE the subgraph
     map -->|bed| _pre_merge_external_hub
     bamcounts -->|bam| _pre_merge_external_hub
-    
+
     %% Feed the bundled lines into Strip Header AND bypass to Config
     _pre_merge_external_hub -->|bam,bed| stripheader
     _pre_merge_external_hub -->|bam,bed| episegmixconfig
-    
+
     %% Corrected: filterbed gets the "merge" color line
     filterbed -->|merge| episegmixconfig
 

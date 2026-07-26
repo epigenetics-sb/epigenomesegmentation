@@ -26,24 +26,24 @@ while [[ $# -gt 0 ]]; do
         -h|--histone) HISTONE="$2"; shift 2 ;;
         -g|--wgbs) WGBS="$2"; shift 2 ;;
         -c|--chr) chr="$2"; shift 2 ;;
-        -o|--output) output_file="$2"; shift 2 ;;  
-        *) echo "Error: Unknown option: $1" >&2; exit 1 ;;  
+        -o|--output) output_file="$2"; shift 2 ;;
+        *) echo "Error: Unknown option: $1" >&2; exit 1 ;;
     esac
-done 
+done
 
 # ==============================================================================
 # Output Configuration
 # ==============================================================================
 {
     echo "states: ${STATE:-8}"
-    
+
     # 1. Histone Markers Section
-    if [[ "${#MARK[@]}" -gt 0 && "${MARK[0]}" != "null" ]]; then	
+    if [[ "${#MARK[@]}" -gt 0 && "${MARK[0]}" != "null" ]]; then
 	echo "marker: ${#MARK[@]}"
         echo "marker_spec:"
         for i in "${!MARK[@]}"; do
             echo "  - name: ${MARK[$i]}"
-            echo "    distribution: ${DISTRIBUTION_HISTONE[$i]:-NBI}" 
+            echo "    distribution: ${DISTRIBUTION_HISTONE[$i]:-NBI}"
         done
     fi
 
@@ -54,7 +54,7 @@ done
 
     # 3. DNA Methylation Section
     if [[ "${WGBS}" != "null" && -n "${WGBS}" ]]; then
-        
+
         # Check if we have DNA marks
         if [[ "${#METH_MARK[@]}" -gt 0 ]]; then
             echo "coverage_marker: ${#METH_MARK[@]}"

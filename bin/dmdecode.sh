@@ -52,9 +52,9 @@ get_counts_for_all.py -d "${YAML}" -o "counts_${OUTPUT}"
 
 
 mkdir states_${OUTPUT}
-for file in $(find "counts_${OUTPUT}" -name "counts*" -type f -print); do 
-    name=${file##*/counts_} 
-        
+for file in $(find "counts_${OUTPUT}" -name "counts*" -type f -print); do
+    name=${file##*/counts_}
+
     HMMChromSeg \
         -m "${JSON}" \
         -v "states_${OUTPUT}/viterbi_${name}" \

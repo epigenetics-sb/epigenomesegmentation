@@ -34,7 +34,7 @@ process CUSTOM_FILTERBINS {
 
     """
     echo $args
-    
+
     touch ${prefix}
     """
 }

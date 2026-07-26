@@ -23,7 +23,7 @@ input:
   - ch_train_region:
       type: file
       description: |
-        The input channel containing the specific regions file required for DNA model decoding. 
+        The input channel containing the specific regions file required for DNA model decoding.
         Structure: `[ val(sample_id), path(region) ]`
       pattern: "*.regions.txt"
 output:

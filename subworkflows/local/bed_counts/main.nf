@@ -1,11 +1,11 @@
 include { CUSTOM_BEDCOUNTS                } from '../../../modules/local/custom/bedcounts/main'
-include { BEDTOOLS_MAP                    } from '../../../modules/nf-core/bedtools/map/main' 
+include { BEDTOOLS_MAP                    } from '../../../modules/nf-core/bedtools/map/main'
 
 workflow BED_COUNTS {
 
     take:
     ch_in_bedcounts
-    ch_bins 
+    ch_bins
 
     main:
     // ---------------------------------------------------------
@@ -16,11 +16,11 @@ workflow BED_COUNTS {
     ch_bedcounts_out = CUSTOM_BEDCOUNTS.out.countsbed
     ch_in_bedtools_map = ch_bins
         .combine(ch_bedcounts_out)
-        .map { meta1, chrombin, meta2, tab -> 
-            [ meta2, chrombin, tab ] 
+        .map { meta1, chrombin, meta2, tab ->
+            [ meta2, chrombin, tab ]
         }
     ch_dummy_chrom_sizes = Channel.value([ [id: 'dummy'], [] ])
-    
+
     BEDTOOLS_MAP(ch_in_bedtools_map, ch_dummy_chrom_sizes)
 
     new_mapped =  BEDTOOLS_MAP.out.mapped

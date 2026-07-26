@@ -11,7 +11,7 @@ workflow EPISEGMIX_DM {
         EPISEGMIX_DMTRAIN(ch_train_counts)
         EPISEGMIX_DMDECODE(EPISEGMIX_DMTRAIN.out.json)
         EPISEGMIX_DMREPORT(EPISEGMIX_DMDECODE.out.Segmentation)
-        
+
     emit:
     ch_segmentation = EPISEGMIX_DMDECODE.out.Segmentation
     ch_dmtrain_json = EPISEGMIX_DMTRAIN.out.json

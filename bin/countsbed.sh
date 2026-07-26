@@ -39,7 +39,7 @@ if [[ "${file_path}" == *.gz ]]; then
 fi
 
 # Process the data
-{    
+{
     join -1 1 -2 1 -a 1 -a 2 \
         <( ${READ_CMD} "${file_path}" \
             | awk -v OFS='\t' '$6=="+" {print $1"_"$2, $1, $2, $6, $10, ($11*$10)/100}' \

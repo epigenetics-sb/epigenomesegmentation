@@ -24,7 +24,7 @@ print("All inputs are read...")
 
 tab_files$V2 <- as.character(tab_files$V2)
 
-# Generating refined regions 
+# Generating refined regions
 regions <- GRanges(ut.regions[[1]], IRanges(start=ut.regions[[2]]+1, end=ut.regions[[3]]))
 starts <- start(regions)-1
 ends <- end(regions)
@@ -108,7 +108,7 @@ colnames(summed_data) <- unique_patterns
 
 refined_regions <- data.frame(chr= as.character(seqnames(regions)), start=start(regions)-1, end=end(regions))
 
-# write the count matrix and refined regions to output file 
+# write the count matrix and refined regions to output file
 print("writing tables...")
 write.table(summed_data,file=paste(output_path,"counts.txt",sep="_"),sep="\t",quote=FALSE,row.names=F)
 write.table(refined_regions,file=paste(output_path,"refine_chr_regions.bed",sep="_"),sep="\t",quote=FALSE,row.names=F, col.names=FALSE)

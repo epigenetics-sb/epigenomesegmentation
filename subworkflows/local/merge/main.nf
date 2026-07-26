@@ -7,7 +7,7 @@ include { CUSTOM_JOINBED                   } from '../../../modules/local/custom
 workflow MERGE {
 
     take:
-    ch_merge 
+    ch_merge
 
     main:
 

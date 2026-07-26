@@ -32,7 +32,7 @@ process EPISEGMIX_DNATRAIN {
     def prefix = task.ext.prefix ?: "${sample_id}"
     """
     echo $args
-    
+
     touch "final-${prefix}.json"
     """
 }

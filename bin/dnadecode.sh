@@ -14,7 +14,7 @@ usage() {
     echo ""
     echo "Options:"
     echo "  -y, --yaml <file>      Specify the input YAML file"
-    echo "  -j, --json <file>      Specify the input JSON file"  
+    echo "  -j, --json <file>      Specify the input JSON file"
     echo "  -o, --output <file>    Specify the output suffix"
     echo "  -c,  --counts <file>   Specify the counts file"
     echo "  -r,  --region <file>   Specify the file containg the regions"

@@ -63,14 +63,14 @@ workflow EPIGENOMESEGMENTATION {
             .map { meta, bamfile -> [meta.id, meta] }
             .groupTuple()
             .map { sample_id, meta_list -> [sample_id, meta_list] }
-            .combine(ch_histonecounts) 
+            .combine(ch_histonecounts)
 
         // 3. Same logic for the BED channel
         ch_meth_tab = ch_input_branched.bed
             .map { meta, bedfile -> [meta.id, meta] }
             .groupTuple(by: 0)
             .combine(ch_methcounts)
-          
+
     }
 
 
@@ -90,7 +90,7 @@ workflow EPIGENOMESEGMENTATION {
 
         TAB_SHEETBAM_COUNTSBAM_CUSTOM(ch_bam, ch_bai, ch_chrom_sizes_sort)
         ch_bamcounts = TAB_SHEETBAM_COUNTSBAM_CUSTOM.out.bamcounts
-        
+
         ch_merge = ch_bamcounts.combine(ch_mapped_bed, by: 0)
 
         MERGE(ch_merge)
@@ -100,21 +100,21 @@ workflow EPIGENOMESEGMENTATION {
 
 
     ch_states = Channel.of("${params.states}").splitCsv().flatten()
-    
+
     if (params.dna == true) {
-        ch_in_episegmix_config = ch_mapped_bed 
-        .map { it -> 
-            def sample_id = it[0] 
+        ch_in_episegmix_config = ch_mapped_bed
+        .map { it ->
+            def sample_id = it[0]
             def meta2     = it[1]
             def meth      = it[2]
-            
-            def meta1     = [id: 'no_bam_counts'] 
+
+            def meta1     = [id: 'no_bam_counts']
             def histone   = []
-            
+
             return tuple(sample_id, meta1, histone, meta2, meth)
         }
         .combine(ch_states)
-        .map { sample_id, meta1, histone, meta2, meth, state ->           
+        .map { sample_id, meta1, histone, meta2, meth, state ->
             ["${sample_id}_${state}", meta1, histone, meta2, meth, state]
         }
     }
@@ -125,21 +125,21 @@ workflow EPIGENOMESEGMENTATION {
             .join(ch_meth_tab, remainder: true)
             .map { it ->
                 def sample_id = it[0]
-                def meta1 
-                def histone 
+                def meta1
+                def histone
                 def meta2
                 def meth
-                
+
                 if (it.size() == 4 && it[1] != null) {
                     meta1 = it[1]; histone = it[2]
                     meta2 = [id: sample_id]; meth = null
-                } 
+                }
                 else if (it.size() == 4 && it[1] == null) {
                     meta2 = it[2]; meth = it[3]
                     // WRAP IN LIST: transpose() requires a list, even if it's just 1 item.
                     meta1 = [[id: sample_id, epigenetic_mark: meta2.epigenetic_mark ?: 'UNKNOWN_MARK']]
                     histone = null
-                } 
+                }
                 else {
                     meta1 = it[1]; histone = it[2]
                     meta2 = it[3]; meth = it[4]
@@ -156,17 +156,17 @@ workflow EPIGENOMESEGMENTATION {
             .combine(ch_dist)
             .map { sample_id, meta1, histone, meta2, meth, state, dist ->
                 def explicit_meta = [
-                    id: meta1.id, 
-                    epigenetic_mark: meta1.epigenetic_mark, 
+                    id: meta1.id,
+                    epigenetic_mark: meta1.epigenetic_mark,
                     distribution: dist
                 ]
                 return tuple(
                     "${meta1.id}_${dist}_${state}_${meta1.epigenetic_mark}",
-                    explicit_meta, 
-                    histone, 
-                    explicit_meta, 
-                    [], 
-                    state 
+                    explicit_meta,
+                    histone,
+                    explicit_meta,
+                    [],
+                    state
                 )
             }
     }
@@ -176,9 +176,9 @@ workflow EPIGENOMESEGMENTATION {
     else if (params.jointrain) {
         ch_in_episegmix_config = ch_bamcounts
             .join(ch_meth_tab, remainder: true)
-            .map { it -> 
-                def sample_id = it[0] 
-                def meta1 
+            .map { it ->
+                def sample_id = it[0]
+                def meta1
                 def histone
                 def meta2
                 def meth
@@ -205,7 +205,7 @@ workflow EPIGENOMESEGMENTATION {
                 return tuple(sample_id, meta1, histone, meta2, meth)
             }
             .combine(ch_states)
-            .map { sample_id, meta1, histone, meta2, meth, state ->           
+            .map { sample_id, meta1, histone, meta2, meth, state ->
                 [state,"${sample_id}_${state}", meta1, histone, meta2, meth]
             }
             .groupTuple()
@@ -217,9 +217,9 @@ workflow EPIGENOMESEGMENTATION {
 
         ch_in_episegmix_config = ch_bamcounts
             .join(ch_meth_tab, remainder: true)
-            .map { it -> 
-                def sample_id = it[0] 
-                def meta1 
+            .map { it ->
+                def sample_id = it[0]
+                def meta1
                 def histone
                 def meta2
                 def meth
@@ -246,7 +246,7 @@ workflow EPIGENOMESEGMENTATION {
                 return tuple(sample_id, meta1, histone, meta2, meth)
             }
             .combine(ch_states)
-            .map { sample_id, meta1, histone, meta2, meth, state ->           
+            .map { sample_id, meta1, histone, meta2, meth, state ->
                 ["${sample_id}_${state}", meta1, histone, meta2, meth, state]
             }
     }
@@ -296,7 +296,7 @@ workflow EPIGENOMESEGMENTATION {
             sort: true,
             newLine: true
         )
-        
+
     emit:
     versions = ch_versions                 // channel: [ path(versions.yml) ]
 }

@@ -11,7 +11,7 @@ usage() {
     echo ""
     echo "Options:"
     echo "  -y, --yaml <file>      Specify the input YAML file"
-    echo "  -j, --json <file>      Specify the input JSON file"  
+    echo "  -j, --json <file>      Specify the input JSON file"
     echo "  -o, --output <file>    Specify the output suffix"
     echo "  -@, --threads <num>    Specify the number of threads to use"
     echo "  -h, --help             Display this help message and exit"
@@ -52,9 +52,9 @@ get_counts_for_all.py -d "${YAML}" -o "counts_${OUTPUT}"
 
 
 mkdir states_${OUTPUT}
-for file in $(find "counts_${OUTPUT}" -name "counts*" -type f -print); do 
-    name=${file##*/counts_} 
-        
+for file in $(find "counts_${OUTPUT}" -name "counts*" -type f -print); do
+    name=${file##*/counts_}
+
     TopologyHMM \
         -m "${JSON}" \
         -v "states_${OUTPUT}/viterbi_${name}" \

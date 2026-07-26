@@ -33,7 +33,7 @@ process EPISEGMIX_LDMTRAIN {
     def prefix = task.ext.prefix ?: "${sample_id}"
     """
     echo $args
-    
+
     touch "final-${prefix}.json"
     touch "final-${prefix}.log"
     """

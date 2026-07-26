@@ -35,7 +35,7 @@ process CUSTOM_BEDCOUNTS {
     def prefix = task.ext.prefix ?: "${meta.id}_${meta.modality}"
     """
     echo $args
-    
+
     touch ${prefix}.tab
     """
 }

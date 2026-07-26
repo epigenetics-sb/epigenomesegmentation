@@ -33,7 +33,7 @@ process CUSTOM_SHEETBAM {
     def prefix = task.ext.prefix ?: "${sample_id}"
     """
     echo $args
-    
+
     touch ${prefix}.txt
     """
 }

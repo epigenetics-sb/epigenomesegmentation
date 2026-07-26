@@ -16,8 +16,8 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    file(params.pipelines_testdata_base_path + '/modules/fitting/kidney_P0_NBI_2_H3K4me3.log', checkIfExists: true), 
-                    file(params.pipelines_testdata_base_path + '/modules/fitting/kidney_P0_SI_2_H3K4me3.log', checkIfExists: true), 
+                    file(params.pipelines_testdata_base_path + '/modules/fitting/kidney_P0_NBI_2_H3K4me3.log', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + '/modules/fitting/kidney_P0_SI_2_H3K4me3.log', checkIfExists: true),
                     file(params.pipelines_testdata_base_path + '/modules/fitting/kidney_P0_BNB_2_H3K4me3.log', checkIfExists: true)
                 ]
                 input[1] = file(params.pipelines_testdata_base_path + '/modules/fitting/samplesheet.csv', checkIfExists: true)
@@ -45,8 +45,8 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    file(params.pipelines_testdata_base_path + '/modules/fitting/kidney_P0_NBI_2_H3K4me3.log', checkIfExists: true), 
-                    file(params.pipelines_testdata_base_path + '/modules/fitting/kidney_P0_SI_2_H3K4me3.log', checkIfExists: true), 
+                    file(params.pipelines_testdata_base_path + '/modules/fitting/kidney_P0_NBI_2_H3K4me3.log', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + '/modules/fitting/kidney_P0_SI_2_H3K4me3.log', checkIfExists: true),
                     file(params.pipelines_testdata_base_path + '/modules/fitting/kidney_P0_BNB_2_H3K4me3.log', checkIfExists: true)
                 ]
                 input[1] = file(params.pipelines_testdata_base_path + '/modules/fitting/samplesheet.csv', checkIfExists: true)

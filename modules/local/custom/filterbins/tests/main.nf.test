@@ -16,7 +16,7 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id: 'mm10' ], 
+                    [ id: 'mm10' ],
                     file(params.pipelines_testdata_base_path + '/modules/mm10_10000bp.bed', checkIfExists: true)
                 ]
                 """
@@ -43,7 +43,7 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id: 'mm10' ], 
+                    [ id: 'mm10' ],
                     file(params.pipelines_testdata_base_path + '/modules/mm10_10000bp.bed', checkIfExists: true)
                 ]
                 """

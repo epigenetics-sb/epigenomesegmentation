@@ -21,7 +21,7 @@ process CUSTOM_FILTERBED {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}_${meta.epigenetic_mark}"
     """
-    {   
+    {
     echo -e "Cov\tMeth"
     awk 'BEGIN {OFS="\t"} {print int(\$4), int(\$5)}' "${meth}"
     } > "${prefix}_meth.tab"
@@ -32,7 +32,7 @@ process CUSTOM_FILTERBED {
     def prefix = task.ext.prefix ?: "${meta.id}_${meta.epigenetic_mark}"
     """
     echo $args
-    
+
     touch ${prefix}_meth.tab
     """
 }

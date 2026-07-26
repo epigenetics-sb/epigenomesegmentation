@@ -28,7 +28,7 @@ process CUSTOM_JOINBED {
     def prefix = task.ext.prefix ?: "${sample_id}_meth.tab"
     """
     echo $args
-    
+
     touch ${prefix}
     """
 }

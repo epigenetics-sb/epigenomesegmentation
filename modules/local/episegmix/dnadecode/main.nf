@@ -19,7 +19,7 @@ process EPISEGMIX_DNADECODE {
     script:
     def args = task.ext.args ?: "-y ${yaml} -j ${json} -c ${meth} -r ${region}"
     def prefix = task.ext.prefix ?: "${sample_id}"
-    
+
     """
     dnadecode.sh \\
         $args \\
@@ -32,7 +32,7 @@ process EPISEGMIX_DNADECODE {
     def prefix = task.ext.prefix ?: "${sample_id}"
     """
     echo $args
-    
+
     mkdir Segmentation
     """
 }

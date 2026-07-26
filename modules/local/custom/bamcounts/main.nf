@@ -3,8 +3,8 @@ process CUSTOM_BAMCOUNTS {
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container ? 
-        'aaryanjaitly/episegmix_counts_v2:latest' : 
+    container "${ workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container ?
+        'aaryanjaitly/episegmix_counts_v2:latest' :
         'aaryanjaitly/episegmix_counts_v2:latest' }"
 
     input:

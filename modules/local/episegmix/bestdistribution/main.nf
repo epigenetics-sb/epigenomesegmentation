@@ -34,7 +34,7 @@ process EPISEGMIX_BESTDISTRIBUTION {
     def prefix = task.ext.prefix ?: "best_samplesheet"
     """
     echo $args
-    
+
     touch ${prefix}.csv all_parsed_loglikelihoods.tsv
     """
 }

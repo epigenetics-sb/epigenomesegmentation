@@ -56,21 +56,21 @@ for log_file in *.log; do
 
     basename="${log_file%.log}"
     IFS='_' read -r -a parts <<< "$basename"
-    
-    mark="${parts[-1]}"   
-    states="${parts[-2]}" 
-    dist="${parts[-3]}"   
-    
+
+    mark="${parts[-1]}"
+    states="${parts[-2]}"
+    dist="${parts[-3]}"
+
     suffix="_${dist}_${states}_${mark}"
     sample_id="${basename%$suffix}"
-    
+
     key="${sample_id}_${mark}"
-    
+
     # Extract Log-Likelihood
     score=$(tail -n 3 "$log_file" | head -n 1 | awk '{print $NF}' | tr -d '[:space:]')
-    
+
     printf "%s\t%s\t%s\t%s\t%s\n" "$sample_id" "$mark" "$dist" "$states" "$score" >> "$TMP_SCORES"
-    
+
     # Maximize the log-likelihood
     if [[ -z "${best_score[$key]}" ]]; then
         best_score[$key]="$score"
@@ -96,27 +96,27 @@ echo "Found best distributions. Updating CSV..."
 {
     # The || [[ -n "$sample_id" ]] ensures we don't drop the last row if it lacks a newline!
     while IFS=',' read -r sample_id replicate mark file_name modality paired_end distribution || [[ -n "$sample_id" ]]; do
-        
+
         # Clean hidden carriage returns from Windows files
         distribution=$(echo "$distribution" | tr -d '\r')
-        
+
         # Print the header line exactly as-is
         if [[ "$sample_id" == "sample_id" ]]; then
             echo "${sample_id},${replicate},${mark},${file_name},${modality},${paired_end},${distribution}"
             continue
         fi
-        
+
         csv_key="${sample_id}_${mark}"
         final_dist="${distribution}"
-        
+
         # If this is a BAM file and we found a better distribution, update it
         if [[ -n "${best_dist[$csv_key]}" ]]; then
             final_dist="${best_dist[$csv_key]}"
         fi
-        
+
         # Output the row (If it's a BED file, it will just print the original final_dist!)
         echo "${sample_id},${replicate},${mark},${file_name},${modality},${paired_end},${final_dist}"
-        
+
     done
 } < "$INPUT_CSV" > "$OUTPUT_CSV"
 

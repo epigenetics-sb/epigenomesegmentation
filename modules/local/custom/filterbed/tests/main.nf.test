@@ -16,14 +16,14 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ 
-                        id: 'kidney_P0', 
-                        replicate: 1, 
-                        epigenetic_mark: 'WGBS', 
-                        modality: 'WGBS', 
-                        paired_end: true, 
-                        distribution: 'BI' 
-                    ], 
+                    [
+                        id: 'kidney_P0',
+                        replicate: 1,
+                        epigenetic_mark: 'WGBS',
+                        modality: 'WGBS',
+                        paired_end: true,
+                        distribution: 'BI'
+                    ],
                     file(params.pipelines_testdata_base_path + '/modules/kidney_P0_binnedbedcounts_synced.bed', checkIfExists: true)
                 ]
                 """
@@ -50,14 +50,14 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ 
-                        id: 'kidney_P0', 
-                        replicate: 1, 
-                        epigenetic_mark: 'WGBS', 
-                        modality: 'WGBS', 
-                        paired_end: true, 
-                        distribution: 'BI' 
-                    ], 
+                    [
+                        id: 'kidney_P0',
+                        replicate: 1,
+                        epigenetic_mark: 'WGBS',
+                        modality: 'WGBS',
+                        paired_end: true,
+                        distribution: 'BI'
+                    ],
                     file(params.pipelines_testdata_base_path + '/modules/kidney_P0_binnedbedcounts_synced.bed', checkIfExists: true)
                 ]
                 """

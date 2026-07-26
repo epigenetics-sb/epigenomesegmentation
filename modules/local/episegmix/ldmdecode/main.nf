@@ -19,7 +19,7 @@ process EPISEGMIX_LDMDECODE {
     script:
     def args = task.ext.args ?: "-y ${yaml} -j ${json}"
     def prefix = task.ext.prefix ?: "${sample_id}"
-    
+
     """
     ldmdecode.sh \\
         $args \\
@@ -32,7 +32,7 @@ process EPISEGMIX_LDMDECODE {
     def prefix = task.ext.prefix ?: "${sample_id}"
     """
     echo $args
-    
+
     mkdir Segmentation
     """
 }

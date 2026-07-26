@@ -20,7 +20,7 @@ process EPISEGMIX_DMDECODE {
     script:
     def args = task.ext.args ?: "-y ${yaml} -j ${json}"
     def prefix = task.ext.prefix ?: "${sample_id}"
-    
+
     """
     dmdecode.sh \\
         $args \\
@@ -33,7 +33,7 @@ process EPISEGMIX_DMDECODE {
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
     echo $args
-    
+
     mkdir Segmentation
     """
 }

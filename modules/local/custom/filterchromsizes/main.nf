@@ -20,8 +20,8 @@ process CUSTOM_FILTERCHROMSIZES {
 
     script:
     def args = task.ext.args ?: '-v OFS="\\t" \'$1 ~ /^chr([1-9][0-9]?|X|Y)$/ { sub(/^chr/, "", $1); print}\''
-    def prefix   = task.ext.prefix ?: "${chromsizes}" 
-    
+    def prefix   = task.ext.prefix ?: "${chromsizes}"
+
     """
     awk \\
         $args \\
@@ -31,10 +31,10 @@ process CUSTOM_FILTERCHROMSIZES {
     stub:
     def args = task.ext.args ?: ''
     def prefix   = task.ext.prefix ?: "${chromsizes}"
-    
+
     """
     echo $args
-    
+
     touch "filtered_${prefix}"
     """
 }

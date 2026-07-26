@@ -12,7 +12,7 @@ process EPISEGMIX_TRAINCOUNTS {
 
     output:
     tuple val(sample_id), val(meta), path(histone), val(meta2), path(meth), val(state), path(yaml) ,path("*train-counts.txt"), path("*train-regions.txt"), path("*train-counts-meth.txt", optional: true), emit: train_counts
-    tuple val(sample_id), path("*.regions.txt", optional: true), emit: dna_regions 
+    tuple val(sample_id), path("*.regions.txt", optional: true), emit: dna_regions
     tuple val("${task.process}"), val('episegmix'), eval("episegmix --version"), topic: versions, emit: versions_episegmix
 
     when:
@@ -33,9 +33,9 @@ process EPISEGMIX_TRAINCOUNTS {
             -c "${prefix}-train-counts.txt" \\
             -r "${prefix}-train-regions.txt" \\
             -C "${prefix}.counts.txt" \\
-            -R "${prefix}.regions.txt"  
-        touch "dummy-train-counts-meth.txt"        
-    else 
+            -R "${prefix}.regions.txt"
+        touch "dummy-train-counts-meth.txt"
+    else
         get_counts.py \\
             -d "${prefix}.yaml" \\
             -c "${prefix}-train-counts.txt" \\
@@ -51,7 +51,7 @@ process EPISEGMIX_TRAINCOUNTS {
     def prefix = task.ext.prefix ?: "${sample_id}"
     """
     echo $args
-    
+
     touch "${prefix}.regions.txt" \\
     "${prefix}-train-counts.txt" \\
     "${prefix}-train-counts-meth.txt" \\

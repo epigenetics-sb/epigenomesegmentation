@@ -30,8 +30,8 @@ done
 # Ensure required parameters are provided
 [[ -n "$prefix" ]] || usage
 [[ -n "$sheetbam" ]] || usage
-[[ -n "$genome" ]] || usage      
-[[ -n "$chromsizes" ]] || usage  
+[[ -n "$genome" ]] || usage
+[[ -n "$chromsizes" ]] || usage
 
 # Split the input sheet based on column 3 (true/false)
 awk '{print $0 > ($3 ".txt")}' "${sheetbam}"
@@ -40,7 +40,7 @@ awk '{print $0 > ($3 ".txt")}' "${sheetbam}"
 if [ -f false.txt ]; then
     awk -v OFS="\t" '{print $1, $2}' false.txt > tmp && mv tmp false.txt
     counts.sh -t false.txt -o ./ -c "${cpus}" -p ignore -f "${prefix}_SE" -g "$genome" -r "$chromsizes" -b "$binsize"
-fi 
+fi
 
 # Process Paired-End (true)
 if [ -f true.txt ]; then
@@ -80,22 +80,22 @@ NUM_COLS=$(head -n 1 "$FINAL_OUT" | awk -F'\t' '{print NF}')
 
 # Only attempt to sort if there are more than 3 columns
 if [[ "$NUM_COLS" -gt 3 ]]; then
-    
+
     # Figure out the alphabetical order of the headers (from col 4 onward)
     SORT_ORDER=$(head -n 1 "$FINAL_OUT" | cut -f4- | tr '\t' '\n' | cat -n | sort -k2,2 | awk '{print $1 + 3}' | paste -sd, -)
 
     # Rebuild the file using that specific order
     awk -v cols="1,2,3,${SORT_ORDER}" '
-    BEGIN { 
+    BEGIN {
         FS = OFS = "\t"
-        num_cols = split(cols, order, ",") 
+        num_cols = split(cols, order, ",")
     }
     {
         for(i=1; i<=num_cols; i++) {
             printf "%s%s", $order[i], (i==num_cols ? ORS : OFS)
         }
     }' "$FINAL_OUT" > tmp_sorted.tab
-    
+
     # Replace the unsorted file with the sorted one
     mv tmp_sorted.tab "$FINAL_OUT"
 fi

@@ -36,7 +36,7 @@ workflow PREPARE_GENOME {
     CUSTOM_FILTERBINS(BEDTOOLS_MAKEWINDOWS.out.bed)
 
     CUSTOM_SORTREF(CUSTOM_FILTERCHROMSIZES.out.filtered_chromsizes)
-    
+
 
     emit:
     // Emit the filtered sizes and bins for downstream use
