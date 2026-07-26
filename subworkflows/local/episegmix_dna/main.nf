@@ -18,8 +18,6 @@ workflow EPISEGMIX_DNA {
 
     EPISEGMIX_DNADECODE(ch_in_episegmix_decode)
     ch_segmentation = EPISEGMIX_DNADECODE.out.Segmentation
-
-    ch_segmentation.view()
     EPISEGMIX_DNAREPORT(ch_segmentation)
 
     emit:

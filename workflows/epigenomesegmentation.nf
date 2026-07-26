@@ -73,6 +73,29 @@ workflow EPIGENOMESEGMENTATION {
 
     }
 
+    else if (params.histonecounts) {
+
+        ch_histonecounts = Channel.fromPath(params.histonecounts).first()
+        ch_bamcounts = ch_input_branched.bam
+            .map { meta, bamfile -> [meta.id, meta] }
+            .groupTuple()
+            .map { sample_id, meta_list -> [sample_id, meta_list] }
+            .combine(ch_histonecounts)
+        
+        ch_meth_tab =  Channel.empty()
+
+    }
+
+
+    if (params.methcounts && params.dna) {
+
+        ch_methcounts = Channel.fromPath(params.methcounts).first()
+        ch_mapped_bed = ch_input_branched.bed
+            .map { meta, bedfile -> [meta.id, meta] }
+            .groupTuple(by: 0)
+            .combine(ch_methcounts)
+    }
+
 
     else{
 
