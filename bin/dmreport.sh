@@ -106,14 +106,14 @@ results.py \
 plot_state_histograms.py \
     -c "${TAB}" \
     -j "${JSON}" \
-    -a "${OUT_DIR}/${OUTPUT}-stateDistribution-viterbi.png" \
+    -a "${OUT_DIR}/${OUTPUT}-stateDistribution.png" \
     -s viterbi
 
 plot_state_colors.py \
         -d "${BED}" \
         -o "${OUT_DIR}/${OUTPUT}-state-colors.png"
 
-segmentation_report_std.sh  \
+segmentation_report_dm.sh  \
         -n "${OUTPUT}" \
         -o "${OUT_DIR}/" \
         -i true \

@@ -1,0 +1,93 @@
+{
+    "mm10 - FILTERBINS": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "mm10"
+                        },
+                        "filtered_mm10_10000bp.bed:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "1": [
+                    [
+                        "CUSTOM_FILTERBINS",
+                        "awk",
+                        "4.1.3,"
+                    ]
+                ],
+                "bed": [
+                    [
+                        {
+                            "id": "mm10"
+                        },
+                        "filtered_mm10_10000bp.bed:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions_awk": [
+                    [
+                        "CUSTOM_FILTERBINS",
+                        "awk",
+                        "4.1.3,"
+                    ]
+                ]
+            },
+            {
+                "versions_awk": [
+                    [
+                        "CUSTOM_FILTERBINS",
+                        "awk",
+                        "4.1.3,"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-07-26T13:07:34.296147",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    },
+    "mm10 - FILTERBINS - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "mm10"
+                        },
+                        "filtered_mm10_10000bp.bed:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "1": [
+                    [
+                        "CUSTOM_FILTERBINS",
+                        "awk",
+                        "4.1.3,"
+                    ]
+                ],
+                "bed": [
+                    [
+                        {
+                            "id": "mm10"
+                        },
+                        "filtered_mm10_10000bp.bed:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions_awk": [
+                    [
+                        "CUSTOM_FILTERBINS",
+                        "awk",
+                        "4.1.3,"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-07-26T13:08:42.738573",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    }
+}

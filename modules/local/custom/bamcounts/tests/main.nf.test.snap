@@ -1,0 +1,117 @@
+{
+    "Kidney - BAMCOUNTS - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        "kidney_P0",
+                        {
+                            "id": "kidney_P0",
+                            "replicate": 1,
+                            "epigenetic_mark": "H3K4me3",
+                            "modality": "ChIP-seq",
+                            "paired_end": false,
+                            "distribution": "NBI"
+                        },
+                        "kidney_P0.tab:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "1": [
+                    [
+                        "CUSTOM_BAMCOUNTS",
+                        "episegmix",
+                        "episegmix 1.0.0"
+                    ]
+                ],
+                "bamcounts": [
+                    [
+                        "kidney_P0",
+                        {
+                            "id": "kidney_P0",
+                            "replicate": 1,
+                            "epigenetic_mark": "H3K4me3",
+                            "modality": "ChIP-seq",
+                            "paired_end": false,
+                            "distribution": "NBI"
+                        },
+                        "kidney_P0.tab:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions_episegmix": [
+                    [
+                        "CUSTOM_BAMCOUNTS",
+                        "episegmix",
+                        "episegmix 1.0.0"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-07-26T12:36:06.563968",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    },
+    "Kidney - BAMCOUNTS": {
+        "content": [
+            {
+                "0": [
+                    [
+                        "kidney_P0",
+                        {
+                            "id": "kidney_P0",
+                            "replicate": 1,
+                            "epigenetic_mark": "H3K4me3",
+                            "modality": "ChIP-seq",
+                            "paired_end": false,
+                            "distribution": "NBI"
+                        },
+                        "kidney_P0.tab:md5,35ad14195d77681f9c4d5afb4fffddd2"
+                    ]
+                ],
+                "1": [
+                    [
+                        "CUSTOM_BAMCOUNTS",
+                        "episegmix",
+                        "episegmix 1.0.0"
+                    ]
+                ],
+                "bamcounts": [
+                    [
+                        "kidney_P0",
+                        {
+                            "id": "kidney_P0",
+                            "replicate": 1,
+                            "epigenetic_mark": "H3K4me3",
+                            "modality": "ChIP-seq",
+                            "paired_end": false,
+                            "distribution": "NBI"
+                        },
+                        "kidney_P0.tab:md5,35ad14195d77681f9c4d5afb4fffddd2"
+                    ]
+                ],
+                "versions_episegmix": [
+                    [
+                        "CUSTOM_BAMCOUNTS",
+                        "episegmix",
+                        "episegmix 1.0.0"
+                    ]
+                ]
+            },
+            {
+                "versions_episegmix": [
+                    [
+                        "CUSTOM_BAMCOUNTS",
+                        "episegmix",
+                        "episegmix 1.0.0"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-07-26T12:35:59.799175",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    }
+}

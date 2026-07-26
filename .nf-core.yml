@@ -6,6 +6,9 @@ lint:
   files_unchanged:
     - .github/CONTRIBUTING.md
     - assets/sendmail_template.txt
+    - assets/nf-core-epigenomesegmentation_logo_light.png
+    - docs/images/nf-core-epigenomesegmentation_logo_light.png
+    - docs/images/nf-core-epigenomesegmentation_logo_dark.png
   multiqc_config: false
   files_exist:
     - assets/multiqc_config.yml

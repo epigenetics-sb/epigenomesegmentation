@@ -103,17 +103,19 @@ results.py \
     -n "${OUT_DIR}/${OUTPUT}-normEmission.png" \
     -d "${BED}"
 
+
 plot_state_histograms.py \
     -c "${TAB}" \
     -j "${JSON}" \
     -a "${OUT_DIR}/${OUTPUT}-stateDistribution.png" \
+    -l "${OUT_DIR}/${OUTPUT}-statelengthDistribution.png" \
     -s viterbi
 
 plot_state_colors.py \
         -d "${BED}" \
         -o "${OUT_DIR}/${OUTPUT}-state-colors.png"
 
-segmentation_report_dm.sh  \
+segmentation_report_ldm.sh  \
         -n "${OUTPUT}" \
         -o "${OUT_DIR}/" \
         -i true

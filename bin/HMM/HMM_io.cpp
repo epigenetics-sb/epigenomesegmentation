@@ -47,6 +47,7 @@ std::ostream& operator<<(std::ostream& out, const HMM& model)
 
     root.put("states", model.N);
 
+    // one column input
     ptree marker;
     for (auto& name: model.marker)
     {
@@ -56,7 +57,15 @@ std::ostream& operator<<(std::ostream& out, const HMM& model)
     }
     root.add_child("marker", marker);
 
-    root.put("methylation", model.methylation);
+    // two column input
+    ptree coverage_marker;
+    for (auto& name: model.coverage_marker)
+    {
+        ptree marker_entry;
+        marker_entry.put("", name);
+        coverage_marker.push_back(std::make_pair("", marker_entry));
+    }
+    root.add_child("coverage_marker", coverage_marker);
 
     ptree emission;
     for (size_t i = 0; i < model.emission.nrows(); ++i)
@@ -141,17 +150,16 @@ std::istream& operator>>(std::istream& in, HMM& model)
         model.marker.push_back(p.second.get_value<std::string>());
     }
     model.m = model.marker.size();
-    
-    model.methylation = false;
-    if (root.find("methylation") != root.not_found())
-    {
-        model.methylation = root.get<bool>("methylation");
+
+    if (root.find("coverage_marker") != root.not_found()){
+        for (ptree::value_type& p : root.get_child("coverage_marker"))
+        {
+            model.coverage_marker.push_back(p.second.get_value<std::string>());
+        }
+        model.cm = model.coverage_marker.size();
     }
 
-    if (root.find("emission") == root.not_found())
-        throw std::ios_base::failure("Missing <emission> parameter.");
-
-    size_t dim = model.methylation ? model.m + 1 : model.m;
+    size_t dim = model.m + model.cm;
     model.emission = Matrix<std::shared_ptr<DiscreteDistribution>> (model.N, dim);
     int s = 0;
     for (ptree::value_type& row : root.get_child("emission"))
@@ -163,12 +171,10 @@ std::istream& operator>>(std::istream& in, HMM& model)
         for (ptree::value_type& cell : row.second)
         {
             if (m >= dim)
-                throw std::ios_base::failure("Distributions per state and number of markers must be the same (plus one if methylation is true).");
+                throw std::ios_base::failure("Distributions per state and number of markers (+ coverage markers) must be the same.");
             
             std::string distribution = cell.second.get<std::string>("distribution");
-            bool meth = false;
-            if (model.methylation && m == dim-1)
-                meth = true;
+            bool meth = m >= model.m;
             parse_distribution(s, m, distribution, meth, cell.second.get_child("parameters"), model.emission);
             ++m;
         }
@@ -471,7 +477,14 @@ std::ostream& operator<<(std::ostream& out, const AdjustableDurationHMM& model)
     }
     root.add_child("marker", marker);
 
-    root.put("methylation", model.methylation);
+    ptree coverage_marker;
+    for (auto& name: model.coverage_marker)
+    {
+        ptree marker_entry;
+        marker_entry.put("", name);
+        coverage_marker.push_back(std::make_pair("", marker_entry));
+    }
+    root.add_child("coverage_marker", coverage_marker);
 
     ptree emission;
     for (size_t i = 0; i < model.emission.nrows(); ++i)
@@ -553,6 +566,15 @@ std::istream& operator>>(std::istream& in, AdjustableDurationHMM& model)
     }
     model.m = model.marker.size();
 
+    if (root.find("coverage_marker") != root.not_found())
+    {
+        for (ptree::value_type& p : root.get_child("coverage_marker"))
+        {
+            model.coverage_marker.push_back(p.second.get_value<std::string>());
+        }
+        model.cm = model.coverage_marker.size();
+    }
+
     if (root.find("states") == root.not_found())
         throw std::ios_base::failure("Missing <states> parameter.");
     size_t states = root.get<int>("states");
@@ -582,16 +604,11 @@ std::istream& operator>>(std::istream& in, AdjustableDurationHMM& model)
         }
     }
 
-    model.methylation = false;
-    if (root.find("methylation") != root.not_found())
-    {
-        model.methylation = root.get<bool>("methylation");
-    }
 
     if (root.find("emission") == root.not_found())
         throw std::ios_base::failure("Missing <emission> parameter.");
 
-    size_t dim = model.methylation ? model.m + 1 : model.m;
+    size_t dim = model.m + model.cm;
 
     model.emission = Matrix<std::shared_ptr<DiscreteDistribution>> (model.stateIndices.size(), dim);
     int s = 0;
@@ -604,12 +621,10 @@ std::istream& operator>>(std::istream& in, AdjustableDurationHMM& model)
         for (ptree::value_type& cell : row.second)
         {
             if (m >= dim)
-                throw std::ios_base::failure("Distributions per state and number of markers must be the same (plus one if methylation is true).");
+                throw std::ios_base::failure("Distributions per state and number of markers (+ coverage markers) must be the same.");
             
             std::string distribution = cell.second.get<std::string>("distribution");
-            bool meth = false;
-            if (model.methylation && m == dim-1)
-                meth = true;
+            bool meth = m >= model.m;
             parse_distribution(s, m, distribution, meth, cell.second.get_child("parameters"), model.emission);
             ++m;
         }

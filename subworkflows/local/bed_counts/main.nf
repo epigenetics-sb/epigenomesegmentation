@@ -1,6 +1,5 @@
 include { CUSTOM_BEDCOUNTS                } from '../../../modules/local/custom/bedcounts/main'
 include { BEDTOOLS_MAP                    } from '../../../modules/nf-core/bedtools/map/main' 
-include { CUSTOM_FILTERBED                } from '../../../modules/local/custom/filterbed/main'
 
 workflow BED_COUNTS {
 
@@ -23,18 +22,12 @@ workflow BED_COUNTS {
     ch_dummy_chrom_sizes = Channel.value([ [id: 'dummy'], [] ])
     
     BEDTOOLS_MAP(ch_in_bedtools_map, ch_dummy_chrom_sizes)
-    CUSTOM_FILTERBED(BEDTOOLS_MAP.out.mapped)
-
-    new_meth = CUSTOM_FILTERBED.out.meth_tab
-    .map{
-        meta, meth -> [meta.id, meta, meth]
-        }
 
     new_mapped =  BEDTOOLS_MAP.out.mapped
     .map{
         meta, bed -> [meta.id, meta, bed]
     }
     emit:
-    ch_meth_tab = new_meth
+
     ch_mapped_bed = new_mapped
 }

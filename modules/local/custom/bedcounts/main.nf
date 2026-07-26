@@ -1,6 +1,6 @@
 process CUSTOM_BEDCOUNTS {
     tag "$meta.id"
-    label 'process_medium'
+    label 'process_single'
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container ?
@@ -31,11 +31,11 @@ process CUSTOM_BEDCOUNTS {
     """
 
     stub:
-    def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def args = task.ext.args ?: "-s ${meta.id} -m ${meta.modality}"
+    def prefix = task.ext.prefix ?: "${meta.id}_${meta.modality}"
     """
     echo $args
     
-    touch ${prefix}.bam
+    touch ${prefix}.tab
     """
 }

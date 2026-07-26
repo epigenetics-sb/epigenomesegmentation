@@ -8,12 +8,13 @@ workflow EPISEGMIX_FITTING {
 
     main:
     EPISEGMIX_LDMTRAIN(ch_train_counts)
-    ch_ldmtrain_log = EPISEGMIX_LDMTRAIN.out.log
+    ch_all_logs = EPISEGMIX_LDMTRAIN.out.log
+    .map { sample_id, log -> log } 
+    .collect()        
+           
+    ch_input = Channel.fromPath(params.input)
 
-    ch_in_bestfit = ch_ldmtrain_log.groupTuple()
-    ch_input = Channel.of(params.input)
-
-    EPISEGMIX_BESTDISTRIBUTION(ch_in_bestfit, ch_input)
+    EPISEGMIX_BESTDISTRIBUTION(ch_all_logs, ch_input)
 
     emit:
     EPISEGMIX_BESTDISTRIBUTION.out.samplesheet

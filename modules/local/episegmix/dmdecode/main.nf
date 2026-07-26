@@ -4,8 +4,8 @@ process EPISEGMIX_DMDECODE {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container ?
-        'aaryanjaitly/episegmix:new_plots':
-        'aaryanjaitly/episegmix:new_plots' }"
+        'aaryanjaitly/episegmix_v2:latest':
+        'aaryanjaitly/episegmix_v2:latest' }"
 
     input:
     tuple val(sample_id), val(meta), path(histone), val(meta2), path(meth), val(state), path(yaml) , path(traincounts), path(trainregions),  path(traincountsmeth), path(json)

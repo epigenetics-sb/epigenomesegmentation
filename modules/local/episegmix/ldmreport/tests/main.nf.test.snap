@@ -1,0 +1,217 @@
+{
+    "Kidney - EPISEGMIX_LDMREPORT": {
+        "content": [
+            {
+                "0": [
+                    [
+                        "kidney_P0_2",
+                        [
+                            {
+                                "id": "kidney_P0",
+                                "replicate": 1,
+                                "epigenetic_mark": "H3K4me3",
+                                "modality": "ChIP-seq",
+                                "paired_end": false,
+                                "distribution": "NBI"
+                            }
+                        ],
+                        "kidney_P0.tab:md5,99561c64fc55eb98fe257187ac41a968",
+                        {
+                            "id": "no_bed_counts"
+                        },
+                        [
+                            
+                        ],
+                        2,
+                        "kidney_P0_2.yaml:md5,5844b6788c271f79f8dcfb699a1e65b3",
+                        "kidney_P0_2-train-counts.txt:md5,3e15c635e915fbb878a9d65384d08d89",
+                        "kidney_P0_2-train-regions.txt:md5,897316929176464ebc9ad085f31e7284",
+                        "kidney_P0_2-train-counts-meth.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "final-model-kidney_P0_2.json:md5,071b943d42d64dad4d5774ec52b8eac6",
+                        [
+                            "kidney_P0.tab:md5,85833a4dbaac178e75685e86ae329f7e",
+                            "viterbi_kidney_P0.bed.gz:md5,f44a1f9db21603b560010dea051dec29"
+                        ],
+                        [
+                            "kidney_P0_2-correlation.png:md5,c44a0a0eaa1bc1b83ea8deb2a4ef825d",
+                            "kidney_P0_2-histogram.png:md5,eede33276852b7b6809af1a7174d872f",
+                            "kidney_P0_2-meanEmission.png:md5,715a0a8bef312ee0c7be2e305ca60bf4",
+                            "kidney_P0_2-normEmission.png:md5,6e3c0f5f20ef51cccc0f35433f75c99b",
+                            "kidney_P0_2-state-colors.png:md5,9e8d8ddd97ab92b299a0ea7588d5b293",
+                            "kidney_P0_2-stateDistribution.png:md5,754da06a12bccb6c40c1e9c34cfcd984",
+                            "kidney_P0_2-stateLength.png:md5,2ba335846325eef27f1a22f836d7050b",
+                            "kidney_P0_2-stateMembership.png:md5,28ba111cd710d325b4209e54e699b1b8",
+                            "kidney_P0_2-statelengthDistribution.png:md5,d59e7f7be46dbb22215cf2cdedcbdbff",
+                            "kidney_P0_2-transitionMatrix.png:md5,96d182a077a60aedf86373d8f5fc4ad5",
+                            "kidney_P0_2.html:md5,b9625859b478dfc48e7a138db8ee1a1d"
+                        ]
+                    ]
+                ],
+                "1": [
+                    [
+                        "EPISEGMIX_LDMREPORT",
+                        "episegmix",
+                        "episegmix 1.0.0"
+                    ]
+                ],
+                "Segmentation": [
+                    [
+                        "kidney_P0_2",
+                        [
+                            {
+                                "id": "kidney_P0",
+                                "replicate": 1,
+                                "epigenetic_mark": "H3K4me3",
+                                "modality": "ChIP-seq",
+                                "paired_end": false,
+                                "distribution": "NBI"
+                            }
+                        ],
+                        "kidney_P0.tab:md5,99561c64fc55eb98fe257187ac41a968",
+                        {
+                            "id": "no_bed_counts"
+                        },
+                        [
+                            
+                        ],
+                        2,
+                        "kidney_P0_2.yaml:md5,5844b6788c271f79f8dcfb699a1e65b3",
+                        "kidney_P0_2-train-counts.txt:md5,3e15c635e915fbb878a9d65384d08d89",
+                        "kidney_P0_2-train-regions.txt:md5,897316929176464ebc9ad085f31e7284",
+                        "kidney_P0_2-train-counts-meth.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "final-model-kidney_P0_2.json:md5,071b943d42d64dad4d5774ec52b8eac6",
+                        [
+                            "kidney_P0.tab:md5,85833a4dbaac178e75685e86ae329f7e",
+                            "viterbi_kidney_P0.bed.gz:md5,f44a1f9db21603b560010dea051dec29"
+                        ],
+                        [
+                            "kidney_P0_2-correlation.png:md5,c44a0a0eaa1bc1b83ea8deb2a4ef825d",
+                            "kidney_P0_2-histogram.png:md5,eede33276852b7b6809af1a7174d872f",
+                            "kidney_P0_2-meanEmission.png:md5,715a0a8bef312ee0c7be2e305ca60bf4",
+                            "kidney_P0_2-normEmission.png:md5,6e3c0f5f20ef51cccc0f35433f75c99b",
+                            "kidney_P0_2-state-colors.png:md5,9e8d8ddd97ab92b299a0ea7588d5b293",
+                            "kidney_P0_2-stateDistribution.png:md5,754da06a12bccb6c40c1e9c34cfcd984",
+                            "kidney_P0_2-stateLength.png:md5,2ba335846325eef27f1a22f836d7050b",
+                            "kidney_P0_2-stateMembership.png:md5,28ba111cd710d325b4209e54e699b1b8",
+                            "kidney_P0_2-statelengthDistribution.png:md5,d59e7f7be46dbb22215cf2cdedcbdbff",
+                            "kidney_P0_2-transitionMatrix.png:md5,96d182a077a60aedf86373d8f5fc4ad5",
+                            "kidney_P0_2.html:md5,b9625859b478dfc48e7a138db8ee1a1d"
+                        ]
+                    ]
+                ],
+                "versions_episegmix": [
+                    [
+                        "EPISEGMIX_LDMREPORT",
+                        "episegmix",
+                        "episegmix 1.0.0"
+                    ]
+                ]
+            },
+            {
+                "versions_episegmix": [
+                    [
+                        "EPISEGMIX_LDMREPORT",
+                        "episegmix",
+                        "episegmix 1.0.0"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-07-26T14:36:45.570677",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    },
+    "Kidney - EPISEGMIX_LDMREPORT - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        "kidney_P0_2",
+                        [
+                            {
+                                "id": "kidney_P0",
+                                "replicate": 1,
+                                "epigenetic_mark": "H3K4me3",
+                                "modality": "ChIP-seq",
+                                "paired_end": false,
+                                "distribution": "NBI"
+                            }
+                        ],
+                        "kidney_P0.tab:md5,99561c64fc55eb98fe257187ac41a968",
+                        {
+                            "id": "no_bed_counts"
+                        },
+                        [
+                            
+                        ],
+                        2,
+                        "kidney_P0_2.yaml:md5,5844b6788c271f79f8dcfb699a1e65b3",
+                        "kidney_P0_2-train-counts.txt:md5,3e15c635e915fbb878a9d65384d08d89",
+                        "kidney_P0_2-train-regions.txt:md5,897316929176464ebc9ad085f31e7284",
+                        "kidney_P0_2-train-counts-meth.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "final-model-kidney_P0_2.json:md5,071b943d42d64dad4d5774ec52b8eac6",
+                        [
+                            "kidney_P0.tab:md5,85833a4dbaac178e75685e86ae329f7e",
+                            "viterbi_kidney_P0.bed.gz:md5,f44a1f9db21603b560010dea051dec29"
+                        ],
+                        "dummy.txt:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "1": [
+                    [
+                        "EPISEGMIX_LDMREPORT",
+                        "episegmix",
+                        "episegmix 1.0.0"
+                    ]
+                ],
+                "Segmentation": [
+                    [
+                        "kidney_P0_2",
+                        [
+                            {
+                                "id": "kidney_P0",
+                                "replicate": 1,
+                                "epigenetic_mark": "H3K4me3",
+                                "modality": "ChIP-seq",
+                                "paired_end": false,
+                                "distribution": "NBI"
+                            }
+                        ],
+                        "kidney_P0.tab:md5,99561c64fc55eb98fe257187ac41a968",
+                        {
+                            "id": "no_bed_counts"
+                        },
+                        [
+                            
+                        ],
+                        2,
+                        "kidney_P0_2.yaml:md5,5844b6788c271f79f8dcfb699a1e65b3",
+                        "kidney_P0_2-train-counts.txt:md5,3e15c635e915fbb878a9d65384d08d89",
+                        "kidney_P0_2-train-regions.txt:md5,897316929176464ebc9ad085f31e7284",
+                        "kidney_P0_2-train-counts-meth.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "final-model-kidney_P0_2.json:md5,071b943d42d64dad4d5774ec52b8eac6",
+                        [
+                            "kidney_P0.tab:md5,85833a4dbaac178e75685e86ae329f7e",
+                            "viterbi_kidney_P0.bed.gz:md5,f44a1f9db21603b560010dea051dec29"
+                        ],
+                        "dummy.txt:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions_episegmix": [
+                    [
+                        "EPISEGMIX_LDMREPORT",
+                        "episegmix",
+                        "episegmix 1.0.0"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-07-26T14:39:37.445784",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    }
+}

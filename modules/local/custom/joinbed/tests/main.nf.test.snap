@@ -1,0 +1,91 @@
+{
+    "Kidney - JOINBED - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        "kidney_P0",
+                        [
+                            {
+                                "id": "kidney_P0",
+                                "replicate": 1,
+                                "epigenetic_mark": "WGBS",
+                                "modality": "WGBS",
+                                "paired_end": true,
+                                "distribution": "BI"
+                            }
+                        ],
+                        "kidney_P0_meth.tab:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "joined_ch_tab": [
+                    [
+                        "kidney_P0",
+                        [
+                            {
+                                "id": "kidney_P0",
+                                "replicate": 1,
+                                "epigenetic_mark": "WGBS",
+                                "modality": "WGBS",
+                                "paired_end": true,
+                                "distribution": "BI"
+                            }
+                        ],
+                        "kidney_P0_meth.tab:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-07-26T13:23:57.615547",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    },
+    "Kidney - JOINBED": {
+        "content": [
+            {
+                "0": [
+                    [
+                        "kidney_P0",
+                        [
+                            {
+                                "id": "kidney_P0",
+                                "replicate": 1,
+                                "epigenetic_mark": "WGBS",
+                                "modality": "WGBS",
+                                "paired_end": true,
+                                "distribution": "BI"
+                            }
+                        ],
+                        "kidney_P0_meth.tab:md5,6cb165e258a129ac3421617140625f72"
+                    ]
+                ],
+                "joined_ch_tab": [
+                    [
+                        "kidney_P0",
+                        [
+                            {
+                                "id": "kidney_P0",
+                                "replicate": 1,
+                                "epigenetic_mark": "WGBS",
+                                "modality": "WGBS",
+                                "paired_end": true,
+                                "distribution": "BI"
+                            }
+                        ],
+                        "kidney_P0_meth.tab:md5,6cb165e258a129ac3421617140625f72"
+                    ]
+                ]
+            },
+            {
+                
+            }
+        ],
+        "timestamp": "2026-07-26T13:23:54.146231",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    }
+}

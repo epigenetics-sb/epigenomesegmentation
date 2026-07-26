@@ -6,23 +6,25 @@ nextflow_process {
     process "CUSTOM_FILTERBED"
 
     tag "modules"
-    tag "modules_"
+    tag "modules_custom"
     tag "custom"
     tag "custom/filterbed"
 
-    test("sarscov2 - bam") {
-
-        // (the module requires running more than one process to generate the required output)
-        // add the 'setup' method here.
-        // You can find more information about how to use a 'setup' method in the nf-test docs (https://www.nf-test.com/docs/testcases/setup/).
+    test("Kidney - FILTERBED") {
 
         when {
             process {
                 """
-                
                 input[0] = [
-                    [ id:'test' ],
-                    file(params.modules_testdata_base_path + 'genomics/sarscov2/illumina/bam/test.paired_end.sorted.bam', checkIfExists: true),
+                    [ 
+                        id: 'kidney_P0', 
+                        replicate: 1, 
+                        epigenetic_mark: 'WGBS', 
+                        modality: 'WGBS', 
+                        paired_end: true, 
+                        distribution: 'BI' 
+                    ], 
+                    file(params.pipelines_testdata_base_path + '/modules/kidney_P0_binnedbedcounts_synced.bed', checkIfExists: true)
                 ]
                 """
             }
@@ -35,23 +37,28 @@ nextflow_process {
                     process.out,
                     process.out.findAll { key, val -> key.startsWith('versions') }
                 ).match() }
-                // See https://nf-co.re/docs/developing/testing/assertions for more information and examples.
             )
         }
 
     }
 
-    test("sarscov2 - bam - stub") {
+    test("Kidney - FILTERBED - stub") {
 
         options "-stub"
 
         when {
             process {
                 """
-                
                 input[0] = [
-                    [ id:'test' ],
-                    file(params.modules_testdata_base_path + 'genomics/sarscov2/illumina/bam/test.paired_end.sorted.bam', checkIfExists: true),
+                    [ 
+                        id: 'kidney_P0', 
+                        replicate: 1, 
+                        epigenetic_mark: 'WGBS', 
+                        modality: 'WGBS', 
+                        paired_end: true, 
+                        distribution: 'BI' 
+                    ], 
+                    file(params.pipelines_testdata_base_path + '/modules/kidney_P0_binnedbedcounts_synced.bed', checkIfExists: true)
                 ]
                 """
             }

@@ -11,7 +11,6 @@ keywords:
 components:
   - custom/bedcounts
   - bedtools/map
-  - custom/filterbed
 input:
   - ch_in_bedcounts:
       type: file
@@ -26,12 +25,6 @@ input:
         Structure: `[ val(meta), path(chrombin) ]`
       pattern: "*.bed"
 output:
-  - ch_meth_tab:
-      type: file
-      description: |
-        Channel containing the filtered methylation tab files.
-        Structure: `[ val(sample_id), val(meta), path(meth) ]`
-      pattern: "*.tab"
   - ch_mapped_bed:
       type: file
       description: |

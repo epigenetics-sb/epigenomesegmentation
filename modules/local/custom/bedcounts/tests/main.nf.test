@@ -10,7 +10,7 @@ nextflow_process {
     tag "custom"
     tag "custom/bedcounts"
 
-    test("sarscov2 - bam") {
+    test("Kidney - BEDCOUNTS") {
 
         // (the module requires running more than one process to generate the required output)
         // add the 'setup' method here.
@@ -19,10 +19,16 @@ nextflow_process {
         when {
             process {
                 """
-                
                 input[0] = [
-                    [ id:'test' ],
-                    file(params.modules_testdata_base_path + 'genomics/sarscov2/illumina/bam/test.paired_end.sorted.bam', checkIfExists: true),
+                    [ 
+                        id: 'kidney_P0', 
+                        replicate: 1, 
+                        epigenetic_mark: 'WGBS', 
+                        modality: 'WGBS', 
+                        paired_end: true, 
+                        distribution: 'BI' 
+                    ], 
+                    file(params.pipelines_testdata_base_path + '/testdata/WGBS_mm10_kidney_chr12_reduced.bed.gz', checkIfExists: true)
                 ]
                 """
             }
@@ -41,17 +47,23 @@ nextflow_process {
 
     }
 
-    test("sarscov2 - bam - stub") {
+    test("Kidney - BEDCOUNTS - stub") {
 
         options "-stub"
 
         when {
             process {
                 """
-                
                 input[0] = [
-                    [ id:'test' ],
-                    file(params.modules_testdata_base_path + 'genomics/sarscov2/illumina/bam/test.paired_end.sorted.bam', checkIfExists: true),
+                    [ 
+                        id: 'kidney_P0', 
+                        replicate: 1, 
+                        epigenetic_mark: 'WGBS', 
+                        modality: 'WGBS', 
+                        paired_end: true, 
+                        distribution: 'BI' 
+                    ], 
+                    file(params.pipelines_testdata_base_path + '/testdata/WGBS_mm10_kidney_chr12_reduced.bed.gz', checkIfExists: true)
                 ]
                 """
             }

@@ -7,15 +7,18 @@ include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_epigenomesegmentation_pipeline'
 
+// Subworkflow
 include { PREPARE_GENOME                  } from '../subworkflows/local/prepare_genome/'
 include { BAM_REHEADER_INDEX_SAMTOOLS     } from '../subworkflows/local/bam_reheader_index_samtools/'
 include { TAB_SHEETBAM_COUNTSBAM_CUSTOM   } from '../subworkflows/local/tab_sheetbam_countsbam_custom/'
 include { BED_COUNTS                      } from '../subworkflows/local/bed_counts/'
+include { MERGE                           } from '../subworkflows/local/merge/'
 include { EPISEGMIX_PREPARE               } from '../subworkflows/local/episegmix_prepare/'
 include { EPISEGMIX_LDM                   } from '../subworkflows/local/episegmix_ldm/'
 include { EPISEGMIX_DM                    } from '../subworkflows/local/episegmix_dm/'
 include { EPISEGMIX_DNA                   } from '../subworkflows/local/episegmix_dna/'
 include { EPISEGMIX_FITTING               } from '../subworkflows/local/episegmix_fitting/'
+
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -35,10 +38,6 @@ workflow EPIGENOMESEGMENTATION {
 
     // --- PIPELINE LOGIC ---
 
-    PREPARE_GENOME()
-    ch_chrom_sizes_sort = PREPARE_GENOME.out.chrom_sizes_sort
-    ch_bins             = PREPARE_GENOME.out.bins
-
     ch_samplesheet
         .branch { it ->
             bam:   it[1].toString().toLowerCase().endsWith('.bam') || it[1].toString().toLowerCase().endsWith('.bam.gz')
@@ -55,16 +54,50 @@ workflow EPIGENOMESEGMENTATION {
     }
     ch_in_bedcounts    = ch_input_branched.bed
 
-    BAM_REHEADER_INDEX_SAMTOOLS(ch_in_bam_reheader)
-    ch_bam      = BAM_REHEADER_INDEX_SAMTOOLS.out.bam
-    ch_bai      = BAM_REHEADER_INDEX_SAMTOOLS.out.bai
 
-    BED_COUNTS(ch_in_bedcounts, ch_bins)
-    ch_meth_tab = BED_COUNTS.out.ch_meth_tab
-    ch_mapped_bed = BED_COUNTS.out.ch_mapped_bed
+    if (params.histonecounts && params.methcounts) {
 
-    TAB_SHEETBAM_COUNTSBAM_CUSTOM(ch_bam, ch_bai, ch_chrom_sizes_sort)
-    ch_bamcounts = TAB_SHEETBAM_COUNTSBAM_CUSTOM.out.bamcounts
+        ch_histonecounts = Channel.fromPath(params.histonecounts).first()
+        ch_methcounts    = Channel.fromPath(params.methcounts).first()
+        ch_bamcounts = ch_input_branched.bam
+            .map { meta, bamfile -> [meta.id, meta] }
+            .groupTuple()
+            .map { sample_id, meta_list -> [sample_id, meta_list] }
+            .combine(ch_histonecounts) 
+
+        // 3. Same logic for the BED channel
+        ch_meth_tab = ch_input_branched.bed
+            .map { meta, bedfile -> [meta.id, meta] }
+            .groupTuple(by: 0)
+            .combine(ch_methcounts)
+          
+    }
+
+
+    else{
+
+
+        PREPARE_GENOME()
+        ch_chrom_sizes_sort = PREPARE_GENOME.out.chrom_sizes_sort
+        ch_bins             = PREPARE_GENOME.out.bins
+
+        BAM_REHEADER_INDEX_SAMTOOLS(ch_in_bam_reheader)
+        ch_bam      = BAM_REHEADER_INDEX_SAMTOOLS.out.bam
+        ch_bai      = BAM_REHEADER_INDEX_SAMTOOLS.out.bai
+        BED_COUNTS(ch_in_bedcounts, ch_bins)
+        ch_mapped_bed = BED_COUNTS.out.ch_mapped_bed
+
+
+        TAB_SHEETBAM_COUNTSBAM_CUSTOM(ch_bam, ch_bai, ch_chrom_sizes_sort)
+        ch_bamcounts = TAB_SHEETBAM_COUNTSBAM_CUSTOM.out.bamcounts
+        
+        ch_merge = ch_bamcounts.combine(ch_mapped_bed, by: 0)
+
+        MERGE(ch_merge)
+        ch_meth_tab = MERGE.out.ch_meth_tab_new
+
+    }
+
 
     ch_states = Channel.of("${params.states}").splitCsv().flatten()
     
@@ -96,19 +129,26 @@ workflow EPIGENOMESEGMENTATION {
                 def histone 
                 def meta2
                 def meth
+                
                 if (it.size() == 4 && it[1] != null) {
                     meta1 = it[1]; histone = it[2]
-                    meta2 = [id: sample_id]; meth = []
+                    meta2 = [id: sample_id]; meth = null
                 } 
                 else if (it.size() == 4 && it[1] == null) {
                     meta2 = it[2]; meth = it[3]
-                    meta1 = [id: sample_id, epigenetic_mark: meta2.epigenetic_mark ?: 'UNKNOWN_MARK']
-                    histone = []
+                    // WRAP IN LIST: transpose() requires a list, even if it's just 1 item.
+                    meta1 = [[id: sample_id, epigenetic_mark: meta2.epigenetic_mark ?: 'UNKNOWN_MARK']]
+                    histone = null
                 } 
                 else {
                     meta1 = it[1]; histone = it[2]
                     meta2 = it[3]; meth = it[4]
                 }
+
+                if (meta2 instanceof List && meta2.size() == 1) {
+                    meta2 = meta2[0]
+                }
+
                 return tuple(sample_id, meta1, histone, meta2, meth)
             }
             .combine(ch_states)
@@ -174,6 +214,7 @@ workflow EPIGENOMESEGMENTATION {
             }
     }
     else {
+
         ch_in_episegmix_config = ch_bamcounts
             .join(ch_meth_tab, remainder: true)
             .map { it -> 

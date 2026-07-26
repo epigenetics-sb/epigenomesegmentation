@@ -12,14 +12,14 @@ process CUSTOM_FILTERBED {
 
     output:
     tuple val(meta), path("*.tab"), emit: meth_tab
-    // tuple val("${task.process}"), val('custom'), eval("custom --version"), topic: versions, emit: versions_custom
+    tuple val("${task.process}"), val('awk'), eval("awk --version | cut -f 3 -d \" \" "), topic: versions, emit: versions_awk
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}_${meta.epigenetic_mark}"
     """
     {   
     echo -e "Cov\tMeth"
@@ -29,10 +29,10 @@ process CUSTOM_FILTERBED {
 
     stub:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}_${meta.epigenetic_mark}"
     """
     echo $args
     
-    touch ${prefix}.bam
+    touch ${prefix}_meth.tab
     """
 }

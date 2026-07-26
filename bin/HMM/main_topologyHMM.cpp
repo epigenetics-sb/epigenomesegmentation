@@ -15,8 +15,8 @@
 namespace bpo = boost::program_options;
 
 bool train, adjustTopology;
-size_t maxIteration, iterationsPretrain, numAdjustments, threads;
-double epsilon;
+size_t maxIteration, iterationsPretrain, numAdjustments, states, threads;
+double epsilon, selfprob;
 std::string modelInput, modelOutput, viterbiPath, posteriorDecoding, countMatrix, methylationMatrix, regions;
 
 bool parseArguments(int argc, char* argv[])
@@ -34,6 +34,8 @@ bool parseArguments(int argc, char* argv[])
         ("maxIteration,i", bpo::value<size_t>(&maxIteration)->default_value(300), "Maximum number of iteration during training.")
         ("iterationsPretrain,j", bpo::value<size_t>(&iterationsPretrain)->default_value(5), "Number of iterations before topology is adjusted.")
         ("numAdjustments,n", bpo::value<size_t>(&numAdjustments)->default_value(2), "How often should the topology be adjusted?")
+        ("states,s", bpo::value<size_t>(&states)->default_value(5), "Maximum number of sub-states for duration model.")
+        ("prob,q", bpo::value<double>(&selfprob)->default_value(0.9), "Maximum self transition probability during duration model adjustment.")
         ("epsilon,e", bpo::value<double>(&epsilon)->default_value(0.1), "Convergence of likelihoods as termination criterion during training.")
         ("modelOutput,o", bpo::value<std::string>(&modelOutput)->default_value(""), "Optional output file for parameters of new HMM (only required if HMM is trained first).")
         ("viterbiPath,v", bpo::value<std::string>(&viterbiPath)->default_value(""), "Optional output file for state sequence using Viterbi decoding.")
@@ -114,7 +116,7 @@ int main(int argc, char* argv[])
                 return -1;
             }
                 
-            nObservation = std::make_shared<Matrix<int>> (r.parse_methylation_matrix(methylation));
+            nObservation = std::make_shared<Matrix<int>> (r.parse_matrix(methylation));
             methylation.close();
             if (!r.get_message().empty())
             {
@@ -150,10 +152,15 @@ int main(int argc, char* argv[])
 
         if (train)
         {
+            if (states < 1 or selfprob < 0 or selfprob > 1)
+            {
+                std::cerr << "Invalid parameters for adjusting topology. Number of sub-states must be > 1 and self probability must in [0, 1]." << std::endl;
+                return -1;
+            }
             for (size_t i = 0; i < numAdjustments; ++i)
             {
                 hmm.train(observation, nObservation, startIndex, epsilon, iterationsPretrain, false);
-                hmm.adjust_topology(observation, nObservation, startIndex);
+                hmm.adjust_topology(observation, nObservation, startIndex, states, selfprob);
             }
             hmm.train(observation, nObservation, startIndex, epsilon, maxIteration, false);
 

@@ -30,7 +30,7 @@ process CUSTOM_FILTERBINS {
 
     stub:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "filtered_${meta.id}"
+    def prefix = task.ext.prefix ?: "filtered_${bed}"
 
     """
     echo $args

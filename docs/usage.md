@@ -20,7 +20,7 @@ You will need to create a samplesheet with information about the samples you wou
 
 The `sample_id` identifiers must be identical for all data files that belong to the same biological sample. The pipeline groups all files sharing the same `sample_id` and processes them together to build a unified segmentation model for that sample.
 
-If you have multiple files for the **exact same histone mark** within a single sample, the pipeline treats them as biological or technical replicates. You must assign each of these files a unique integer in the `replicate` column. 
+If you have multiple files for the **exact same histone mark** within a single sample, the pipeline treats them as biological or technical replicates. You must assign each of these files a unique integer in the `replicate` column.
 
 **NOTE:** Replicates for methylation data (`.bed` or `.bed.gz` files) are not currently supported by the pipeline. Methylation data should only have one entry per `sample_id`.
 
@@ -38,6 +38,7 @@ SAMPLE_A,1,WGBS,./data/sampleA_methyl.bed.gz,WGBS,true,BI
 
 The pipeline uses a **7-column structured format** to process and group epigenetic data.  
 File types are inferred automatically:
+
 - Histone -> `.bam`, `.bam.gz`
 - Methylation -> `.bed`, `.bed.gz`
 
@@ -54,33 +55,32 @@ TREATMENT,1,H3K27ac,./data/treatment_H3K27ac.bam,ChIP-seq,true,NBI
 TREATMENT,1,WGBS,./data/treatment_methyl.bed.gz,WGBS,true,BI
 ```
 
-| Column | Description |
-|--------|-------------|
-| `sample_id` | Custom sample name. Must be identical across all entries of the same sample. |
-| `replicate` | Integer replicate number. Unique for same `epigenetic_mark` within a sample. |
-| `epigenetic_mark` | Target mark or assay type (e.g., `H3K4me3`, `H3K27ac`, `WGBS`). |
-| `file_name` | Full path to file. `.bam` / `.bam.gz` (histone), `.bed` / `.bed.gz` (methylation). |
-| `modality` | Supported: `ChIP-seq`, `WGBS`, `ATAC-seq`, `NOMe-seq`, `chip`, `wgbs`, `atac`, `nome`. |
-| `paired_end` | Boolean (`true` or `false`). |
-| `distribution` | Statistical distribution used for modeling. |
+| Column            | Description                                                                            |
+| ----------------- | -------------------------------------------------------------------------------------- |
+| `sample_id`       | Custom sample name. Must be identical across all entries of the same sample.           |
+| `replicate`       | Integer replicate number. Unique for same `epigenetic_mark` within a sample.           |
+| `epigenetic_mark` | Target mark or assay type (e.g., `H3K4me3`, `H3K27ac`, `WGBS`).                        |
+| `file_name`       | Full path to file. `.bam` / `.bam.gz` (histone), `.bed` / `.bed.gz` (methylation).     |
+| `modality`        | Supported: `ChIP-seq`, `WGBS`, `ATAC-seq`, `NOMe-seq`, `chip`, `wgbs`, `atac`, `nome`. |
+| `paired_end`      | Boolean (`true` or `false`).                                                           |
+| `distribution`    | Statistical distribution used for modeling.                                            |
 
 ### Supported Distributions
 
-| Code | Name |
-|------|------|
-| `PO` | Poisson |
-| `ZAP` | Zero Adjusted Poisson |
-| `BI` | Binomial |
-| `NBI` | Negative Binomial |
-| `ZANBI` | Zero Adjusted Negative Binomial |
-| `BB` | Beta Binomial |
-| `BNB` | Beta Negative Binomial |
-| `ZABNB` | Zero Adjusted Beta Negative Binomial |
-| `SI` | Sichel |
-| `ZASI` | Zero Adjusted Sichel |
-| `GA` | Gaussian |
-| `B` | Bernoulli *(requires binarized input)* |
-
+| Code    | Name                                   |
+| ------- | -------------------------------------- |
+| `PO`    | Poisson                                |
+| `ZAP`   | Zero Adjusted Poisson                  |
+| `BI`    | Binomial                               |
+| `NBI`   | Negative Binomial                      |
+| `ZANBI` | Zero Adjusted Negative Binomial        |
+| `BB`    | Beta Binomial                          |
+| `BNB`   | Beta Negative Binomial                 |
+| `ZABNB` | Zero Adjusted Beta Negative Binomial   |
+| `SI`    | Sichel                                 |
+| `ZASI`  | Zero Adjusted Sichel                   |
+| `GA`    | Gaussian                               |
+| `B`     | Bernoulli _(requires binarized input)_ |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
@@ -149,6 +149,7 @@ However, if `--best_fit_segmentation` is set to true along with fitting, it will
 ```bash
 --merge
 ```
+
 When the `--merge` flag is provided, the pipeline processes **both** histone BAM files and methylation BED files. It merges their respective count matrices into a single, comprehensive dataset and trains a combined segmentation model across all modalities.
 
 #### Exploring Multiple States
@@ -166,7 +167,6 @@ The `--states` parameter defines the number of chromatin states for the segmenta
 ```
 
 The `--chr_parameter_estimation` parameter defines which chromosome should be used for the initial parameter estimation step before full model training. By default, it uses chromosome `12`. You can provide an integer (e.g., `12`, `22`), or a string identifier if you are using specific custom reference genomes or pilot data (e.g., `pilot_hg38`).
-
 
 > [!WARNING]
 > Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or module arguments (args).

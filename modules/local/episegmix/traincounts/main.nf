@@ -4,8 +4,8 @@ process EPISEGMIX_TRAINCOUNTS {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container ?
-        'aaryanjaitly/episegmix:new_plots':
-        'aaryanjaitly/episegmix:new_plots' }"
+        'aaryanjaitly/episegmix_v2:latest':
+        'aaryanjaitly/episegmix_v2:latest' }"
 
     input:
     tuple val(sample_id), val(meta), path(histone), val(meta2), path(meth), val(state), path(yaml)
@@ -24,13 +24,17 @@ process EPISEGMIX_TRAINCOUNTS {
 
     """
     if [[ "${histone}" == "" ]]; then
+
+    awk 'BEGIN {OFS="\t"} { \$4 = int(\$4 + 0.5); \$5 = int(\$5 + 0.5); print \$0 }' $meth > tmp.bed && mv tmp.bed $meth
+    sed -i '1 i\\chr\\tstart\\tend\\tCov\\tMeth' $meth
+
         get_meth_counts.py \\
             -d "${prefix}.yaml" \\
             -c "${prefix}-train-counts.txt" \\
             -r "${prefix}-train-regions.txt" \\
             -C "${prefix}.counts.txt" \\
             -R "${prefix}.regions.txt"  
-        touch "dummy-train-counts-meth.txt"  
+        touch "dummy-train-counts-meth.txt"        
     else 
         get_counts.py \\
             -d "${prefix}.yaml" \\

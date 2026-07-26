@@ -1,19 +1,21 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
 name: "custom_filterbed"
-description: write your description here
+description: Extracts coverage and methylation count columns from a BED file and formats them into a tab-separated file with a header.
 keywords:
-  - sort
-  - example
-  - genomics
+  - awk
+  - bed
+  - filter
+  - methylation
+  - coverage
 tools:
-  - "custom":
-      description: ""
-      homepage: ""
-      documentation: ""
-      tool_dev_url: ""
+  - "awk":
+      description: "GNU Awk is a pattern scanning and processing language."
+      homepage: "https://www.gnu.org/software/gawk/"
+      documentation: "https://www.gnu.org/software/gawk/manual/gawk.html"
+      tool_dev_url: "https://git.savannah.gnu.org/cgit/gawk.git"
       doi: ""
-      licence: null
-      identifier: null
+      licence: ["GPL-3.0-or-later"]
+      identifier: ""
 
 input:
   - - meta:
@@ -21,53 +23,37 @@ input:
         description: |
           Groovy Map containing sample information
           e.g. `[ id:'sample1' ]`
-    - bam:
+    - meth:
         type: file
-        description: Sorted BAM/CRAM/SAM file
-        pattern: "*.{bam,cram,sam}"
-        ontologies:
-          - edam: "http://edamontology.org/format_2572" # BAM
-          - edam: "http://edamontology.org/format_2573" # CRAM
-          - edam: "http://edamontology.org/format_3462" # SAM
+        description: Input methylation BED file
+        pattern: "*.bed" # Adjust extension if your input is different
 
 output:
-  bam:
+  meth_tab:
     - - meta:
           type: map
           description: |
             Groovy Map containing sample information
             e.g. `[ id:'sample1' ]`
-      - "*.bam":
+      - "*.tab":
           type: file
-          description: Sorted BAM/CRAM/SAM file
-          pattern: "*.{bam,cram,sam}"
-          ontologies:
-            - edam: "http://edamontology.org/format_2572" # BAM
-            - edam: "http://edamontology.org/format_2573" # CRAM
-            - edam: "http://edamontology.org/format_3462" # SAM
-  versions_custom:
-    - - "${task.process}":
-          type: string
-          description: The name of the process
-      - "custom":
-          type: string
-          description: The name of the tool
-      - "custom --version":
-          type: eval
-          description: The expression to obtain the version of the tool
+          description: Tab-separated file containing integer 'Cov' (coverage) and 'Meth' (methylation) columns.
+          pattern: "*.tab"
 
+# Note: The version tracking output is currently commented out in your Nextflow process.
+# If you uncomment it, you can track the awk version.
 topics:
   versions:
     - - ${task.process}:
           type: string
           description: The name of the process
-      - custom:
+      - awk:
           type: string
           description: The name of the tool
-      - custom --version:
+      - "awk --version | head -n1 | cut -d ' ' -f 3":
           type: eval
           description: The expression to obtain the version of the tool
 authors:
-  - "@aaryanjaitlu"
+  - "@aaryanjaitly"
 maintainers:
-  - "@aaryanjaitlu"
+  - "@aaryanjaitly"

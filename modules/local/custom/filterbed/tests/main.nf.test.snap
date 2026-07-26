@@ -1,0 +1,113 @@
+{
+    "Kidney - FILTERBED - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "kidney_P0",
+                            "replicate": 1,
+                            "epigenetic_mark": "WGBS",
+                            "modality": "WGBS",
+                            "paired_end": true,
+                            "distribution": "BI"
+                        },
+                        "kidney_P0_WGBS_meth.tab:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "1": [
+                    [
+                        "CUSTOM_FILTERBED",
+                        "awk",
+                        ""
+                    ]
+                ],
+                "meth_tab": [
+                    [
+                        {
+                            "id": "kidney_P0",
+                            "replicate": 1,
+                            "epigenetic_mark": "WGBS",
+                            "modality": "WGBS",
+                            "paired_end": true,
+                            "distribution": "BI"
+                        },
+                        "kidney_P0_WGBS_meth.tab:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions_awk": [
+                    [
+                        "CUSTOM_FILTERBED",
+                        "awk",
+                        ""
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-07-26T13:02:02.911213",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    },
+    "Kidney - FILTERBED": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "kidney_P0",
+                            "replicate": 1,
+                            "epigenetic_mark": "WGBS",
+                            "modality": "WGBS",
+                            "paired_end": true,
+                            "distribution": "BI"
+                        },
+                        "kidney_P0_WGBS_meth.tab:md5,54e264a82f6a567c3c5f2e6691c39059"
+                    ]
+                ],
+                "1": [
+                    [
+                        "CUSTOM_FILTERBED",
+                        "awk",
+                        ""
+                    ]
+                ],
+                "meth_tab": [
+                    [
+                        {
+                            "id": "kidney_P0",
+                            "replicate": 1,
+                            "epigenetic_mark": "WGBS",
+                            "modality": "WGBS",
+                            "paired_end": true,
+                            "distribution": "BI"
+                        },
+                        "kidney_P0_WGBS_meth.tab:md5,54e264a82f6a567c3c5f2e6691c39059"
+                    ]
+                ],
+                "versions_awk": [
+                    [
+                        "CUSTOM_FILTERBED",
+                        "awk",
+                        ""
+                    ]
+                ]
+            },
+            {
+                "versions_awk": [
+                    [
+                        "CUSTOM_FILTERBED",
+                        "awk",
+                        ""
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-07-26T13:01:53.591454",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    }
+}

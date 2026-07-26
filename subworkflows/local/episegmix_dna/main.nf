@@ -15,9 +15,11 @@ workflow EPISEGMIX_DNA {
     ch_dnatrain_json = EPISEGMIX_DNATRAIN.out.json
     ch_in_episegmix_decode = ch_dnatrain_json.join(ch_train_region)
 
+
     EPISEGMIX_DNADECODE(ch_in_episegmix_decode)
     ch_segmentation = EPISEGMIX_DNADECODE.out.Segmentation
 
+    ch_segmentation.view()
     EPISEGMIX_DNAREPORT(ch_segmentation)
 
     emit:

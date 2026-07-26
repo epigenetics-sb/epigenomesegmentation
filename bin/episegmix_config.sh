@@ -5,9 +5,10 @@
 # ==============================================================================
 MARK=()
 DISTRIBUTION_HISTONE=()
+METH_MARK=()
+DISTRIBUTION_DNA=()
 STATE=""
 HISTONE=""
-distribution_dna=""
 WGBS=""
 chr=""
 output_file="config.yaml"
@@ -17,91 +18,55 @@ output_file="config.yaml"
 # ==============================================================================
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -d|--distribution_histone)
-            read -r -a DISTRIBUTION_HISTONE <<< "$2"
-            shift 2
-            ;;
-        -s|--state)
-            STATE="$2"
-            shift 2
-            ;;
-        -m|--mark)
-            read -r -a MARK <<< "$2"
-            shift 2
-            ;;
-        -h|--histone)
-            HISTONE="$2"
-            shift 2
-            ;;
-        -n|--distribution_dna)
-            distribution_dna="$2"
-            shift 2
-            ;;
-        -g|--wgbs)
-            WGBS="$2"
-            shift 2
-            ;;
-        -c|--chr)
-            chr="$2"
-            shift 2
-            ;;
-        -o|--output)
-            output_file="$2"
-            shift 2
-            ;;  
-        *) 
-            echo "Error: Unknown option: $1" >&2
-            exit 1
-            ;;  
+        -d|--distribution_histone) IFS=' ' read -r -a DISTRIBUTION_HISTONE <<< "$2"; shift 2 ;;
+        -s|--state) STATE="$2"; shift 2 ;;
+        -m|--mark) IFS=' ' read -r -a MARK <<< "$2"; shift 2 ;;
+        -x|--meth_mark) IFS=' ' read -r -a METH_MARK <<< "$2"; shift 2 ;;
+        -n|--distribution_dna) IFS=' ' read -r -a DISTRIBUTION_DNA <<< "$2"; shift 2 ;;
+        -h|--histone) HISTONE="$2"; shift 2 ;;
+        -g|--wgbs) WGBS="$2"; shift 2 ;;
+        -c|--chr) chr="$2"; shift 2 ;;
+        -o|--output) output_file="$2"; shift 2 ;;  
+        *) echo "Error: Unknown option: $1" >&2; exit 1 ;;  
     esac
 done 
-
-declare -A seen_marks
-unique_marks=()
-unique_dists=()
-
-for i in "${!MARK[@]}"; do
-    current_mark="${MARK[$i]}"
-    
-    if [[ -z "${seen_marks[$current_mark]}" ]]; then
-        seen_marks[$current_mark]=1
-        unique_marks+=("$current_mark")
-        unique_dists+=("${DISTRIBUTION_HISTONE[$i]}")
-    fi
-done
-
-MARK=("${unique_marks[@]}")
-DISTRIBUTION_HISTONE=("${unique_dists[@]}")
 
 # ==============================================================================
 # Output Configuration
 # ==============================================================================
-
-if [[ "${HISTONE}" == "null" ]]; then
-    {
-    echo "data: ${WGBS}"
-    echo "distribution: ${distribution_dna}"
-    echo "states: ${STATE}"
-    echo "chr: [${chr}]"
-    } > "${output_file}"
-else
-    {
-    echo "states: ${STATE}"
-    echo "marker: ${#MARK[@]}"
-    echo "marker_spec:"
-
-    for i in "${!MARK[@]}"; do
-        echo "  - distribution: ${DISTRIBUTION_HISTONE[$i]}" 
-        echo "    name: ${MARK[$i]}"
-    done
-
-    echo "data: [${HISTONE}]"
-
-    if [[ "${WGBS}" != "null" ]]; then
-        echo "dna_methylation: ${distribution_dna}"
-        echo "meth_data: [${WGBS}]"
+{
+    echo "states: ${STATE:-8}"
+    
+    # 1. Histone Markers Section
+    if [[ "${#MARK[@]}" -gt 0 && "${MARK[0]}" != "null" ]]; then	
+	echo "marker: ${#MARK[@]}"
+        echo "marker_spec:"
+        for i in "${!MARK[@]}"; do
+            echo "  - name: ${MARK[$i]}"
+            echo "    distribution: ${DISTRIBUTION_HISTONE[$i]:-NBI}" 
+        done
     fi
 
-    echo "chr: [${chr}]"
-    } > "${output_file}"
-fi
+    # 2. Histone Data
+    if [[ -n "${HISTONE}" && "${HISTONE}" != "null" ]]; then
+        echo "data: [${HISTONE}]"
+    fi
+
+    # 3. DNA Methylation Section
+    if [[ "${WGBS}" != "null" && -n "${WGBS}" ]]; then
+        
+        # Check if we have DNA marks
+        if [[ "${#METH_MARK[@]}" -gt 0 ]]; then
+            echo "coverage_marker: ${#METH_MARK[@]}"
+            echo "coverage_marker_spec:"
+            for i in "${!METH_MARK[@]}"; do
+                # Get the corresponding distribution, default to null if missing
+                echo "  - name: ${METH_MARK[$i]}"
+                echo "    distribution: ${DISTRIBUTION_DNA[$i]:-BI}"
+            done
+        fi
+        echo "coverage_data: [${WGBS}]"
+    fi
+
+    echo "chr: [${chr:-12}]"
+} > "${output_file}"

@@ -1,0 +1,39 @@
+nextflow_workflow {
+
+    name "Test Subworkflow MERGE"
+    script "../main.nf"
+    workflow "MERGE"
+
+    tag "subworkflows"
+    tag "subworkflows_"
+    tag "subworkflows/merge"
+    tag "samtools"
+    tag "samtools/sort"
+    tag "samtools/index"
+
+    test("sarscov2 - bam - single_end") {
+
+        when {
+            workflow {
+                """
+                input[0] = [
+                    [ id:'test', single_end:false ], // meta map
+                    file(params.modules_testdata_base_path + 'genomics/sarscov2/illumina/bam/test.paired_end.sorted.bam', checkIfExists: true),
+                ]
+                input[1] = [
+                    [ id:'genome' ],
+                    file(params.modules_testdata_base_path + 'genomics/sarscov2/illumina/bam/test.paired_end.sorted.bam', checkIfExists: true),
+                ]
+                """
+            }
+        }
+        then {
+            assert workflow.success
+            assertAll(
+                { assert snapshot(
+                    workflow.out
+                ).match() }
+            )
+        }
+    }
+}

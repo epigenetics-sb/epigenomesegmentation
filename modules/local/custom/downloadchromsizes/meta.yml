@@ -28,7 +28,7 @@ output:
         type: file
         description: A two-column text file containing chromosome names and their respective sizes.
         pattern: "*.chrom.sizes"
-        
+
   versions_wget:
     - - "${task.process}":
           type: string

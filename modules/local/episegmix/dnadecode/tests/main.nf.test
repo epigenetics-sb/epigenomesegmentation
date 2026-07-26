@@ -6,23 +6,35 @@ nextflow_process {
     process "EPISEGMIX_DNADECODE"
 
     tag "modules"
-    tag "modules_"
+    tag "modules_episegmix"
     tag "episegmix"
     tag "episegmix/dnadecode"
 
-    test("sarscov2 - bam") {
-
-        // (the module requires running more than one process to generate the required output)
-        // add the 'setup' method here.
-        // You can find more information about how to use a 'setup' method in the nf-test docs (https://www.nf-test.com/docs/testcases/setup/).
+    test("Forebrain - EPISEGMIX_DNADECODE") {
 
         when {
             process {
                 """
-                
                 input[0] = [
-                    [ id:'test' ],
-                    file(params.modules_testdata_base_path + 'genomics/sarscov2/illumina/bam/test.paired_end.sorted.bam', checkIfExists: true),
+                    'Forebrain_16.5_2', 
+                    [ id: 'no_bam_counts' ], 
+                    [], 
+                    [ 
+                        id: 'Forebrain_16.5', 
+                        replicate: 1, 
+                        epigenetic_mark: 'WGBS', 
+                        modality: 'WGBS', 
+                        paired_end: true, 
+                        distribution: 'BI' 
+                    ], 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_WGBS_binnedbedcounts.bed', checkIfExists: true), 
+                    2, 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2.yaml', checkIfExists: true), 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2-train-counts.txt', checkIfExists: true), 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2-train-regions.txt', checkIfExists: true), 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/dummy-train-counts-meth.txt', checkIfExists: true), 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/final-model-Forebrain_16.5_2.json', checkIfExists: true), 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2.regions.txt', checkIfExists: true)
                 ]
                 """
             }
@@ -35,23 +47,38 @@ nextflow_process {
                     process.out,
                     process.out.findAll { key, val -> key.startsWith('versions') }
                 ).match() }
-                // See https://nf-co.re/docs/developing/testing/assertions for more information and examples.
             )
         }
 
     }
 
-    test("sarscov2 - bam - stub") {
+    test("Forebrain - EPISEGMIX_DNADECODE - stub") {
 
         options "-stub"
 
         when {
             process {
                 """
-                
                 input[0] = [
-                    [ id:'test' ],
-                    file(params.modules_testdata_base_path + 'genomics/sarscov2/illumina/bam/test.paired_end.sorted.bam', checkIfExists: true),
+                    'Forebrain_16.5_2', 
+                    [ id: 'no_bam_counts' ], 
+                    [], 
+                    [ 
+                        id: 'Forebrain_16.5', 
+                        replicate: 1, 
+                        epigenetic_mark: 'WGBS', 
+                        modality: 'WGBS', 
+                        paired_end: true, 
+                        distribution: 'BI' 
+                    ], 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_WGBS_binnedbedcounts.bed', checkIfExists: true), 
+                    2, 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2.yaml', checkIfExists: true), 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2-train-counts.txt', checkIfExists: true), 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2-train-regions.txt', checkIfExists: true), 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/dummy-train-counts-meth.txt', checkIfExists: true), 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/final-model-Forebrain_16.5_2.json', checkIfExists: true), 
+                    file(params.pipelines_testdata_base_path + '/modules/dna/Forebrain_16.5_2.regions.txt', checkIfExists: true)
                 ]
                 """
             }

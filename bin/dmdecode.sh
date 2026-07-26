@@ -60,7 +60,7 @@ for file in $(find "counts_${OUTPUT}" -name "counts*" -type f -print); do
         -v "states_${OUTPUT}/viterbi_${name}" \
         -d "states_${OUTPUT}/posterior_${name}" \
         -c "${file}" \
-        -x "counts_${OUTPUT}/meth_${name}" \
+        -x "counts_${OUTPUT}/coverage_data_${name}" \
         -r "counts_${OUTPUT}/regions_${name}" \
         -p "${THREADS}"
 done

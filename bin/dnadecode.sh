@@ -68,6 +68,7 @@ done
 touch states.txt
 
 cut -f 4,5 ${COUNTS} > tmp_counts.txt
+sed -i '1d' tmp_counts.txt
 TopologyHMM \
     -m "${JSON}" \
     -v "states.txt" \
@@ -75,7 +76,7 @@ TopologyHMM \
     -r "${REGION}" \
     -p "${THREADS}"
 rm -rf tmp_counts.txt
-sed -i '1ichr\tstart\tend\tCov\tMeth' ${COUNTS}
+
 segmentation_to_bed.py \
     -d "${YAML}" \
     -i "states.txt" \

@@ -8,13 +8,12 @@
 #include "HMM.h"
 #include "log_prob.h"
 
-HMM::HMM(size_t states, Matrix<std::shared_ptr<DiscreteDistribution>>& emission, bool methylation):
-N(states), emission(emission), methylation(methylation)
+HMM::HMM(size_t states, Matrix<std::shared_ptr<DiscreteDistribution>>& emission, size_t marker, size_t cov_marker):
+N(states), emission(emission), m(marker), cm(cov_marker)
 {
     if (states != emission.nrows())
         throw std::invalid_argument("Number of rows in the emmission matrix must be equal to number of states.");
 
-    m = methylation ? emission.ncols()-1 : emission.ncols();
     init_transitions();
     init_initial();
 }
@@ -340,11 +339,11 @@ void HMM::calculate_log_emission(matrix_ptr<double> logEmission, const_matrix_pt
                     ++it;
                 }
             }
-            if (methylation)
+            for (size_t k = 0; k < cm; ++k)
             {
                 auto mIt = nObservation->row_begin(start+t);
                 std::shared_ptr<TwoValueDiscreteDistribution> dis = std::dynamic_pointer_cast<TwoValueDiscreteDistribution>(emission(i, m));
-                p = lp::log_mul(p, dis->log_pmf((*nObservation)(start+t, 0), (*nObservation)(start+t, 1)));
+                p = lp::log_mul(p, dis->log_pmf((*nObservation)(start+t, 2 * k), (*nObservation)(start+t, 2 * k + 1)));
             }
             (*logEmission)(t, i) = p;
         }
@@ -503,10 +502,10 @@ void HMM::M_step(const_matrix_ptr<int> observations, const_matrix_ptr<int> nObse
             {
                 emission(i, k)->update(completeGamma.begin(), completeGamma.end(), observations->col_begin(k), observations->col_end(k));
             }
-            if (methylation)
+            for (size_t k = 0; k < cm; ++k)
             {
                 std::shared_ptr<TwoValueDiscreteDistribution> dis = std::dynamic_pointer_cast<TwoValueDiscreteDistribution>(emission(i, m));
-                dis->update_methylation(completeGamma.begin(), completeGamma.end(), nObservations->col_begin(0), nObservations->col_begin(1));
+                dis->update_methylation(completeGamma.begin(), completeGamma.end(), nObservations->col_begin(2 * k), nObservations->col_begin(2 * k + 1));
             }
         }
     }

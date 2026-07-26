@@ -101,8 +101,8 @@ plot_state_colors.py \
         -d "${BED}" \
         -o "${OUT_DIR}/${OUTPUT}-stateColors.png"
 
-segmentation_report_dna.sh  \
+segmentation_report_meth.sh  \
         -n "${OUTPUT}" \
-        -o "${OUT_DIR}/" \
+        -o "${OUT_DIR}/"
 
 echo "Plots generated successfully in ${OUT_DIR}/"

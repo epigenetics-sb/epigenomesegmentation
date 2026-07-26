@@ -111,7 +111,7 @@ int main(int argc, char* argv[])
                 return -1;
             }
                 
-            nObservation = std::make_shared<Matrix<int>> (r.parse_methylation_matrix(methylation));
+            nObservation = std::make_shared<Matrix<int>> (r.parse_matrix(methylation));
             methylation.close();
             if (!r.get_message().empty())
             {

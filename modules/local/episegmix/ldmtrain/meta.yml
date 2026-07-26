@@ -10,10 +10,10 @@ keywords:
 tools:
   - "episegmix":
       description: "EpiSegMix is a tool for the segmentation of epigenomic data."
-      homepage: "https://gitlab.com/rahmannlab/episegmix" 
-      documentation: "https://gitlab.com/rahmannlab/episegmix/-/blob/main/README.md?ref_type=heads" 
-      tool_dev_url: "" 
-      doi: "https://doi.org/10.1093/nar/gkag591" 
+      homepage: "https://gitlab.com/rahmannlab/episegmix"
+      documentation: "https://gitlab.com/rahmannlab/episegmix/-/blob/main/README.md?ref_type=heads"
+      tool_dev_url: ""
+      doi: "https://doi.org/10.1093/nar/gkag591"
       licence: null
       identifier: biotools:episegmix
 
@@ -90,7 +90,7 @@ output:
           type: file
           description: The final trained EpiSegMix model JSON file.
           pattern: "final*.json"
-  
+
   log:
     - - sample_id:
           type: string

@@ -34,7 +34,7 @@ class HMM
          * @param states 
          * @param emission (matrix states x variables)
          */
-        explicit HMM(size_t states, Matrix<std::shared_ptr<DiscreteDistribution>>& emission, bool methylation = false);
+        explicit HMM(size_t states, Matrix<std::shared_ptr<DiscreteDistribution>>& emission, size_t marker, size_t cov_marker);
 
         /**
          * @brief Returns the complete log likelihood of an observation in the current model.
@@ -119,7 +119,7 @@ class HMM
          * 
          * @return methylation
          */
-        bool has_methylation() {return methylation;};
+        bool has_methylation() {return cm > 0;};
 
         /**
          * @brief Outputs the initial state distribution, transition matrix and parameters of the distribution in the different states.
@@ -204,8 +204,9 @@ class HMM
 
         size_t N;
         size_t m;
+        size_t cm;
         std::vector<std::string> marker;
-        bool methylation;
+        std::vector<std::string> coverage_marker;
         Matrix<double> logA;
         std::vector<double> logPi;
         Matrix<std::shared_ptr<DiscreteDistribution>> emission;

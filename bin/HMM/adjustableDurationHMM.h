@@ -32,8 +32,9 @@ class AdjustableDurationHMM: public HMM
      * @param observations
      * @param nObservation two column input (trials, successes)
      * @param starting indices of observations
+     * @param maximum number of sub-states
      **/
-    void adjust_topology(const_matrix_ptr<int>, const_matrix_ptr<int>, std::vector<size_t>&);
+    void adjust_topology(const_matrix_ptr<int>, const_matrix_ptr<int>, std::vector<size_t>&, size_t max_states, double max_prob);
 
     /**
      * @brief Outputs the initial state distribution, transition matrix, states in sub-HMMs and parameters of the distribution in the different states.

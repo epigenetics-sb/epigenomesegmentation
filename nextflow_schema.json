@@ -74,12 +74,6 @@
                     "fa_icon": "fas fa-play",
                     "default": false
                 },
-                "best_fit_segmentation": {
-                    "type": "boolean",
-                    "description": "Automatically run standard segmentation using the best-fit distributions after 'fitting' mode completes.",
-                    "fa_icon": "fas fa-project-diagram",
-                    "default": false
-                },
                 "distributions": {
                     "type": "string",
                     "description": "Comma-separated list of statistical distributions to test during 'fitting' mode (e.g., 'NBI,P,ZINB').",
@@ -99,16 +93,25 @@
                     "fa_icon": "fas fa-file-alt",
                     "help_text": "Use this parameter to provide a custom chromosome sizes file (e.g., if you are not relying on the pipeline to download them automatically based on the `--genome` ID). It should be a tab-separated text file with chromosome names in the first column and sizes in the second."
                 },
+                "methcounts": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to a custom methylation counts file.",
+                    "fa_icon": "fas fa-file-alt",
+                    "help_text": "Use this parameter to provide a custom methylation counts file (e.g., if you are not relying on the pipeline to generate them automatically)."
+                },
+                "histonecounts": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to a custom histone counts file.",
+                    "fa_icon": "fas fa-file-alt",
+                    "help_text": "Use this parameter to provide a custom histone counts file (e.g., if you are not relying on the pipeline to generate them automatically)."
+                },
                 "states": {
                     "type": ["integer", "string"],
                     "default": "8",
                     "description": "Number of chromatin states in the HMM model.",
                     "fa_icon": "fas fa-sort-numeric-up"
-                },
-                "merge": {
-                    "type": "boolean",
-                    "description": "Merge adjacent segments with the same chromatin state label.",
-                    "fa_icon": "fas fa-code-branch"
                 },
                 "decoding": {
                     "type": "string",
