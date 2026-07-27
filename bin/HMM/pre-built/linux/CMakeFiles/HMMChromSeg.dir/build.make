@@ -126,4 +126,3 @@ CMakeFiles/HMMChromSeg.dir/clean:
 CMakeFiles/HMMChromSeg.dir/depend:
 	cd /src/HMM/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /src/HMM /src/HMM /src/HMM/build /src/HMM/build /src/HMM/build/CMakeFiles/HMMChromSeg.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/HMMChromSeg.dir/depend
-

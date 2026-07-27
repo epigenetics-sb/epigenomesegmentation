@@ -189,4 +189,3 @@ CMakeFiles/HMM.dir/clean:
 CMakeFiles/HMM.dir/depend:
 	cd /src/HMM/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /src/HMM /src/HMM /src/HMM/build /src/HMM/build /src/HMM/build/CMakeFiles/HMM.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/HMM.dir/depend
-

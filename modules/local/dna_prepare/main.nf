@@ -25,7 +25,7 @@ process DNA_PREPARE {
 
     """
     set -euo pipefail
-    
+
     # 1. Create YAML config via external script
     create_dna_yaml.py \\
         --prefix "${prefix}" \\

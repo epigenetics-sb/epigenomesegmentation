@@ -7,9 +7,9 @@ process GENERATE_GENOME_BINS {
         'community.wave.seqera.io/library/bedtools:2.31.1--7c4ce4cb07c09ee4' }"
 
     input:
-    path chrom_sizes    
-    val genome          
-    val bin_size        
+    path chrom_sizes
+    val genome
+    val bin_size
 
     output:
     path "${out_filename}", emit: bins_file
@@ -34,7 +34,7 @@ process GENERATE_GENOME_BINS {
 
     stub:
     out_filename = "${genome}_${bin_size}bp_bins.bed"
-    
+
     """
     touch "${out_filename}"
 

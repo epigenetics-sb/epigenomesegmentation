@@ -126,4 +126,3 @@ CMakeFiles/TopologyHMM.dir/clean:
 CMakeFiles/TopologyHMM.dir/depend:
 	cd /src/HMM/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /src/HMM /src/HMM /src/HMM/build /src/HMM/build /src/HMM/build/CMakeFiles/TopologyHMM.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/TopologyHMM.dir/depend
-

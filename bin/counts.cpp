@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <numeric>
 #include <chrono>
-#include <ctime> 
+#include <ctime>
 
 // need to be compiled like
 // g++ -o [outfile] [file] -fopenmp
@@ -21,8 +21,8 @@ std::vector<std::vector<double>> transpose(const std::vector<std::vector<double>
     {
         #pragma omp for
         for (std::vector<double>::size_type i = 0; i < data[0].size(); i++)
-        { 
-            for (std::vector<double>::size_type j = 0; j < data.size(); j++) 
+        {
+            for (std::vector<double>::size_type j = 0; j < data.size(); j++)
             {
                 result[i][j] = data[j][i];
             }
@@ -42,7 +42,7 @@ std::vector<double> calculate_rowMeans(std::vector<std::vector<double>> vec, int
         {
             double value = std::accumulate(vec[i].begin(), vec[i].end(), 0.0) / (double)vec[i].size();
             res.push_back(value);
-                
+
         }
     }
 
@@ -89,7 +89,7 @@ IntegerVector quantileNormalization(DataFrame df, int threads = 1)
                 ranks.push_back(std::pair<double,int>(column[j-1],j));
             }
             initial_ranks.push_back(ranks);
-            
+
             // sort the vector of pairs
             // STEP 2
             Rcout << "Sorting column " << i << "..." << std::endl;

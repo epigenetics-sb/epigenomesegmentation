@@ -1,4 +1,4 @@
-name: generate_count_matrix_bam 
+name: generate_count_matrix_bam
 channels:
   - conda-forge
   - bioconda

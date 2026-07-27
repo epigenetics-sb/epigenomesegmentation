@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import pandas as pd
-import yaml 
+import yaml
 import argparse
 import os
 import warnings
@@ -27,10 +27,10 @@ def train_counts(config, data, counts, regions):
             chr = [str(chr)]
 
     train = []
-    
+
     # FIX: Dynamically find the script directory to locate pilot beds
     script_dir = os.path.dirname(os.path.realpath(__file__))
-    
+
     if chr[0].startswith('pilot'):
         if chr[0] == 'pilot_hg19':
             pilot_path = os.path.join(script_dir, "encode_pilot_regions", "hg19.bed")
@@ -50,7 +50,7 @@ def train_counts(config, data, counts, regions):
             chr_data = data[data["chr"] == c]
             chr_data = chr_data.iloc[:, 3:]
             train.append(chr_data)
-            
+
     train = pd.concat(train, axis=0)
     train.to_csv(counts, sep='\t', header=False, index=False)
 

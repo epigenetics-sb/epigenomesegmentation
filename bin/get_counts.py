@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import pandas as pd
-import yaml 
+import yaml
 import argparse
 import warnings
 import os
@@ -48,7 +48,7 @@ def main():
     trainMeth = []
     index =  []
     start = 0
-    
+
     # Dynamically find the directory where this script lives
     script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -76,8 +76,8 @@ def main():
                     methData = pd.read_csv(methFiles[i], sep='\t')
                     methData = methData.iloc[chr_data.index[0]:chr_data.index[-1]+1,:]
                     trainMeth.append(methData)
-                
-                rows += chr_data.shape[0] 
+
+                rows += chr_data.shape[0]
 
             index.append(start)
             start += rows
@@ -96,7 +96,7 @@ def main():
 
                 index.append(start)
                 start += chr_data.shape[0]
-            
+
     train = pd.concat(train, axis=0)
     train.to_csv(trainFile, sep='\t', header=False, index=False)
 

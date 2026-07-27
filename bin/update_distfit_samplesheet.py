@@ -25,7 +25,7 @@ def main():
 
     # Map the new distributions, falling back to original if no new one exists
     df_sample['distribution'] = df_sample['epigenetic_mark'].map(best_dists).fillna(df_sample['distribution'])
-    
+
     # Save the updated samplesheet
     df_sample.to_csv(args.output, index=False)
 

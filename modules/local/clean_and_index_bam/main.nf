@@ -10,15 +10,15 @@ process CLEAN_AND_INDEX_BAM {
     tuple val(meta), path(bam)
 
     output:
-    tuple val(meta), 
-          path("*.nochr.bam"), 
-          path("*.nochr.bam.bai"), 
+    tuple val(meta),
+          path("*.nochr.bam"),
+          path("*.nochr.bam.bai"),
           emit: sanitized_bam
-    path "versions.yml", emit: versions 
+    path "versions.yml", emit: versions
 
     script:
     def out_bam  = "${bam.baseName}.nochr.bam"
-    
+
     """
     set -euo pipefail
 

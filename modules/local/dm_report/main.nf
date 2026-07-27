@@ -5,7 +5,7 @@ process DM_REPORT {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'aaryanjaitly/episegmix:new_plots' :
         'aaryanjaitly/episegmix:new_plots' }"
-        
+
     input:
     tuple val(meta), path(config), path(model), path(bed), path(seg_txt)
 
@@ -20,7 +20,7 @@ process DM_REPORT {
     export MPLCONFIGDIR=\$(pwd)
 
     mkdir -p plots/${meta.id}
-    
+
     # 1. GENERATE DATA STATISTICS
     # Found in bin/src (Conda) or /usr/local/bin (Docker)
     plot_statistics.py \\

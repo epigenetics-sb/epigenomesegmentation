@@ -14,7 +14,7 @@ input:
   - ch_dna_model_input:
       type: channel
       description: |
-        Channel containing metadata, methylation count matrices, 
+        Channel containing metadata, methylation count matrices,
         and the desired number of hidden states for the DNA-only model.
 output:
   - versions:

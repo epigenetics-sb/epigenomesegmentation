@@ -2,7 +2,7 @@ include { MERGE_COUNTS }        from '../../../modules/local/merge_counts/main.n
 include { SPLIT_MERGED_COUNTS } from '../../../modules/local/split_merged_counts/main.nf'
 
 workflow MERGE_DATA {
-    
+
     take:
     ch_histone_data
     ch_methyl_data

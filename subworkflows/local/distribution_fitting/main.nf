@@ -4,7 +4,7 @@ include { DISTFIT_HISTONE_ASSESS } from '../../../modules/local/distfit_histone_
 workflow DISTRIBUTION_FITTING {
 
     take:
-    ch_input_raw  
+    ch_input_raw
     val_dists
     original_samplesheet
 
@@ -34,7 +34,7 @@ workflow DISTRIBUTION_FITTING {
         .map { meta, h -> tuple(meta.id, tuple(meta, h)) }
         .cross(DISTFIT_HISTONE_TRAIN.out.model.map { m, f -> tuple(m.id, f) }.groupTuple())
         .map { input, models -> tuple(input[1][0], input[1][1], models[1]) }
-        
+
     // Call Assess process
     DISTFIT_HISTONE_ASSESS(ch_h_assess_input, original_samplesheet)
     ch_versions = ch_versions.mix(DISTFIT_HISTONE_ASSESS.out.versions)
@@ -43,13 +43,13 @@ workflow DISTRIBUTION_FITTING {
     DISTFIT_HISTONE_ASSESS.out.updated_samplesheet
         .map { meta, csv -> csv }
         .collectFile(
-            name: 'optimal_samplesheet.csv', 
-            storeDir: "${params.outdir}/pipeline_info", 
-            keepHeader: true, 
+            name: 'optimal_samplesheet.csv',
+            storeDir: "${params.outdir}/pipeline_info",
+            keepHeader: true,
             skip: 1
         )
 
     emit:
-    updated_samplesheet = DISTFIT_HISTONE_ASSESS.out.updated_samplesheet 
+    updated_samplesheet = DISTFIT_HISTONE_ASSESS.out.updated_samplesheet
     versions            = ch_versions
 }

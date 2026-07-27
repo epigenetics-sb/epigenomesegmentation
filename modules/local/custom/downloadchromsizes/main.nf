@@ -20,7 +20,7 @@ process CUSTOM_DOWNLOADCHROMSIZES {
     script:
     def args = task.ext.args ?: "http://hgdownload.soe.ucsc.edu/goldenPath/${genome}/bigZips/${genome}.chrom.sizes"
     def prefix   = task.ext.prefix ?: "${genome}"
-    
+
     """
     wget \\
         $args \\
@@ -30,10 +30,10 @@ process CUSTOM_DOWNLOADCHROMSIZES {
     stub:
     def args = task.ext.args ?: ''
     def prefix   = task.ext.prefix ?: "${genome}"
-    
+
     """
     echo $args
-    
+
     touch ${prefix}.chrom.sizes
     """
 }

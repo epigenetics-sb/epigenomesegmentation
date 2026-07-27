@@ -25,9 +25,9 @@ elif [[ "${GENOME}" == mm* ]]; then
     }' "${DOWNLOAD_FILE}" > "${TMP_FILE}"
 
 else
-    awk 'BEGIN{OFS="\t"} { 
-        sub(/^chr/, "", $1); 
-        print 
+    awk 'BEGIN{OFS="\t"} {
+        sub(/^chr/, "", $1);
+        print
     }' "${DOWNLOAD_FILE}" > "${TMP_FILE}"
 fi
 

@@ -43,7 +43,7 @@ def plot_state_distribution(data, column, MAX, HMM, filename, pmf):
             sb.histplot(ax=axes[i, j], data=subset.iloc[:,j], color=blue, bins=201, stat='probability')
             if (HMM['emission'][i][j]['distribution'] == 'BI'):
                 p = round(float(HMM['emission'][i][j]['parameters']['p']), 4)
-                axes[i, j].vlines(x = p, ymin = 0, ymax = axes[i, j].get_ylim()[1], colors = red) 
+                axes[i, j].vlines(x = p, ymin = 0, ymax = axes[i, j].get_ylim()[1], colors = red)
             elif (HMM['emission'][i][j]['distribution'] == 'AB'):
                 axes[i, j].plot(np.linspace(-0.005, 1, 200), pmf(MAX, HMM, i, j), label='pmf', color=red)
             else:
@@ -66,7 +66,7 @@ def plot_mean_emission(data, column, m, states, filename, palette):
 
     marks = m + 1 if 'DNA-Methylation' in data.columns else m
     mean_emmission = pd.DataFrame(columns = data.columns[:marks], dtype=float)
-    
+
     for i in range(states):
         subset = data[data[column]==i+1]
         subset = subset.iloc[:, :marks]
@@ -76,9 +76,9 @@ def plot_mean_emission(data, column, m, states, filename, palette):
     ax_state.imshow(color_col, aspect='auto')
 
     for i in range(states):
-        text_color = 'black' 
+        text_color = 'black'
         ax_state.text(0, i, str(i+1), ha='center', va='center', color=text_color)
-    
+
     ax_state.set_xticks([])
     ax_state.set_yticks([])
 
@@ -159,12 +159,12 @@ def plot_mean_emission_norm(data, column, m, states, filename, palette):
     norm_emmission = (norm_emmission - min_val) / (max_val - min_val)
 
     color_col = palette[:states].reshape((states, 1, 3))
-    ax_state.imshow(color_col, aspect='auto')    
+    ax_state.imshow(color_col, aspect='auto')
 
     for i in range(states):
         text_color = 'black'
         ax_state.text(0, i, str(i+1), ha='center', va='center', color=text_color)
-    
+
     ax_state.set_xticks([])
     ax_state.set_yticks([])
 
@@ -176,7 +176,7 @@ def plot_mean_emission_norm(data, column, m, states, filename, palette):
 def plot_transition(matrix, filename, palette):
     N = matrix.shape[0]
     fig, axes = plt.subplots(2, 3, figsize=(14, 12), gridspec_kw={'width_ratios': [1.5, 20, 1], 'height_ratios': [1.5, 20], 'wspace': 0.05, 'hspace': 0.05})
-    
+
     ax_empty    = axes[0, 0]
     ax_top      = axes[0, 1]
     ax_empty_r  = axes[0, 2]
@@ -190,7 +190,7 @@ def plot_transition(matrix, filename, palette):
     ax_top.imshow(col_strip_horz, aspect='auto')
 
     for i in range(N):
-        text_color = 'black' 
+        text_color = 'black'
         ax_top.text(i, 0, str(i+1), ha='center', va='center', color=text_color)
     ax_top.set_axis_off()
 
@@ -198,15 +198,15 @@ def plot_transition(matrix, filename, palette):
     ax_left.imshow(col_strip_vert, aspect='auto')
 
     for i in range(N):
-        text_color = 'black' 
+        text_color = 'black'
         ax_left.text(0, i, str(i+1), ha='center', va='center', color=text_color)
     ax_left.set_axis_off()
 
     sb.heatmap(matrix, ax=ax_main, cbar_ax=ax_cbar,
-               cmap=sb.light_palette(blue, input="rgb", as_cmap=True), 
-               cbar_kws={'label': 'Transition probability'}, 
+               cmap=sb.light_palette(blue, input="rgb", as_cmap=True),
+               cbar_kws={'label': 'Transition probability'},
                xticklabels=False, yticklabels=False)
-    
+
     ax_cbar.yaxis.set_ticks([], minor=True)
     plt.savefig(filename, bbox_inches='tight')
 

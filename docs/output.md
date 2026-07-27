@@ -65,6 +65,7 @@ If `--merge` is enabled, these matrices will also include WGBS (Methylation) dat
 This is the core results directory, containing the output of the segmentation modeling. Files are organized by sample and state number (e.g., `_s10`).
 
 #### 1. Segmentation
+
 <details markdown="1">
 <summary>Output files</summary>
 
@@ -75,6 +76,7 @@ This is the core results directory, containing the output of the segmentation mo
 </details>
 
 #### 2. Models
+
 <details markdown="1">
 <summary>Output files</summary>
 
@@ -87,6 +89,7 @@ This is the core results directory, containing the output of the segmentation mo
 </details>
 
 #### 3. Plots
+
 <details markdown="1">
 <summary>Output files</summary>
 

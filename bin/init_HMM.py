@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import pandas as pd 
+import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
@@ -14,7 +14,7 @@ def init_k_means(data, k, marker, distributions, file, methylation=None):
     json_data = {}
 
     json_data["states"] = k
-    
+
     json_data["marker"] = marker
 
     json_data["methylation"] = False
@@ -23,7 +23,7 @@ def init_k_means(data, k, marker, distributions, file, methylation=None):
         json_data["marker"] = marker[:-1]
 
     json_data["emission"] = []
-    
+
     scaler = StandardScaler()
     scaled_features = scaler.fit_transform(data)
     try:
@@ -50,7 +50,7 @@ def init_k_means(data, k, marker, distributions, file, methylation=None):
                 mean_DNA[i] = subset.mean(axis=0, skipna=True).to_list()[0]
                 std_DNA[i] = subset.std(axis=0, skipna=True).to_list()[0]
                 zero_DNA[i] = subset.isna().sum() / subset.shape[0]
-        
+
         maxN = np.empty(data.shape[1])
         for i in range(data.shape[1]):
             maxN[i] = max(data.values[:, i])
@@ -72,7 +72,7 @@ def init_k_means(data, k, marker, distributions, file, methylation=None):
             if json_data["methylation"]:
                 state.append({"distribution": 'BI', "parameters": {"p": 0.5}})
             json_data["emission"].append(state)
-    
+
     with open(file, 'w') as jsonFile:
         json.dump(json_data, jsonFile, indent=4)
 
@@ -82,7 +82,7 @@ def init_k_means_meth(data, k, distribution, file):
     json_data["marker"] = []
     json_data["emission"] = []
     json_data["methylation"] = True
-    
+
     scaler = StandardScaler()
     scaled_features = scaler.fit_transform(data)
     try:
@@ -100,7 +100,7 @@ def init_k_means_meth(data, k, distribution, file):
             state = []
             state.append([{"distribution": 'BI', "parameters": {"p": 0.5}}])
             json_data["emission"].append(state)
-    
+
     with open(file, 'w') as jsonFile:
         json.dump(json_data, jsonFile, indent=4)
 
@@ -121,11 +121,11 @@ def main():
     except:
         parser.print_help()
         return
-        
+
     marker = dict()
     with open(markerFile) as file:
         marker = yaml.safe_load(file)
-    
+
     if dataFile != '':
         k = marker['states']
         m = marker['marker']
@@ -156,4 +156,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

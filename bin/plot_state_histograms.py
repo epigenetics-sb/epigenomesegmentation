@@ -11,7 +11,7 @@ from distribution import pmf
 
 def main():
     warnings.simplefilter(action='ignore', category=FutureWarning)
-    
+
     parser = argparse.ArgumentParser(description = "Results of chromatin segmentation.")
     parser.add_argument("-c", metavar = "data", type = str, nargs = 1, help = "Data with histone modifcations and segmentation.")
     parser.add_argument("-j", metavar = "json", type = str, nargs = 1, help = "Json file with HMM parameters.")
@@ -40,7 +40,7 @@ def main():
     data = pd.read_csv(data, sep='\t', converters={0:str})
     data.columns = ['chr', 'start', 'end'] + list(data.columns)[3:]
     max = int(math.ceil(np.percentile(data.iloc[:,3:3+m].values, 99.5) / 100.0)) * 100
-    
+
     if HMM['methylation']:
         data['DNA-Methylation'] = data['Meth'] / data['Cov']
         data['DNA-Methylation'] = data['DNA-Methylation'].fillna(-0.005)

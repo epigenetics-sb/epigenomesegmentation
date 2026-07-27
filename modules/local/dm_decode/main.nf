@@ -36,7 +36,7 @@ process DM_DECODE {
     get_counts_for_all.py \\
         -d "${config}" \\
         -o "counts_${meta.id}"
-    
+
     # 3. RUN VITERBI DECODING
     for file in \$(find "counts_${meta.id}" -name "counts*" -type f -print); do
         name=\${file##*/counts_}

@@ -21,7 +21,7 @@ def main():
     parser.add_argument("-l", metavar = "state_length", type = str, nargs = 1, help = "Plot state length distribution.")
     parser.add_argument("-s", metavar = "states", type = str, nargs = 1, help = "Column name with state sequence.")
     parser.add_argument("-d", metavar = "bed_data", type = str, nargs = 1, help = "Segmentation BED file for colors.")
-    
+
     args = parser.parse_args()
 
     try:
@@ -43,7 +43,7 @@ def main():
     HMM = dict()
     with open(model) as file:
         HMM = json.load(file)
-    
+
     HMM['states'] = int(HMM['states'])
     # Safely handle the methylation flag
     HMM['methylation'] = True if HMM.get('methylation') == "true" or HMM.get('methylation') == True else False
@@ -54,12 +54,12 @@ def main():
     m = len(HMM.get('marker', []))
     data = pd.read_csv(data, sep='\t', converters={0:str})
     data.columns = ['chr', 'start', 'end'] + list(data.columns)[3:]
-    
+
     # Safe calculation for percentile (prevents IndexError on empty arrays)
     if m > 0:
         max_val = int(math.ceil(np.percentile(data.iloc[:,3:3+m].values, 99.5) / 100.0)) * 100
     else:
-        max_val = 100 
+        max_val = 100
 
     # DNA-Methylation logic
     if HMM['methylation']:

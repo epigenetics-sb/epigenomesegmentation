@@ -21,7 +21,7 @@ printHelp() {
    echo -e ""
    echo -e "${bold}${red}Please give always absolute paths!${normal}"
    echo -e "${bold}Mandatory:$(tput sgr0)"
-   echo -e "  -t Input sheet- Epigenetic marks label (first column) and corresponding histone mark bam file (second column )as tab seperated sheet." 
+   echo -e "  -t Input sheet- Epigenetic marks label (first column) and corresponding histone mark bam file (second column )as tab seperated sheet."
    echo -e "	* See sample input sheet "
    echo -e "	* Either provide complete path to the files or "
    echo -e "	* use -d argument to provide the complete path to the folder containing all marks and provide only file names in the input sheet. "
@@ -46,7 +46,7 @@ printHelp() {
    echo -e "		third column  - length of the chromosome in bp. Eg. 248956422"
 }
 
-# defiult values 
+# defiult values
 binsize=200
 shift_bp=75
 paired_end=ignore
@@ -69,11 +69,11 @@ do
                         shift_bp=$OPTARG ;;
                 p)
                         paired_end=$OPTARG ;;
-                f) 
-                        filename=$OPTARG ;; 
-                d) 
+                f)
+                        filename=$OPTARG ;;
+                d)
                         input_dir=$OPTARG ;;
-                g) 
+                g)
                         genome=$OPTARG ;;
                 r)
                         regions_chromosome=$OPTARG ;;
@@ -82,31 +82,31 @@ done
 
 echo -e "${bold}${magenta}The following command was used:${normal} ${bold}bash mixture_model_container.sh" $@ ${normal}
 
-# Output folder check if the user did not create the output folder than it would be created 
+# Output folder check if the user did not create the output folder than it would be created
 if [ ! -d $output_dir ]
 	then
 		mkdir -p ${output_dir}
 	else
-		echo -e "Failed to create an output directory! Directory may exist, in this case files will be overwritten." 
+		echo -e "Failed to create an output directory! Directory may exist, in this case files will be overwritten."
 fi
 
 
 if [ -z ${genome} ]
-then 
+then
         output_file=$(realpath -s ${output_dir}/${filename})
-else    
+else
         output_file=$(realpath -s ${output_dir}/${filename}_${genome})
 fi
 
 
-# if user provided input directory and paths of the bam file then create a new tab file 
+# if user provided input directory and paths of the bam file then create a new tab file
 if [ -z ${input_dir} ]
 then
         echo -e "Input file to be used: ${tab_file}"
-else 
-	
-        while read marks files 
-        do 
+else
+
+        while read marks files
+        do
                 path=$(realpath -s ${input_dir}/${files})
                 echo -e "${marks}\t${path}"
         done < ${tab_file} >  ${output_file}_episegmix_input.txt
@@ -115,21 +115,21 @@ else
 fi
 
 echo -e "$(timestamp) Checking for the input files"
-# 1. Check all the paths and the bam files works 
+# 1. Check all the paths and the bam files works
 bam_files=($(cut -f 2 ${tab_file}))
 number_of_bams=${#bam_files[@]}
 j=0
-while [ "$j" -le "$((number_of_bams-1))" ] 
-        do      
+while [ "$j" -le "$((number_of_bams-1))" ]
+        do
                 bamfile=${bam_files[$j]}
                 [ -f ${bamfile} ] || { echo "File '${bamfile}' not found."; exit 1; }
-                [ -f ${bamfile}.bai ] || { samtools index ${bamfile} ; } 
+                [ -f ${bamfile}.bai ] || { samtools index ${bamfile} ; }
                 j=$(($j + 1))
-        done	
+        done
 # 2. Create regions file if user did not provide
 echo -e "$(timestamp) Finalizing the regions for the count matrix"
 if [ -z ${regions_chromosome} ]
-then 
+then
         samtools view -H ${bamfile} 	\
                 | grep "@SQ" \
                 |cut -f 2,3 \
@@ -139,7 +139,7 @@ then
                 | awk '$1~/^chr[1-9XY][0-9]$/ || $1~/^chr[1-9XY]$/ ||$1~/^[1-9XY][0-9]$/ || $1~/^[1-9XY]$/' \
                 > ${output_file}_chrom_sizes.bed
         chrom_sizes=${output_file}_chrom_sizes.bed
-else    
+else
         echo "user provided chromosome regions will be used for generating count matrices"
         chrom_sizes=${regions_chromosome}
 fi
@@ -147,7 +147,7 @@ fi
 
 # 4. Run the script and generate the count matrix in the output folder
 echo -e "$(timestamp) Reading bam files and generating count matrix"
-counts.R ${tab_file} ${chrom_sizes} ${binsize} ${shift_bp} ${output_file} ${cores} ${paired_end} 
+counts.R ${tab_file} ${chrom_sizes} ${binsize} ${shift_bp} ${output_file} ${cores} ${paired_end}
 
 # 5. Create a count matrix for the EpiSegMix input
 counts_txt=${output_file}"_counts.txt"

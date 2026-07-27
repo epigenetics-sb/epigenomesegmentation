@@ -23,7 +23,7 @@ def set_plot_style():
 
 def main():
     warnings.simplefilter(action='ignore', category=FutureWarning)
-    
+
     parser = argparse.ArgumentParser(description = "Plot state colors.")
     parser.add_argument("-d", metavar = "data", type = str, nargs = 1, help = "Segmentation.")
     parser.add_argument("-o", metavar = "output", type = str, nargs = 1, help = "Output filename.")

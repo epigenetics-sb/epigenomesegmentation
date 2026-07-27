@@ -18,7 +18,7 @@ process STD_REPORT {
     """
     set -euo pipefail
     export MPLCONFIGDIR=\$(pwd)
-    
+
     mkdir -p plots/${meta.id}
 
     # 1. GENERATE DATA STATISTICS PLOTS

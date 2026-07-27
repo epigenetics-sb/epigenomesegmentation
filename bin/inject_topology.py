@@ -11,11 +11,11 @@ def main():
     # Load pre-initialized HMM
     with open(args.input, 'r') as f:
         hmm = json.load(f)
-    
+
     # Inject topology
     N = int(hmm.get('states', 0))
     hmm['topology'] = {str(s+1): [s] for s in range(N)}
-    
+
     # Save initialized HMM
     with open(args.output, 'w') as f:
         json.dump(hmm, f, indent=4)

@@ -43,7 +43,7 @@ bool parseArguments(int argc, char* argv[])
     try
     {
         bpo::store(bpo::command_line_parser(argc, argv).options(desc).run(),vm);
-        if (vm.count("help")) 
+        if (vm.count("help"))
         {
             std::cout << "Command line options: " << std::endl;
             std::cout << desc << "\n";
@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
     {
         return -1;
     }
-    
+
     omp_set_num_threads(threads);
 
     std::ifstream startModel (modelInput, std::ifstream::in);
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
     {
         std::cerr << "Cannot open input file: " + modelInput << std::endl;
         return  -1;
-    } 
+    }
 
     try
     {
@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
         if (countMatrix != "")
         {
             std::ifstream counts (countMatrix, std::ifstream::in);
-            if (!counts) 
+            if (!counts)
             {
                 std::cerr << "Cannot open input file: " + countMatrix << std::endl;
                 return -1;
@@ -103,17 +103,17 @@ int main(int argc, char* argv[])
                 return -1;
             }
         }
-        
+
         HMM::const_matrix_ptr<int> nObservation = std::make_shared<Matrix<int>>(Matrix<int>());
         if (hmm.has_methylation())
         {
             std::ifstream methylation (methylationMatrix, std::ifstream::in);
-            if (!methylation) 
+            if (!methylation)
             {
                 std::cerr << "Cannot open input file: " + methylationMatrix << std::endl;
                 return -1;
             }
-                
+
             nObservation = std::make_shared<Matrix<int>> (r.parse_methylation_matrix(methylation));
             methylation.close();
             if (!r.get_message().empty())
@@ -134,7 +134,7 @@ int main(int argc, char* argv[])
         if (!regions.empty())
         {
             std::ifstream index (regions, std::ifstream::in);
-            if (!index) 
+            if (!index)
             {
                 std::cerr << "Cannot open input file: " + regions << std::endl;
                 return -1;
@@ -160,11 +160,11 @@ int main(int argc, char* argv[])
             if (!modelOutput.empty())
             {
                 std::ofstream finalModel (modelOutput, std::ifstream::out);
-                if (!finalModel) 
+                if (!finalModel)
                 {
                     std::cerr << "Cannot open output file: " << modelOutput << std::endl;
                     return -1;
-                } 
+                }
                 finalModel << hmm;
                 finalModel.close();
             }

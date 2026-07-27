@@ -28,7 +28,7 @@ workflow EPIGENOMESEGMENTATION {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
-    
+
     main:
 
     ch_versions = channel.empty()
@@ -56,10 +56,10 @@ workflow EPIGENOMESEGMENTATION {
     // INITIAL DISTRIBUTION MAP
     // ---------------------------------------------------------
     ch_distributions = ch_forked_samplesheet.for_dists
-        .map { tuple -> 
+        .map { tuple ->
             def meta = tuple[0]
             def dist = meta.distribution ?: meta.distributions
-            [ meta.id, meta.epigenetic_mark, dist ] 
+            [ meta.id, meta.epigenetic_mark, dist ]
         }
         .groupTuple(by: 0)
         .map { tuple ->
@@ -94,7 +94,7 @@ workflow EPIGENOMESEGMENTATION {
         ch_versions = ch_versions.mix(PROCESS_HISTONES.out.versions)
         ch_counts   = ch_counts.mix(PROCESS_HISTONES.out.counts)
     }
-    
+
     // ---------------------------------------------------------
     // STEP 4: METHYLATION
     // ---------------------------------------------------------
@@ -138,14 +138,14 @@ workflow EPIGENOMESEGMENTATION {
         // STEP 6: INITIAL METADATA INJECTION
         // ---------------------------------------------------------
         ch_ready_for_analysis = ch_model_input
-            .map { tuple -> [ tuple[0].id, tuple ] } 
-            .join(ch_distributions)                  
+            .map { tuple -> [ tuple[0].id, tuple ] }
+            .join(ch_distributions)
             .map { tuple ->
                 def id             = tuple[0]
                 def original_tuple = tuple[1]
                 def dist_map       = tuple[2]
-                def new_meta       = original_tuple[0] + [ distributions: dist_map ]    
-                return [ new_meta ] + original_tuple.drop(1) 
+                def new_meta       = original_tuple[0] + [ distributions: dist_map ]
+                return [ new_meta ] + original_tuple.drop(1)
             }
 
         // ---------------------------------------------------------
@@ -157,24 +157,24 @@ workflow EPIGENOMESEGMENTATION {
         // PHASE A: FITTING
         if (params.fitting) {
             def dist_list = params.distributions ? params.distributions.split(',').collect{ it.trim() } : []
-            
+
             DISTRIBUTION_FITTING(
                 ch_ready_for_analysis.map { tuple -> [tuple[0], tuple[1]] },
                 dist_list,
-                Channel.fromPath(params.input).first() 
+                Channel.fromPath(params.input).first()
             )
             ch_versions = ch_versions.mix(DISTRIBUTION_FITTING.out.versions)
 
             // CHAINING LOGIC: If segmentation is requested, parse the new CSV and update the input
             if (params.best_fit_segmentation) {
-                
+
                 // Parse the new distributions from the CSV output
                 ch_updated_dist = DISTRIBUTION_FITTING.out.updated_samplesheet
                     .splitCsv(header: true)
-                    .map { tuple -> 
+                    .map { tuple ->
                         def meta = tuple[0]
                         def row  = tuple[1]
-                        [ meta.id, row.epigenetic_mark, row.distribution ] 
+                        [ meta.id, row.epigenetic_mark, row.distribution ]
                     }
                     .groupTuple(by: 0)
                     .map { tuple ->
@@ -187,14 +187,14 @@ workflow EPIGENOMESEGMENTATION {
 
                 // Inject the updated distributions back into the main data channel
                 ch_final_training_input = ch_ready_for_analysis
-                    .map { tuple -> [ tuple[0].id, tuple ] } 
-                    .join(ch_updated_dist)                  
+                    .map { tuple -> [ tuple[0].id, tuple ] }
+                    .join(ch_updated_dist)
                     .map { tuple ->
                         def id             = tuple[0]
                         def original_tuple = tuple[1]
                         def dist_map       = tuple[2]
-                        def new_meta       = original_tuple[0] + [ distributions: dist_map ]    
-                        return [ new_meta ] + original_tuple.drop(1) 
+                        def new_meta       = original_tuple[0] + [ distributions: dist_map ]
+                        return [ new_meta ] + original_tuple.drop(1)
                     }
             }
         }
@@ -202,14 +202,14 @@ workflow EPIGENOMESEGMENTATION {
         // PHASE B: SEGMENTATION / DURATION / STANDARD TRAINING
         // Runs if it's a standard run, OR if it's a fitting run that explicitly requested downstream segmentation
         if (!params.fitting || params.best_fit_segmentation) {
-            
+
             if (params.duration) {
                 MODEL_TRAINING_DM(ch_final_training_input)
                 ch_versions = ch_versions.mix(MODEL_TRAINING_DM.out.versions)
 
             } else if (is_dna) {
-                ch_dna_model_input = ch_final_training_input.map { tuple -> 
-                    [ tuple[0], tuple[1], tuple.size() > 2 ? tuple[2] : params.states ] 
+                ch_dna_model_input = ch_final_training_input.map { tuple ->
+                    [ tuple[0], tuple[1], tuple.size() > 2 ? tuple[2] : params.states ]
                 }
                 MODEL_TRAINING_DNA(ch_dna_model_input)
                 ch_versions = ch_versions.mix(MODEL_TRAINING_DNA.out.versions)

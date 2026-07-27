@@ -7,16 +7,16 @@ process GENERATE_COUNT_MATRIX_BAM {
         'aaryanjaitly/episegmix_counts_container:latest' }"
 
     input:
-    tuple val(meta), 
-          val(meta_list), 
-          path(bams), 
+    tuple val(meta),
+          val(meta_list),
+          path(bams),
           path(bais)
-    path reference_file 
+    path reference_file
     val  genome
-    
+
     output:
-    tuple val(meta), 
-          path("${meta.id}_Histones/*_refined_counts.txt"), 
+    tuple val(meta),
+          path("${meta.id}_Histones/*_refined_counts.txt"),
           emit: counts
     path "versions.yml", emit: versions
 
@@ -31,11 +31,11 @@ process GENERATE_COUNT_MATRIX_BAM {
         def is_pe    = m.paired_end
         def bam_file = bams instanceof List ? bams[index].name : bams.name
         def line     = "${mark}\t${bam_file}"
-        
-        if (is_pe) { 
-            pe_lines.add(line) 
-        } else { 
-            se_lines.add(line) 
+
+        if (is_pe) {
+            pe_lines.add(line)
+        } else {
+            se_lines.add(line)
         }
     }
 
@@ -45,7 +45,7 @@ process GENERATE_COUNT_MATRIX_BAM {
     """
     set -euo pipefail
     mkdir -p "${out_dir}"
-    
+
     PE_OUT="${out_dir}/${sample_id}_PE_${genome}_refined_counts.txt"
     SE_OUT="${out_dir}/${sample_id}_SE_${genome}_refined_counts.txt"
     FINAL_OUT="${out_dir}/${sample_id}_${genome}_refined_counts.txt"
@@ -55,10 +55,10 @@ process GENERATE_COUNT_MATRIX_BAM {
 
     if [[ -n "${pe_content}" ]]; then
         echo "${pe_content}" > "PE_info.txt"
-        
+
         # Create a specific copy for the PE run
         cp new_reference_base new_reference_pe
-        
+
         bash counts.sh \\
             -t "PE_info.txt" \\
             -o "${out_dir}" \\
@@ -72,10 +72,10 @@ process GENERATE_COUNT_MATRIX_BAM {
 
     if [[ -n "${se_content}" ]]; then
         echo "${se_content}" > "SE_info.txt"
-        
+
         # Create a specific copy for the SE run
         cp new_reference_base new_reference_se
-        
+
         bash counts.sh \\
             -t "SE_info.txt" \\
             -o "${out_dir}" \\

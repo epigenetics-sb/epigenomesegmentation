@@ -10,9 +10,9 @@ process SPLIT_MERGED_COUNTS {
     tuple val(meta), path(merged_bed)
 
     output:
-    tuple val(meta), 
-          path("${meta.id}_Histone_Input.txt"), 
-          path("${meta.id}_Meth_Input.txt"), 
+    tuple val(meta),
+          path("${meta.id}_Histone_Input.txt"),
+          path("${meta.id}_Meth_Input.txt"),
           emit: inputs
     path "versions.yml", emit: versions
 

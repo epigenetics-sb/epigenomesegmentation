@@ -19,7 +19,7 @@ process DISTFIT_HISTONE_TRAIN {
 
     output:
     tuple val(meta), path("*final-model.json"), emit: model
-    tuple val(meta), val(mark), val(dist),      emit: meta_info 
+    tuple val(meta), val(mark), val(dist),      emit: meta_info
     path "versions.yml",                        emit: versions
 
     script:

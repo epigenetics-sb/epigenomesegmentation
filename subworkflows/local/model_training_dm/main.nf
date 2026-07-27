@@ -6,8 +6,8 @@ include { DM_REPORT  } from '../../../modules/local/dm_report/main.nf'
 workflow MODEL_TRAINING_DM {
 
     take:
-    ch_input       
-     
+    ch_input
+
     main:
     ch_versions = Channel.empty()
 
@@ -15,19 +15,19 @@ workflow MODEL_TRAINING_DM {
     ch_dm_prepare_in = ch_input
         .flatMap { meta, histone, meth ->
             def state_list = (params.states instanceof String) ? params.states.split(',') : params.states
-            
+
             state_list.collect { state ->
                 def new_meta = meta.clone()
                 new_meta.id = "${meta.id}_s${state}"
-                
+
                 [ new_meta, histone, meth, state ]
             }
         }
 
     // Generate configuration and count matrices
     DM_PREPARE(
-        ch_dm_prepare_in,    
-        params.chr_parameter_estimation  
+        ch_dm_prepare_in,
+        params.chr_parameter_estimation
     )
     ch_versions = ch_versions.mix(DM_PREPARE.out.versions)
 

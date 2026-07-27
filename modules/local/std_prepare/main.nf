@@ -25,7 +25,7 @@ process STD_PREPARE {
 
     """
     set -euo pipefail
-    
+
     # 1. GENERATE YAML CONFIG
     create_std_yaml.py \\
         --prefix "${prefix}" \\

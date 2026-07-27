@@ -5,7 +5,7 @@ process DM_PREPARE {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'aaryanjaitly/episegmix:new_plots' :
         'aaryanjaitly/episegmix:new_plots' }"
-    
+
     input:
     tuple val(meta), path(histone), path(meth), val(state)
     val chr_params
@@ -21,13 +21,13 @@ process DM_PREPARE {
     def prefix    = "${meta.id}"
     def dist_hist = params.dist_histone.toString()
     def dist_meth = params.dist_methyl.toString()
-    
+
     // Safely format the overrides map into a comma-separated string for the python script
     def dist_overrides = meta.distributions ? meta.distributions.collect { k, v -> "${k}:${v}" }.join(",") : ""
 
     """
     set -euo pipefail
-    
+
     # 1. Generate the YAML config via external script
     create_dm_yaml.py \\
         --prefix "${prefix}" \\

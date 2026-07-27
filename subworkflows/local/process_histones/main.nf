@@ -2,14 +2,14 @@ include { CLEAN_AND_INDEX_BAM }       from '../../../modules/local/clean_and_ind
 include { GENERATE_COUNT_MATRIX_BAM } from '../../../modules/local/generate_count_matrix_bam/main.nf'
 
 workflow PROCESS_HISTONES {
-    
+
     take:
     ch_input_bam
     chrom_sizes
 
     main:
     ch_versions = Channel.empty()
-    
+
     // Clean headers and index input BAM files
     CLEAN_AND_INDEX_BAM(
         ch_input_bam
@@ -44,7 +44,7 @@ workflow PROCESS_HISTONES {
         params.genome
     )
     ch_versions = ch_versions.mix(GENERATE_COUNT_MATRIX_BAM.out.versions)
-    
+
     emit:
     counts   = GENERATE_COUNT_MATRIX_BAM.out.counts
     versions = ch_versions

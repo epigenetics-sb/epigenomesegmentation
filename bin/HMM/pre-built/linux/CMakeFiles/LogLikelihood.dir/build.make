@@ -126,4 +126,3 @@ CMakeFiles/LogLikelihood.dir/clean:
 CMakeFiles/LogLikelihood.dir/depend:
 	cd /src/HMM/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /src/HMM /src/HMM /src/HMM/build /src/HMM/build /src/HMM/build/CMakeFiles/LogLikelihood.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/LogLikelihood.dir/depend
-

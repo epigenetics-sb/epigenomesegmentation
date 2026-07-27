@@ -335,19 +335,19 @@ events:
       - "CMakeLists.txt:8 (project)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-      Compiler: /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/arm64-apple-darwin20.0.0-clang 
+      Compiler: /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/arm64-apple-darwin20.0.0-clang
       Build flags: -ftree-vectorize;-fPIC;-fstack-protector-strong;-O2;-pipe;-isystem;/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/include
-      Id flags:  
-      
+      Id flags:
+
       The output was:
       0
-      
-      
+
+
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
-      
+
       The C compiler identification is Clang, found in:
         /Users/aaryanjaitly/Desktop/dev/epigenomesegmentation/bin/HMM/build/CMakeFiles/4.3.2/CompilerIdC/a.out
-      
+
   -
     kind: "message-v1"
     backtrace:
@@ -386,8 +386,8 @@ events:
         # 199 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/Availability.h" 2 3 4
         # 208 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/AvailabilityMacros.h" 2 3 4
         # 2 "apple-sdk.c" 2
-        
-        
+
+
       Found apple sysroot: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
   -
     kind: "find-v1"
@@ -1932,19 +1932,19 @@ events:
       - "CMakeLists.txt:8 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-      Compiler: /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/arm64-apple-darwin20.0.0-clang++ 
+      Compiler: /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/arm64-apple-darwin20.0.0-clang++
       Build flags: -ftree-vectorize;-fPIC;-fstack-protector-strong;-O2;-pipe;-stdlib=libc++;-fvisibility-inlines-hidden;-fmessage-length=0;-isystem;/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/include
-      Id flags:  
-      
+      Id flags:
+
       The output was:
       0
-      
-      
+
+
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
-      
+
       The CXX compiler identification is Clang, found in:
         /Users/aaryanjaitly/Desktop/dev/epigenomesegmentation/bin/HMM/build/CMakeFiles/4.3.2/CompilerIdCXX/a.out
-      
+
   -
     kind: "message-v1"
     backtrace:
@@ -1983,8 +1983,8 @@ events:
         # 199 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/Availability.h" 2 3 4
         # 208 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/AvailabilityMacros.h" 2 3 4
         # 2 "apple-sdk.cpp" 2
-        
-        
+
+
       Found apple sysroot: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
   -
     kind: "find-v1"
@@ -2543,7 +2543,7 @@ events:
       cached: true
       stdout: |
         Change Dir: '/Users/aaryanjaitly/Desktop/dev/epigenomesegmentation/bin/HMM/build/CMakeFiles/CMakeScratch/TryCompile-GkRe50'
-        
+
         Run Build Command(s): /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_c7d4a/fast
         /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_c7d4a.dir/build.make CMakeFiles/cmTC_c7d4a.dir/build
         Building C object CMakeFiles/cmTC_c7d4a.dir/CMakeCCompilerABI.c.o
@@ -2582,7 +2582,7 @@ events:
         Framework search paths:
         	/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/
         /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/arm64-apple-darwin20.0.0-clang -ftree-vectorize -fPIC -fstack-protector-strong -O2 -isystem /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/include  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-rpath,/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/opt/homebrew/opt/llvm/lib -v -Wl,-v CMakeFiles/cmTC_c7d4a.dir/CMakeCCompilerABI.c.o -o cmTC_c7d4a
-        
+
       exitCode: 0
   -
     kind: "message-v1"
@@ -2611,8 +2611,8 @@ events:
         collapse include dir [/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib/clang/18/include] ==> [/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib/clang/18/include]
         collapse include dir [/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include]
         implicit include dirs: [/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/include;/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib/clang/18/include;/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include]
-      
-      
+
+
   -
     kind: "message-v1"
     backtrace:
@@ -2706,8 +2706,8 @@ events:
         implicit objs: []
         implicit dirs: [/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib;/opt/homebrew/opt/llvm/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib]
         implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks]
-      
-      
+
+
   -
     kind: "try_compile-v1"
     backtrace:
@@ -2734,7 +2734,7 @@ events:
       cached: true
       stdout: |
         Change Dir: '/Users/aaryanjaitly/Desktop/dev/epigenomesegmentation/bin/HMM/build/CMakeFiles/CMakeScratch/TryCompile-tLtNEp'
-        
+
         Run Build Command(s): /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_b9dc9/fast
         /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_b9dc9.dir/build.make CMakeFiles/cmTC_b9dc9.dir/build
         Building CXX object CMakeFiles/cmTC_b9dc9.dir/CMakeCXXCompilerABI.cpp.o
@@ -2774,7 +2774,7 @@ events:
         Framework search paths:
         	/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/
         /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/arm64-apple-darwin20.0.0-clang++ -ftree-vectorize -fPIC -fstack-protector-strong -O2 -stdlib=libc++ -fvisibility-inlines-hidden -fmessage-length=0 -isystem /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/include  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-rpath,/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/opt/homebrew/opt/llvm/lib -v -Wl,-v CMakeFiles/cmTC_b9dc9.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_b9dc9
-        
+
       exitCode: 0
   -
     kind: "message-v1"
@@ -2805,8 +2805,8 @@ events:
         collapse include dir [/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib/clang/18/include] ==> [/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib/clang/18/include]
         collapse include dir [/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include]
         implicit include dirs: [/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/include;/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/include/c++/v1;/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib/clang/18/include;/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include]
-      
-      
+
+
   -
     kind: "message-v1"
     backtrace:
@@ -2902,8 +2902,8 @@ events:
         implicit objs: []
         implicit dirs: [/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib;/opt/homebrew/opt/llvm/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib]
         implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks]
-      
-      
+
+
   -
     kind: "find_package-v1"
     backtrace:
@@ -3854,7 +3854,7 @@ events:
       cached: true
       stdout: |
         Change Dir: '/Users/aaryanjaitly/Desktop/dev/epigenomesegmentation/bin/HMM/build/CMakeFiles/CMakeScratch/TryCompile-xSpy8E'
-        
+
         Run Build Command(s): /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_2de21/fast
         /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_2de21.dir/build.make CMakeFiles/cmTC_2de21.dir/build
         Building C object CMakeFiles/cmTC_2de21.dir/src.c.o
@@ -3862,7 +3862,7 @@ events:
         Linking C executable cmTC_2de21
         /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2de21.dir/link.txt --verbose=1
         /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/arm64-apple-darwin20.0.0-clang -ftree-vectorize -fPIC -fstack-protector-strong -O2 -pipe -isystem /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/include  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-rpath,/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/opt/homebrew/opt/llvm/lib  CMakeFiles/cmTC_2de21.dir/src.c.o -o cmTC_2de21
-        
+
       exitCode: 0
   -
     kind: "find_package-v1"
@@ -9309,7 +9309,7 @@ events:
       cached: true
       stdout: |
         Change Dir: '/Users/aaryanjaitly/Desktop/dev/epigenomesegmentation/bin/HMM/build/CMakeFiles/CMakeScratch/TryCompile-KgusaW'
-        
+
         Run Build Command(s): /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_5c56b/fast
         /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_5c56b.dir/build.make CMakeFiles/cmTC_5c56b.dir/build
         Building C object CMakeFiles/cmTC_5c56b.dir/OpenMPTryFlag.c.o
@@ -9332,7 +9332,7 @@ events:
         Framework search paths:
         	/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/
         /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/arm64-apple-darwin20.0.0-clang -ftree-vectorize -fPIC -fstack-protector-strong -O2 -pipe -isystem /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/include -fopenmp=libomp -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-rpath,/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/opt/homebrew/opt/llvm/lib  -v -Wl,-v CMakeFiles/cmTC_5c56b.dir/OpenMPTryFlag.c.o -o cmTC_5c56b
-        
+
       exitCode: 0
   -
     kind: "message-v1"
@@ -9401,8 +9401,8 @@ events:
         implicit objs: []
         implicit dirs: [/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib;/opt/homebrew/opt/llvm/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib]
         implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks]
-      
-      
+
+
   -
     kind: "find-v1"
     backtrace:
@@ -9539,7 +9539,7 @@ events:
       cached: true
       stdout: |
         Change Dir: '/Users/aaryanjaitly/Desktop/dev/epigenomesegmentation/bin/HMM/build/CMakeFiles/CMakeScratch/TryCompile-DtWKwF'
-        
+
         Run Build Command(s): /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_b54d6/fast
         /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_b54d6.dir/build.make CMakeFiles/cmTC_b54d6.dir/build
         Building CXX object CMakeFiles/cmTC_b54d6.dir/OpenMPTryFlag.cpp.o
@@ -9562,7 +9562,7 @@ events:
         Framework search paths:
         	/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/
         /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/arm64-apple-darwin20.0.0-clang++ -ftree-vectorize -fPIC -fstack-protector-strong -O2 -pipe -stdlib=libc++ -fvisibility-inlines-hidden -fmessage-length=0 -isystem /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/include -std=c++17 -stdlib=libc++ -fopenmp=libomp -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-rpath,/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/opt/homebrew/opt/llvm/lib  -v -Wl,-v CMakeFiles/cmTC_b54d6.dir/OpenMPTryFlag.cpp.o -o cmTC_b54d6
-        
+
       exitCode: 0
   -
     kind: "message-v1"
@@ -9632,8 +9632,8 @@ events:
         implicit objs: []
         implicit dirs: [/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib;/opt/homebrew/opt/llvm/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib]
         implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks]
-      
-      
+
+
   -
     kind: "try_compile-v1"
     backtrace:
@@ -9659,7 +9659,7 @@ events:
       cached: true
       stdout: |
         Change Dir: '/Users/aaryanjaitly/Desktop/dev/epigenomesegmentation/bin/HMM/build/CMakeFiles/CMakeScratch/TryCompile-ewsMQh'
-        
+
         Run Build Command(s): /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_81f71/fast
         /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_81f71.dir/build.make CMakeFiles/cmTC_81f71.dir/build
         Building C object CMakeFiles/cmTC_81f71.dir/OpenMPCheckVersion.c.o
@@ -9667,7 +9667,7 @@ events:
         Linking C executable cmTC_81f71
         /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/cmake -E cmake_link_script CMakeFiles/cmTC_81f71.dir/link.txt --verbose=1
         /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/arm64-apple-darwin20.0.0-clang -ftree-vectorize -fPIC -fstack-protector-strong -O2 -pipe -isystem /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/include -fopenmp=libomp -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-rpath,/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/opt/homebrew/opt/llvm/lib  CMakeFiles/cmTC_81f71.dir/OpenMPCheckVersion.c.o -o cmTC_81f71
-        
+
       exitCode: 0
   -
     kind: "try_compile-v1"
@@ -9694,7 +9694,7 @@ events:
       cached: true
       stdout: |
         Change Dir: '/Users/aaryanjaitly/Desktop/dev/epigenomesegmentation/bin/HMM/build/CMakeFiles/CMakeScratch/TryCompile-0hP8oC'
-        
+
         Run Build Command(s): /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_53afa/fast
         /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_53afa.dir/build.make CMakeFiles/cmTC_53afa.dir/build
         Building CXX object CMakeFiles/cmTC_53afa.dir/OpenMPCheckVersion.cpp.o
@@ -9702,6 +9702,6 @@ events:
         Linking CXX executable cmTC_53afa
         /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/cmake -E cmake_link_script CMakeFiles/cmTC_53afa.dir/link.txt --verbose=1
         /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/bin/arm64-apple-darwin20.0.0-clang++ -ftree-vectorize -fPIC -fstack-protector-strong -O2 -pipe -stdlib=libc++ -fvisibility-inlines-hidden -fmessage-length=0 -isystem /Users/aaryanjaitly/.local/share/mamba/envs/episegmix/include -std=c++17 -stdlib=libc++ -fopenmp=libomp -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-rpath,/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/Users/aaryanjaitly/.local/share/mamba/envs/episegmix/lib -L/opt/homebrew/opt/llvm/lib  CMakeFiles/cmTC_53afa.dir/OpenMPCheckVersion.cpp.o -o cmTC_53afa
-        
+
       exitCode: 0
 ...

@@ -19,7 +19,7 @@ process DNA_REPORT {
     set -euo pipefail
     export MPLCONFIGDIR=\$(pwd)
     mkdir -p plots/${meta.id}
-    
+
     # 1. GENERATE RESULTS PLOTS
     results.py \\
         -c "${seg_txt}" \\

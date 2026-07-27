@@ -1,7 +1,7 @@
 include { GENERATE_COUNT_MATRIX_BED } from '../../../modules/local/generate_count_matrix_bed/main.nf'
 
 workflow PROCESS_METHYL {
-    
+
     take:
     ch_input_bed
 

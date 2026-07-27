@@ -34,7 +34,7 @@ process STD_TRAIN {
         ${meth_arg} \\
         -m "${config}" \\
         -j "${meta.id}-init.json"
-    
+
     HMMChromSeg \\
         -t \\
         -m "${meta.id}-init.json" \\

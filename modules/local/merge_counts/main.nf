@@ -7,18 +7,18 @@ process MERGE_COUNTS {
         'community.wave.seqera.io/library/bedtools:2.31.1--7c4ce4cb07c09ee4' }"
 
     input:
-    tuple val(meta), 
-          val(meta_list_meth), 
-          path(files_meth), 
-          val(meta_list_hist), 
-          path(files_hist) 
+    tuple val(meta),
+          val(meta_list_meth),
+          path(files_meth),
+          val(meta_list_hist),
+          path(files_hist)
     val   genome
-    path  ref            
-    path  segment_coords 
+    path  ref
+    path  segment_coords
 
     output:
-    tuple val(meta), 
-          path("${meta.id}_seg_tabs_counts.bed"), 
+    tuple val(meta),
+          path("${meta.id}_seg_tabs_counts.bed"),
           emit: merged_counts
     path "versions.yml", emit: versions
 
@@ -30,7 +30,7 @@ process MERGE_COUNTS {
     // Assign paths based on modality
     meta_list_meth.eachWithIndex { m, i ->
         def current_file = files_meth instanceof List ? files_meth[i].name : files_meth.name
-        if (m.modality == 'WGBS') { wgbs_path = current_file } 
+        if (m.modality == 'WGBS') { wgbs_path = current_file }
         else if (m.modality == 'NOMe-seq') { nome_path = current_file }
     }
 

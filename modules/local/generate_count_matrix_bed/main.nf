@@ -16,7 +16,7 @@ process GENERATE_COUNT_MATRIX_BED {
     script:
     def sample_id = meta.id
     def modality  = meta.modality
-    
+
     """
     # Execute external bash script
     generate_count_matrix_bed.sh "${sample_id}" "${modality}" "${file_path}"

@@ -24,8 +24,8 @@ workflow MODEL_TRAINING_STD {
 
     // Generate training configuration and count files
     STD_PREPARE (
-        ch_std_prepare_in,    
-        params.chr_parameter_estimation   
+        ch_std_prepare_in,
+        params.chr_parameter_estimation
     )
     ch_versions = ch_versions.mix(STD_PREPARE.out.versions)
 

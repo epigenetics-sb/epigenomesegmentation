@@ -16,11 +16,11 @@ process DISTFIT_HISTONE_ASSESS {
 
     input:
     tuple val(meta), path(histone_data), path(models)
-    path original_csv 
+    path original_csv
 
     output:
     tuple val(meta), path("DISTFIT_${meta.id}_samplesheet.csv"), emit: updated_samplesheet
-    path "versions.yml", emit: versions 
+    path "versions.yml", emit: versions
 
     script:
     def model_files = models.join(' ')
@@ -48,7 +48,7 @@ process DISTFIT_HISTONE_ASSESS {
         for cfile in temp_counts/\${mark}/counts*.txt; do
             [ -f "\$cfile" ] || continue
             rfile="temp_counts/\${mark}/regions_\${cfile##*counts_}"
-            
+
             if [ -f "\$rfile" ]; then
                 score=\$(LogLikelihood -m "\$model" -c "\$cfile" -r "\$rfile" || echo "NaN")
                 echo -e "\$dist\\t\$mark\\t\$score" >> log_likelihoods.txt
@@ -63,7 +63,7 @@ process DISTFIT_HISTONE_ASSESS {
         -s ${meta.id} \\
         -o DISTFIT_${meta.id}_samplesheet.csv
 
-    # 6. Capture versions 
+    # 6. Capture versions
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         python: \$(python --version | awk '{print \$2}')

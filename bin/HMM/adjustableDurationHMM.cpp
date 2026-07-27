@@ -45,7 +45,7 @@ void AdjustableDurationHMM::update_transitions(size_t index, std::vector<HMM::ma
     size_t numStates = substates.size();
     size_t startIndex = substates[0];
     size_t endIndex = substates[numStates-1];
-    
+
     size_t obs = logGamma.size();
     double lowerProbBound = lp::ext_log(pow(10.0, -10.0));
     double xi_tij = 0;
@@ -129,7 +129,7 @@ void AdjustableDurationHMM::update_transitions(size_t index, std::vector<HMM::ma
         new_logA(endIndex, endIndex) = lp::log_mul(num, -denom);
 
 
-        // update outgoing transitions of last state 
+        // update outgoing transitions of last state
         denom = NAN;
         for (size_t k = 0; k < obs; ++k)
         {
@@ -139,7 +139,7 @@ void AdjustableDurationHMM::update_transitions(size_t index, std::vector<HMM::ma
                 denom = lp::log_add(denom, (*logGamma[k])(t, endIndex));
             }
         }
-        
+
         double sum = NAN;
         for (size_t j = 0; j < N; ++j)
         {
@@ -162,13 +162,13 @@ void AdjustableDurationHMM::update_transitions(size_t index, std::vector<HMM::ma
         }
 
 
-        // normalize outgoing transitions to one 
+        // normalize outgoing transitions to one
         double ratio = lp::log_mul(new_logA(substates[0], substates[1]), -sum);
         for (size_t j = 0; j < N; ++j)
         {
             if (j != endIndex)
             {
-                new_logA(endIndex, j) = lp::log_mul(new_logA(endIndex, j), ratio);  
+                new_logA(endIndex, j) = lp::log_mul(new_logA(endIndex, j), ratio);
             }
         }
     }
@@ -218,7 +218,7 @@ void AdjustableDurationHMM::M_step(HMM::const_matrix_ptr<int> observation, HMM::
 {
     size_t states = stateIndices.size();
     Matrix<double> new_logA = Matrix<double> (N, N, NAN);
-    
+
     #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < states; ++i)
     {
@@ -241,7 +241,7 @@ void AdjustableDurationHMM::init_initial()
 void AdjustableDurationHMM::init_transitions(const std::vector<double>& selfP)
 {
     size_t states = stateIndices.size();
-    
+
     logA = Matrix<double> (N, N, NAN);
 
     // outgoing transition probabilities are initialized uniformly (considering fixed self transition probability)
@@ -249,7 +249,7 @@ void AdjustableDurationHMM::init_transitions(const std::vector<double>& selfP)
     {
         double logSelfP = lp::ext_log(selfP[i]);
         double logNextP = lp::ext_log((1.0 - selfP[i]));
-        
+
         // set transition probabilities for inner states of  the sub-HMM
         const std::vector<size_t>& subHMM = stateIndices[i];
         for (size_t j = 0; j < subHMM.size()-1; ++j)
@@ -257,7 +257,7 @@ void AdjustableDurationHMM::init_transitions(const std::vector<double>& selfP)
             logA(subHMM[j], subHMM[j+1]) = logNextP;
             logA(subHMM[j], subHMM[j]) = logSelfP;
         }
-        
+
         // set transition probabilities for last state of the sub-HMM
         double logSwicthP = lp::ext_log((1.0 - selfP[i]) * (1.0 / (states-1)));
         size_t endState = subHMM[subHMM.size()-1];
@@ -269,13 +269,13 @@ void AdjustableDurationHMM::init_transitions(const std::vector<double>& selfP)
                 size_t nextState = stateIndices[j][0];
                 logA(endState, nextState) = logSwicthP;
             }
-        } 
-    }    
+        }
+    }
 }
 
 void AdjustableDurationHMM::init_transitions()
 {
-    init_transitions(std::vector<double>(stateIndices.size(), 0.8));   
+    init_transitions(std::vector<double>(stateIndices.size(), 0.8));
 }
 
 void AdjustableDurationHMM::process_state_sequence(std::vector<int>& stateSequence) const

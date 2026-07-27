@@ -35,7 +35,7 @@ process DM_TRAIN {
         ${meth_arg} \\
         -m "${config}" \\
         -j "${meta.id}-preinit.json"
-    
+
     add_topology_to_init.py  \\
         --input "${meta.id}-preinit.json" \\
         --output "${meta.id}-init.json"

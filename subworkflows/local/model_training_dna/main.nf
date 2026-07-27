@@ -40,7 +40,7 @@ workflow MODEL_TRAINING_DNA {
         .join(DNA_TRAIN.out.model)
         .join(DNA_PREPARE.out.counts)
         .join(DNA_PREPARE.out.train_regions)
-        
+
     DNA_DECODE(ch_decode_inputs)
     ch_versions = ch_versions.mix(DNA_DECODE.out.versions)
 

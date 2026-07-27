@@ -17,7 +17,7 @@ fi
 
 {
     echo -e "chr\tstart\tend\tCov\tMeth"
-    
+
     join -1 1 -2 1 -a 1 -a 2 \
         <( ${READ_CMD} "${FILE_PATH}" \
             | awk -v OFS='\t' '$6=="+" {print $1"_"$2, $1, $2, $6, $5, ($11*$5)/100}' \

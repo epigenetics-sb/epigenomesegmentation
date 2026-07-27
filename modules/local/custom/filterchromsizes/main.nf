@@ -21,7 +21,7 @@ process CUSTOM_FILTERCHROMSIZES {
     script:
     def args = task.ext.args ?: '-v OFS="\\t" \'$1 ~ /^chr([1-9][0-9]?|X|Y)$/ { sub(/^chr/, "", $1); print}\''
     def prefix   = task.ext.prefix ?: "${chromsizes}"
-    
+
     """
     awk \\
         $args \\
@@ -32,7 +32,7 @@ process CUSTOM_FILTERCHROMSIZES {
     stub:
     def args = task.ext.args ?: ''
     def prefix   = task.ext.prefix ?: "${chromsizes}"
-    
+
     // TODO nf-core: A stub section should mimic the execution of the original module as best as possible
     //               Have a look at the following examples:
     //               Simple example: https://github.com/nf-core/modules/blob/624977dfaf562211e68a8a868ca80acc8461f1ac/modules/nf-core/cutadapt/main.nf#L34-L46
@@ -42,7 +42,7 @@ process CUSTOM_FILTERCHROMSIZES {
     //               - The use of the variable in the script `echo $args ` below.
     """
     echo $args
-    
+
     touch ${prefix}_V2
     """
 }
