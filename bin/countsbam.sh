@@ -56,8 +56,29 @@ FINAL_OUT="${prefix}.tab"
 # --- 1. DYNAMIC MERGE LOGIC ---
 
 if [[ -f "$SE_FILE" ]] && [[ -f "$PE_FILE" ]]; then
-    # Both exist: Put them side-by-side (keep cols 1,2,3 from SE, grab col 4+ from PE)
-    paste "$SE_FILE" <(cut -f4- "$PE_FILE") > "$FINAL_OUT"
+    
+    # 1. Extract and combine the headers directly into FINAL_OUT
+    paste <(head -n 1 "$SE_FILE") <(head -n 1 "$PE_FILE" | cut -f4-) > "$FINAL_OUT"
+
+    # 2. Get the number of columns in the SE file dynamically
+    SE_COLS=$(awk -F'\t' '{print NF; exit}' "$SE_FILE")
+
+    # 3. Intersect the data (using tail -n +2 to skip headers) and append (>>) to FINAL_OUT
+    bedtools intersect -a <(tail -n +2 "$SE_FILE") -b <(tail -n +2 "$PE_FILE") -wa -wb -f 1.0 -r | \
+        awk -v se="$SE_COLS" 'BEGIN{FS="\t"; OFS="\t"} {
+            # Keep all columns from SE_FILE
+            line = $1
+            for (i=2; i<=se; i++) {
+                line = line OFS $i
+            }
+            # Append columns from PE_FILE (skipping its 1st, 2nd, and 3rd cols: chr, start, end)
+            for (i=se+4; i<=NF; i++) {
+                line = line OFS $i
+            }
+            print line
+        }' >> "$FINAL_OUT"
+
+    # 4. Clean up
     rm -f "$SE_FILE" "$PE_FILE"
 
 elif [[ -f "$SE_FILE" ]]; then
