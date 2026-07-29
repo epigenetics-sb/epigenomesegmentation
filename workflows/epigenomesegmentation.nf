@@ -87,7 +87,7 @@ workflow EPIGENOMESEGMENTATION {
     }
 
 
-    if (params.methcounts && params.dna) {
+    else if (params.methcounts && params.dna) {
 
         ch_methcounts = Channel.fromPath(params.methcounts).first()
         ch_mapped_bed = ch_input_branched.bed

@@ -19,7 +19,6 @@ workflow MERGE {
         ]
     }
 
-    ch_in_stripheader.view()
     CUSTOM_STRIPHEADER(ch_in_stripheader)
 
     ch_merge_new = ch_merge.join(CUSTOM_STRIPHEADER.out.noheader)
