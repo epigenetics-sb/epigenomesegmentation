@@ -92,14 +92,12 @@ add_topology_to_init.py \
     --output "${OUTPUT}-init.json"
 
 echo "3/3: Running TopologyHMM..."
-TopologyHMM \
-    -t \
-    -n "${ADJUSTMENT}" \
+TopologyHMM -t -n "${ADJUSTMENT}" \
     -m "${OUTPUT}-init.json" \
     -o "final-model-${OUTPUT}.json" \
     -c "${TRAINCOUNTS}" \
     -x "${TRAINMETHCOUNTS}" \
-    -r "${TRAINREGIONS}"    \
+    -r "${TRAINREGIONS}" \
     -i "${ITERATIONS}" \
     -e "${EPSILON}" \
     -p "${THREADS}" &> "${OUTPUT}.log"
