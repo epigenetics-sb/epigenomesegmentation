@@ -58,11 +58,10 @@ Processed alignment files that have been filtered (e.g., "nochr" suffix) and ind
 
 </details>
 
-If `--merge` is enabled, these matrices will also include WGBS (Methylation) data intersected with the histone bins.
 
 ### EpiSegMix
 
-This is the core results directory, containing the output of the segmentation modeling. Files are organized by sample and state number (e.g., `_s10`).
+This is the core results directory, containing the output of the segmentation modeling. Files are organized by sample and state number (e.g., `_10`).
 
 #### 1. Segmentation
 
@@ -111,13 +110,6 @@ This is the core results directory, containing the output of the segmentation mo
 <summary>Output files</summary>
 
 - `pipeline_info/`
-- `EpiSegMix/[SampleID]/Plots/`
-  - `*-correlation.png`: Correlation matrix of input marks.
-  - `*-histogram.png`: Signal distribution for each mark.
-  - `*-transitionMatrix.png`: Probabilities of transitioning between chromatin states.
-  - `*-meanEmission-viterbi.png` / `*-normEmission-viterbi.png`: Heatmaps showing the signal signature for each state.
-  - `*-stateDistribution-viterbi.png`: Percentage of the genome occupied by each state.
-  - `*-viterbi.html`: **Interactive HTML report** for exploring the segmentation results.
 
 </details>
 

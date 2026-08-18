@@ -107,25 +107,21 @@ If you wish to repeatedly use the same parameters for multiple runs, rather than
 
 Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
 
-### EpiSegMix Run Modes
+## Segmentaion 
 
-The pipeline's behavior can be significantly altered using modes for EpiSegMix tool as boolean flags `--standard, --duration, --DNA, --fitting` and the `--merge` flag. By default, the pipeline runs in `standard` mode.
+Based on your sample sheet, if it contains only histone data or methylation data or both together, the pipeline behavior changes by default. If both are present, the pipeline runs combined segmentation, and if there is only histone (BAM files) data present, it only runs histone segmentation. But **if only methylation or Coveragemarker (BED files) data is present**, then please **use the flag --dna** to do methylation or Coveragemarker marker specific segmentation.
 
-#### Standard Mode (Default)
 
-```bash
---standard
-```
+### Epigenomesegmentaion modes
+The pipeline's behavior can be significantly altered using boolean flags `--duration`, `--dna`, `--fitting`, `--jointrain`, `--methcounts` & `--histonecounts` flag. By default, the pipeline runs in topology modeling mode.
 
-Processes only histone data (BAM files) to generate chromatin segmentation models. Methylation data provided in the samplesheet will be ignored in this mode.
-
-#### DNA Mode
+#### Methylation or CoverageMarker Mode
 
 ```bash
---DNA
+--dna
 ```
 
-Bypasses histone processing entirely. The pipeline will process only methylation data (BED files), generate methylation-specific bins, and train a DNA-only segmentation model.
+By giving this flag, histone processing is entirely ignored. The pipeline will process only methylation data or coverage markers (BED files), generate methylation specific bins, train and decode a methylation or CoverageMarker only segmentation model.
 
 #### Duration Mode
 
@@ -133,7 +129,7 @@ Bypasses histone processing entirely. The pipeline will process only methylation
 --duration
 ```
 
-Executes the duration-based Hidden Markov Model (HMM). This is useful for modeling states with explicit length distributions to better capture the spatial characteristics of epigenetic domains.
+Executes the Standard Hidden Markov Model (HMM) for epigenomesegmenation.
 
 #### Fitting Mode
 
@@ -141,16 +137,28 @@ Executes the duration-based Hidden Markov Model (HMM). This is useful for modeli
 --fitting
 ```
 
-This mode does not perform full segmentation. Instead, it extracts counts and runs distribution-fitting algorithms to help you determine the optimal statistical distributions (e.g., NBI, BI, SI, BNB) for your specific epigenetic marks. You can specify a comma-separated list of distributions to test using the `--distributions` parameter.
-However, if `--best_fit_segmentation` is set to true along with fitting, it will run segmentation on the best-fitting distribution found. You can also mention `--duration` with it for segmentation to be done using duration modules.
+This mode does not perform full segmentation. Instead, it extracts counts and runs distribution fitting algorithms to help you determine the optimal statistical distributions (e.g., NBI, BI, SI, BNB) for your specific epigenetic marks. You can specify a comma-separated list of distributions to test using the `--distributions` parameter.
 
-#### Merging Histone and Methylation Data
+
+#### Jointrain Mode
 
 ```bash
---merge
+--jointrain
 ```
 
-When the `--merge` flag is provided, the pipeline processes **both** histone BAM files and methylation BED files. It merges their respective count matrices into a single, comprehensive dataset and trains a combined segmentation model across all modalities.
+When this flag is set to true, the segmentation traing is run on the concatenated count matrix to give us the same states labeling order for multiple samples. 
+
+**Note:** Only the order of labeling is the same; the segmentation results for different samples are different.
+
+#### Your own Counts Mode
+
+```bash
+--methcounts <path to count matrix>  --histonecounts <path to count matrix>
+```
+
+Users can themselves provide their own count matrix path via the flags `--methcounts` & `--histonecounts` if both flags are given a combined segmentation is done, or otherwise if one flag is given a corresponding segmentation is done. 
+
+**Note:** With the flag `--methcounts`, the user has to mention `--dna` flag true as well to run methylation segmentaion.
 
 #### Exploring Multiple States
 

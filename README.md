@@ -23,28 +23,30 @@
 
 **nf-core/epigenomesegmentation** is a bioinformatics pipeline for chromatin segmentation. It uses a hidden Markov model (HMM) to annotate genomic regions with functional states (e.g., enhancers, promoters) based on combinations of epigenetic modifications, capturing spatial relations via transition probabilities.
 
-![nf-core/epigenomesegmentation metro map](docs/images/nf-core-epigenomesegmentation_dark.svg)
+![nf-core/epigenomesegmentation metro map](docs/images/nf-core-epigenomesegmentation_dark.png)
 
-## Default Workflow: Standard Mode
-
-By default, the EPIGENOMESEGMENTATION pipeline executes the **Standard Mode** (`--standard true` or remains unspecified, and `--merge false`). This primary pathway processes histone data (BAM files) to generate segmentation models, bypassing methylation processing.
+## Default Workflow: Topology Modelling
+By default, the EPIGENOMESEGMENTATION pipeline executes the **Topology Modeling**.
 
 ### Execution Steps
 
-1. **Genome Preparation** (`PREPARE_GENOME` & `GENERATE_BINS`): Fetches chromosome size files and generates the required genomic bins.
-2. **Processing Branching (Histone & Methylation)**: Parses the input samplesheet and evaluates the `--merge` flag:
-   - **Histone Processing** (`PROCESS_HISTONES`): Maps BAM files against genomic bins to extract count matrices.
-   - **Methylation Processing** (`PROCESS_METHYL`): Triggered if `--merge true`. Processes BED files at base-pair resolution with merged +/- strands to maintain signal fidelity.
-3. **Count Merging & Synchronization** (`MERGE_DATA`): If `--merge` is enabled, the pipeline intersects the processed matrices. This synchronizes the Histone (binned) and Methylation (base-pair) data into a consistent windowed format to ensure all multi-omic layers are aligned to the same coordinate system.
-4. **Segmentation Modeling**: Based on the selected parameters (`--standard`, `--duration`, or `--dna`), the data is routed through a specific modeling subworkflow:
-   - **Standard** (`MODEL_TRAINING_STD`): Default HMM-based segmentation.
-   - **Duration-Aware** (`MODEL_TRAINING_DM`): Incorporates state duration modeling.
-   - **DNA-Centric** (`MODEL_TRAINING_DNA`): Optimized for DNA-specific features.
-   - _Note: Each subworkflow executes four consecutive modules: `prepare`, `train`, `decode`, and `report`._
-5. **Distribution Fitting & Automated Selection** (`DISTRIBUTION_FITTING`): If the `fitting` mode is triggered, the pipeline identifies the optimal statistical distribution for the data using:
-   - `distfit_histone_train`: Trains models across statistical distributions.
-   - `distfit_histone_assess`: Evaluates and selects the distribution with the best fit.
-   - **Automated Step**: If the `--best_fit_segmentation` flag is present, the pipeline automatically executes the segmentation workflow (Step 4). By default, this runs in `standard` mode unless `--duration` is explicitly specified.
+1. **Genome Processing:** It includes 4 modules (`GET_CHROMSIZES`, `FILTER_CHROMSIZES`, `SORT_REFRENCE` & `MAKE_WINDOWS`) to generate a binned window size reference BED file based on parameter `--binsize and --genome` (200 and hg38 by default) along with a sorted reference chromosome sizes tab file.
+
+2. **BAM Processing:** It includes 4 modules (`SAMTOOLS_REHEADER`, `SAMTOOLS_INDEX`, `BAM_SHEET` & `BAM_COUNTS`) to generate a count matrix for histone marks using BAM files as input for the tool [EpiSegMix](https://doi.org/10.1101/2025.07.25.666820).
+
+3. **BED Processing:** It includes 2 modules (`BED_COUTNS` & `BEDTOOLS_MAP`) to generate a count matrix for coverage markers using BED files as input for the tool [EpiSegMix](https://doi.org/10.1101/2025.07.25.666820).
+
+4. **Merging:** It includes 4 modules (`STRIPHEADER`, `BEDTOOLS_INTERSECT`, `FILTER_BED` & `JOINBED`) to standardize the files to have the same number of rows and same genomic positions between histone and coverage counts is also responsible for merging the different coverage counts files together in one file.
+
+5. **EpiSegMix Prepare:** It includes 2 modules (`CONFIG` & `TRAINCOUNTS`) These generate a config file along with the training counts for the tool [EpiSegMix](https://doi.org/10.1101/2025.07.25.666820).
+
+6. **EpiSegMix Topology Modelling:** It includes 3 modules (`TRAIN`, `DECODE` & `REPORT`) to give us segmentation results based on topology modeling HMM.
+
+7. **EpiSegMix Standard Modelling:** It includes 3 modules (`TRAIN`, `DECODE` & `REPORT`) to give us segmentation results based on standard modeling HMM.
+
+8. **EpiSegMix Methylation Modelling:** It includes 3 modules (`TRAIN`, `DECODE` & `REPORT`) to give us segmentation results based on topology modeling HMM but <strong>only for coverage markers</strong>.
+
+9. **EpiSegMix Fitting:** It includes 2 modules (`TRAIN` & `BEST_DISTRIBUTION`) to give us a new samplesheet containing the best distribution that fits our data.
 
 ---
 
@@ -54,14 +56,16 @@ The pipeline logic is organized into the following modular components:
 
 | Category            | Subworkflows                                                    |
 | :------------------ | :-------------------------------------------------------------- |
-| **Setup**           | `PREPARE_GENOME`, `GENERATE_BINS`                               |
-| **Data Processing** | `PROCESS_HISTONES`, `PROCESS_METHYL`, `MERGE_DATA`              |
-| **Modeling Modes**  | `MODEL_TRAINING_STD`, `MODEL_TRAINING_DM`, `MODEL_TRAINING_DNA` |
-| **Optimization**    | `DISTRIBUTION_FITTING`                                          |
+| **Setup**           | `GET_CHROMSIZES`, `FILTER_CHROMSIZES`, `SORT_REFRENCE`, `MAKE_WINDOWS`, `CONFIG` & `TRAINCOUNTS`                             |
+| **Data Processing** | `SAMTOOLS_REHEADER`, `SAMTOOLS_INDEX`, `BAM_SHEET`, `BAM_COUNTS`, `BED_COUTNS` & `BEDTOOLS_MAP`             |
+| **Modeling**  | `TRAIN`, `DECODE` & `REPORT` |
+| **Optimization**    | `BEST_DISTRIBUTION`                                          |
 
 ---
 
-> **Note:** You can set the execution mode using the primary `--episegmix_mode` flag (e.g., `standard`, `duration`, `dna`, or `fitting`) or by using direct shortcut flags: `--standard`, `--duration`, `--dna`, or `--fitting`.
+> **Note:** You can set the execution mode using flags: `--duration`, `--dna` & `--fitting` to adjust for what type of segmentation modeling you would like to use. 
+
+**Note:** You can also directly use a your own count matrices if you have using the flags `--methcounts` & `--histonecounts`.
 
 ## Usage
 
@@ -96,7 +100,6 @@ Now, you can run the pipeline using:
 nextflow run nf-core/epigenomesegmentation \
    --input samplesheet.csv \
    --outdir <OUTDIR> \
-   --episegmix_mode standard \
    --genome hg38 \
    -profile <docker/singularity/.../institute>
 ```
