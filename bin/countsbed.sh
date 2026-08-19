@@ -50,7 +50,7 @@ fi
     | sort --parallel="${cpus}" -k2,2V -k3,3n \
     | awk -v OFS='\t' '{
             sub(/^chr/, "", $2);
-            printf ("%s\t%d\t%d\t%d\t%.0f\n", $2, $3, $3+1, $5+$10, $6+$11)
+	     printf ("%s\t%d\t%d\t%d\t%d\n", $2, $3, $3+1, $5+$10, ($6+$11)+0.5)
         }' \
     | grep -E -v "random|GL|NC|M|hs|hap|Un|J|EBV|ph|L"
 

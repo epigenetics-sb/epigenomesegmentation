@@ -1,6 +1,6 @@
 process EPISEGMIX_LDMDECODE {
     tag "$sample_id"
-    label 'process_medium'
+    label 'process_high'
 
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container ?
         'aaryanjaitly/episegmix_v2:latest':
