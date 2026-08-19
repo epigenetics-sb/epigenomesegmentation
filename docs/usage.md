@@ -156,7 +156,7 @@ When this flag is set to true, the segmentation traing is run on the concatenate
 --methcounts <path to count matrix>  --histonecounts <path to count matrix>
 ```
 
-Users can themselves provide their own count matrix path via the flags `--methcounts` & `--histonecounts` if both flags are given a combined segmentation is done, or otherwise if one flag is given a corresponding segmentation is done. 
+Users can themselves provide their own count matrix path via the flags `--methcounts` & `--histonecounts` if both flags are given a combined segmentation is done, or otherwise if one flag is given a corresponding segmentation is done. In this case the sample sheet must contain the same order and dummy paths to BAM or BED files as count matrices to make the config file on the fly, and the naming of meth counts and histone counts should be {sample_id}_meth.tab and {sample_id}.tab, respectively.
 
 **Note:** With the flag `--methcounts`, the user has to mention `--dna` flag true as well to run methylation segmentaion.
 
