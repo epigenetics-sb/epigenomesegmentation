@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "custom_filterchromsizes"
+description: Filters raw chromosome sizes files to retain only standard chromosomes.
+keywords:
+  - filter
+  - chromosome
+  - genomics
+tools:
+  - "custom":
+      description: "Custom processing utilizing core terminal utilities like awk or grep."
+      homepage: ""
+      documentation: ""
+      tool_dev_url: ""
+      doi: ""
+      licence: null
+      identifier: null
+
+input:
+  - chromsizes:
+      type: file
+      description: Path to the raw chromosome sizes file.
+      pattern: "*.chrom.sizes"
+
+output:
+  - filtered_chromsizes:
+      - "*.filtered.chrom.sizes":
+          type: file
+          description: Filtered chromosome sizes file.
+          pattern: "*.filtered.chrom.sizes"
+  - versions_custom:
+      - - ${task.process}:
+            type: string
+            description: The name of the process
+        - awk:
+            type: string
+            description: The name of the tool reporting the version
+        - awk -W version 2>&1 | head -n 1 | awk '{print $2}':
+            type: eval
+            description: The expression to obtain the version of the tool
+
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The name of the process
+      - awk:
+          type: string
+          description: The name of the tool reporting the version
+      - awk -W version 2>&1 | head -n 1 | awk '{print $2}':
+          type: eval
+          description: The expression to obtain the version of the tool
+
+authors:
+  - "@aaryanjaitly"
+maintainers:
+  - "@aaryanjaitly"

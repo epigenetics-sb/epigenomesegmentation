@@ -3,9 +3,6 @@
     "homePage": "https://github.com/nf-core/epigenomesegmentation",
     "repos": {
         "https://github.com/nf-core/modules.git": {
-            "modules": {
-                "nf-core": {}
-            },
             "subworkflows": {
                 "nf-core": {
                     "utils_nextflow_pipeline": {

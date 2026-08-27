@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "custom_filterchromsizes"
+description: Filters raw chromosome sizes files to retain only standard chromosomes and sorts them alphanumerically.
+keywords:
+  - filter
+  - sort
+  - chromosome
+  - genomics
+tools:
+  - "awk":
+      description: "A pattern scanning and processing language used to filter chromosomes."
+      homepage: "https://www.gnu.org/software/gawk/manual/gawk.html"
+      documentation: "https://www.gnu.org/software/gawk/manual/gawk.html"
+      tool_dev_url: "https://git.savannah.gnu.org/cgit/gawk.git"
+      doi: ""
+      licence: ["GPL v3+"]
+      identifier: null
+  - "sort":
+      description: "Sort lines of text files (GNU coreutils)."
+      homepage: "https://www.gnu.org/software/coreutils/sort"
+      documentation: "https://www.gnu.org/software/coreutils/sort"
+      tool_dev_url: "https://git.savannah.gnu.org/cgit/coreutils.git"
+      doi: ""
+      licence: ["GPL v3+"]
+      identifier: null
+
+input:
+  - chromsizes:
+      type: file
+      description: Path to the raw chromosome sizes file.
+      pattern: "*.chrom.sizes"
+
+output:
+  - chromsizes_V2:
+      - "*.V2":
+          type: file
+          description: Filtered and sorted chromosome sizes file.
+          pattern: "*.V2"
+  - versions_awk:
+      - - ${task.process}:
+            type: string
+            description: The name of the process
+        - awk:
+            type: string
+            description: The name of the tool reporting the version
+        - awk --version | head -n 1 | cut -f 3 -d ' ':
+            type: eval
+            description: The expression to obtain the version of the tool
+  - versions_sort:
+      - - ${task.process}:
+            type: string
+            description: The name of the process
+        - sort:
+            type: string
+            description: The name of the tool reporting the version
+        - sort --version | head -n 1 | awk '{print $NF}':
+            type: eval
+            description: The expression to obtain the version of the tool
+
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The name of the process
+      - awk:
+          type: string
+          description: The name of the tool reporting the version
+      - awk --version | head -n 1 | cut -f 3 -d ' ':
+          type: eval
+          description: The expression to obtain the version of the tool
+    - - ${task.process}:
+          type: string
+          description: The name of the process
+      - sort:
+          type: string
+          description: The name of the tool reporting the version
+      - sort --version | head -n 1 | awk '{print $NF}':
+          type: eval
+          description: The expression to obtain the version of the tool
+
+authors:
+  - "@aaryanjaitly"
+maintainers:
+  - "@aaryanjaitly"
