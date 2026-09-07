@@ -19,7 +19,7 @@ process CUSTOM_FILTERBED {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}_${meta.epigenetic_mark}"
+    def prefix = task.ext.prefix ?: "${meta.id}_${meta.epigenetic_mark}_${meta.replicate}"
     """
     {
     echo -e "Cov\tMeth"

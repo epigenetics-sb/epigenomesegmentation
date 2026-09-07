@@ -32,6 +32,38 @@ while [[ $# -gt 0 ]]; do
 done
 
 # ==============================================================================
+# Deduplicate and Sort Histone Marks (keeping distributions in sync)
+# ==============================================================================
+declare -A seen_marks
+declare -A mark_dist_map
+UNIQUE_MARK=()
+
+# 1. Deduplicate and map each mark to its corresponding distribution
+for i in "${!MARK[@]}"; do
+    mark="${MARK[$i]}"
+    # Only process if the mark hasn't been seen yet
+    if [[ -z "${seen_marks[$mark]}" ]]; then
+        seen_marks[$mark]=1
+        UNIQUE_MARK+=("$mark")
+        mark_dist_map[$mark]="${DISTRIBUTION_HISTONE[$i]}"
+    fi
+done
+
+# 2. Sort the unique marks alphabetically
+# The mapfile command safely reads the sorted output into a new array
+mapfile -t SORTED_MARKS < <(printf '%s\n' "${UNIQUE_MARK[@]}" | sort)
+
+# 3. Rebuild original arrays in the newly sorted order
+MARK=()
+DISTRIBUTION_HISTONE=()
+for mark in "${SORTED_MARKS[@]}"; do
+    if [[ -n "$mark" ]]; then # Skip empty lines
+        MARK+=("$mark")
+        DISTRIBUTION_HISTONE+=("${mark_dist_map[$mark]}")
+    fi
+done
+
+# ==============================================================================
 # Output Configuration
 # ==============================================================================
 {
@@ -39,7 +71,7 @@ done
 
     # 1. Histone Markers Section
     if [[ "${#MARK[@]}" -gt 0 && "${MARK[0]}" != "null" ]]; then
-	echo "marker: ${#MARK[@]}"
+        echo "marker: ${#MARK[@]}"
         echo "marker_spec:"
         for i in "${!MARK[@]}"; do
             echo "  - name: ${MARK[$i]}"
