@@ -77,18 +77,14 @@ for BED in "${SEG_DIR}"/viterbi_*.bed.gz; do
         -d "${BED}" \
         -o "${PREFIX}-state-colors.png"
 
-    # 3. Copy global stats so the HTML script can find them under this sample's prefix
     cp "${OUT_DIR}/${OUTPUT}-histogram.png" "${PREFIX}-histogram.png"
     cp "${OUT_DIR}/${OUTPUT}-correlation.png" "${PREFIX}-correlation.png"
     cp "${OUT_DIR}/${OUTPUT}-methylation-density.png" "${PREFIX}-methylation-density.png" 2>/dev/null || true
 
-    # 4. Generate the HTML report for this specific sample
-    segmentation_report_dm.sh \
+    segmentation_report_md.sh \
         -n "${BASE_PREFIX}" \
-        -o "${OUT_DIR}/" \
-        -i true \
-        -c viterbi
-        
+        -o "${OUT_DIR}/"
+
 done
 
 echo "Plots and HTML reports generated successfully in ${OUT_DIR}/"
