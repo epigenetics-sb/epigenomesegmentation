@@ -107,8 +107,10 @@ if 'marker_spec' in model:
 
     for i in range(len(model['data'])):
         df, prefix = combine_data(model, args.i[0], i, columns, state_columns)
-        if i == 0:
-            df.to_csv(args.o[0] + prefix, index=False, sep='\t')
+        
+        # CHANGED HERE: Removed the 'if i == 0:' restriction
+        df.to_csv(args.o[0] + prefix, index=False, sep='\t')
+        
         to_bed(df, args.o[0], prefix, state_columns)
 else:
     to_bed_methylation(model, args.o[0], args.i[0], args.c[0])

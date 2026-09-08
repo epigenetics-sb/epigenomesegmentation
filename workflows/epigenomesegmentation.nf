@@ -228,13 +228,15 @@ workflow EPIGENOMESEGMENTATION {
                 return tuple(sample_id, meta1, histone, meta2, meth)
             }
             .combine(ch_states)
-            .map { sample_id, meta1, histone, meta2, meth, state ->
-                [state,"${sample_id}_${state}", meta1, histone, meta2, meth]
-            }
-            .groupTuple()
-            .map { state, sample_id, meta1, histone, meta2, meth ->
-                [sample_id[0], meta1[0], histone, meta2[0], meth, state]
-            }
+                        .map { sample_id, meta1, histone, meta2, meth, state ->
+                            [state, sample_id, meta1, histone, meta2, meth]
+                        }
+                        .groupTuple()
+                        .map { state, sample_ids, meta1, histone, meta2, meth ->
+                            def combined_key = "${sample_ids.join('_')}_${state}"
+                            
+                            [combined_key, meta1[0], histone, meta2[0], meth, state]
+                        }
     }
     else {
 
@@ -274,7 +276,9 @@ workflow EPIGENOMESEGMENTATION {
             }
     }
 
+
     EPISEGMIX_PREPARE(ch_in_episegmix_config)
+
     ch_train_counts = EPISEGMIX_PREPARE.out.ch_train_counts
     ch_train_region = EPISEGMIX_PREPARE.out.ch_dna_regions
 
